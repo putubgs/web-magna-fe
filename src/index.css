@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+:root {
+  --color-primary-default: #270081;
+  --color-primary-light: #3D0FA8;
+  --color-neutral-default: #000000;
+  --color-neutral-light: #FFFFFF;
+  --color-neutral-admin-background: #0B0D12;
+}
+
+@font-face {
+  font-family: "SF Pro Display";
+  src: url(/assets/fonts/SF-Pro.ttf) format("truetype");
+}
+
+body {
+  background-color: var(--color-neutral-default);
+  color: var(--color-neutral-light);
+  font-family: "SF Pro Display", sans-serif;
+}
+
+.gilda-font {
+  font-family: 'Gilda Display', serif;
+}
