@@ -28,12 +28,14 @@ export const UpComingEvents = ({ upComingEventsData }: UpComingEventsProps) => {
 	};
 
 	return (
-		<section className="flex flex-col justify-center items-center space-y-[56px] px-10 md:px-96 pb-[80px]">
+		<section
+			id="ourEvent"
+			className="flex flex-col justify-center items-center space-y-[56px] px-[50px] lg:px-[90px] xl:px-52 2xl:px-96 py-[80px]">
 			<div className="text-center px-4 md:px-40 space-y-[20px]">
-				<h1 className="gilda-font text-[32px] md:text-[48px] font-[400]">
+				<h1 className="gilda-font text-3xl lg:text-4xl xl:text-5xl md:text-[48px] font-[400]">
 					Up Coming Events
 				</h1>
-				<p className="text-[16px] md:text-[18px]">
+				<p className="text-base xl:text-lg md:text-[18px]">
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut varius, lorem
 					quis tempor suscipit, nisl enim pellentesque turpis,
 				</p>
@@ -46,14 +48,16 @@ export const UpComingEvents = ({ upComingEventsData }: UpComingEventsProps) => {
 					{upComingEventsData.map((event, index) => (
 						<div
 							key={index}
-							className="min-w-full grid grid-cols-1 md:grid-cols-12 items-center border-4 border-[#262626] rounded-[8px] p-5 gap-[24px] md:gap-[56px]">
+							className="min-w-full grid grid-cols-12 items-center border-4 border-[#262626] rounded-[8px] p-5 gap-[24px] md:gap-[56px]">
 							<img
-								className="md:col-span-3 w-full"
+								className="col-start-4 col-end-10 md:col-span-3 w-full h-full"
 								src={event.image}
 								alt={event.title}
 							/>
-							<div className="md:col-span-9 space-y-[24px]">
-								<h1 className="text-[20px] font-[800]">{event.title}</h1>
+							<div className="col-span-12 md:col-span-9 space-y-[24px]">
+								<h1 className="text-xl md:text-base lg:text-[20px] font-[800]">
+									{event.title}
+								</h1>
 								<p className="text-sm font-normal">{event.description}</p>
 								<div className="space-x-[24px]">
 									<div className="inline-flex gap-x-[10px]">
@@ -65,9 +69,14 @@ export const UpComingEvents = ({ upComingEventsData }: UpComingEventsProps) => {
 										<p className="text-sm font-normal">{event.time}</p>
 									</div>
 								</div>
-								<button className="text-white text-base font-semibold bg-transparent border border-white rounded-full px-[28px] py-[14px]">
-									Register Now
-								</button>
+								<div className="w-full flex justify-center md:justify-start">
+									<a
+										target="_blank"
+										href="https://instagram.com"
+										className="text-white text-xs md:text-base font-semibold bg-transparent border border-white rounded-full px-[28px] py-[14px]">
+										Register Now
+									</a>
+								</div>
 							</div>
 						</div>
 					))}
@@ -78,7 +87,7 @@ export const UpComingEvents = ({ upComingEventsData }: UpComingEventsProps) => {
 				<button
 					onClick={handlePrev}
 					disabled={currentIndex === 0}
-					className={`p-[13px] rounded-[8px] ${
+					className={`p-[13px] rounded-[8px] cursor-pointer ${
 						currentIndex === 0
 							? "bg-[#262626] border border-transparent"
 							: "bg-transparent border border-white"
@@ -92,7 +101,7 @@ export const UpComingEvents = ({ upComingEventsData }: UpComingEventsProps) => {
 				<button
 					onClick={handleNext}
 					disabled={currentIndex === upComingEventsData.length - 1}
-					className={`p-[13px] rounded-[8px] ${
+					className={`p-[13px] rounded-[8px] cursor-pointer ${
 						currentIndex === upComingEventsData.length - 1
 							? "bg-[#262626] border border-transparent"
 							: "bg-transparent border border-white"

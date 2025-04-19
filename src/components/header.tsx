@@ -9,7 +9,7 @@ export default function Header() {
 
 	return (
 		<>
-			<header className="sticky top-0 bg-[#0B0D12] z-[50] flex justify-between py-6 px-4 md:px-[120px] items-center shadow-md">
+			<header className="sticky top-0 bg-[#0B0D12] z-[50] flex justify-between py-6 px-10 md:px-12 lg:px-[90px] xl:px-[120px] items-center shadow-md">
 				<a className="flex items-center space-x-4 cursor-pointer" href="/">
 					<img
 						src="/assets/logo/business-units/Magna.png"
@@ -21,7 +21,7 @@ export default function Header() {
 						Magna Partners
 					</div>
 				</a>
-				<div className="hidden md:flex space-x-12">
+				<div className="hidden lg:flex space-x-12">
 					<a href="#ourEvent" className="cursor-pointer">
 						Our Event
 					</a>
@@ -36,13 +36,13 @@ export default function Header() {
 					</a>
 				</div>
 				<div
-					className={`block md:hidden ham-menu ${burgerStatus ? "active" : ""}`}
+					className={`block lg:hidden ham-menu ${burgerStatus ? "active" : ""}`}
 					onClick={handleBurger}>
 					<span></span>
 					<span></span>
 				</div>
 				{burgerStatus && (
-					<div className="flex flex-col bg-black w-48 h-40 rounded-xl absolute right-6 top-20 p-4 z-[99] space-y-[12px] md:hidden">
+					<div className="flex flex-col bg-black w-48 h-40 rounded-xl absolute right-6 top-20 p-4 z-[99] space-y-[12px] lg:hidden">
 						<a href="#ourEvent" className="cursor-pointer" onClick={handleBurger}>
 							Our Event
 						</a>

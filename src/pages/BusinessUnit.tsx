@@ -1,12 +1,13 @@
 import { useParams } from "react-router";
-import { AboutData } from "./data/aboutData";
-import Header from "./components/header";
+import { AboutData } from "../data/aboutData";
+import Header from "../components/header";
 import CountUp from "react-countup";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { UpComingEvents } from "./components/upComingEvents";
-import { iconMapper } from "./data/iconMapperData";
-import { HeroBackground } from "./components/heroBackground";
-import ExitIcon from "./components/icons/exitIcon";
+import { UpComingEvents } from "../components/upComingEvents";
+import { iconMapper } from "../data/iconMapperData";
+import { HeroBackground } from "../components/heroBackground";
+import ExitIcon from "../components/icons/exitIcon";
+import { BecomeOurPartners } from "../components/becomeOurPartners";
 
 function BusinessUnit() {
 	const countUpRef = useRef(null);
@@ -59,10 +60,10 @@ function BusinessUnit() {
 			<Header />
 
 			{/* hero section */}
-			<section className="h-full grid grid-cols-12 space-y-56 px-56 py-40">
-				<div className="col-span-7 space-y-[30px]">
-					<h1 className="text-7xl font-[600]">{buData?.title}</h1>
-					<h3 className="text-xl font-[400]">{buData?.description}</h3>
+			<section className="relative h-full grid grid-cols-12 space-y-56 px-10 md:px-[50px] lg:px-[90px] xl:px-40 2xl:px-56 py-40">
+				<div className="col-span-12 md:col-span-7 space-y-[30px]">
+					<h1 className="text-5xl xl:text-7xl font-[600]">{buData?.title}</h1>
+					<h3 className="text-lg xl:text-xl font-[400]">{buData?.description}</h3>
 					<div className="flex items-center gap-x-5">
 						{buData?.contacts.top.map((contact, index) => {
 							const Icon = iconMapper[contact.icon];
@@ -80,31 +81,31 @@ function BusinessUnit() {
 						})}
 					</div>
 				</div>
-				<div className="col-span-5">
-					<div className="flex justify-center h-full items-center">
+				<div className="order-first md:order-none col-span-12 md:col-span-5">
+					<div className="flex justify-start md:justify-center h-full items-center">
 						<div
-							className="absolute w-[35px] h-[35px] lg:w-[300px] lg:h-[300px] rotate-[25deg] rounded-[6px] lg:rounded-[30px] transition-transform duration-300 hover-trigger-element"
+							className="absolute w-[150px] h-[150px] md:w-[200px] md:h-[200px] lg:w-[250px] xl:w-[300px] lg:h-[250px] xl:h-[300px] rotate-[25deg] rounded-[20px] lg:rounded-[30px] transition-transform duration-300 hover-trigger-element"
 							style={{ backgroundColor: buData?.bgColor }}></div>
-						<div className="absolute w-[35px] h-[35px] lg:w-[300px] lg:h-[300px] rotate-0 rounded-[6px] lg:rounded-[30px] bg-white">
+						<div className="absolute w-[150px] h-[150px] md:w-[200px] md:h-[200px] lg:w-[250px] lg:h-[250px] xl:w-[300px] xl:h-[300px] rotate-0 rounded-[20px] lg:rounded-[30px] bg-white">
 							<div className="flex justify-center items-center h-full">
 								<img
 									src={buData?.logo}
 									alt={`${buData?.title} logo`}
-									className="w-[27px] lg:w-[200px] h-[27px] lg:h-[200px] object-contain"
+									className="w-[70px] h-[70px] md:w-[100px] md:h-[100px] lg:w-[150px] lg:h-[150px] xl:w-[200px] xl:h-[200px] object-contain"
 								/>
 							</div>
 						</div>
 					</div>
+					<HeroBackground haxColor={buData?.bgColor} />
 				</div>
 				<div className="col-span-12 flex justify-between items-start">
 					{buData?.taglines.map((tagline, index) => (
 						<div key={index} className="w-[300px]">
-							<h2 className="text-3xl font-[800]">{tagline.title}</h2>
-							<p className="text-lg font-[400]">{tagline.description}</p>
+							<h2 className="text-2xl xl:text-3xl font-[800]">{tagline.title}</h2>
+							<p className="text-base xl:text-lg font-[400]">{tagline.description}</p>
 						</div>
 					))}
 				</div>
-				<HeroBackground haxColor={buData?.bgColor} />
 			</section>
 
 			{/* up coming events section */}
@@ -114,31 +115,40 @@ function BusinessUnit() {
 
 			{/* achievement section */}
 			<section
+				id="ourCollaboration"
 				ref={countUpRef}
-				className="relative overflow-hidden flex flex-col items-center text-center space-y-[32px] px-56 py-[96px]">
-				<div className="space-y-[20px] px-72">
+				className="relative overflow-hidden flex flex-col items-center text-center space-y-[32px] px-[50px] lg:px-[90px] xl:px-40 2xl:px-56 py-[96px]">
+				<div className="space-y-[20px] px-0 xl:px-40 2xl:px-72">
 					<h2 className="text-2xl font-semibold">Why Leading Businesses</h2>
-					<h1 className="text-5xl gilda-font">Choose Magna Partners</h1>
-					<p className="text-lg font-normal">
+					<h1 className="text-3xl lg:text-4xl xl:text-5xl gilda-font">
+						Choose Magna Partners
+					</h1>
+					<p className="text-base xl:text-lg font-normal">
 						These numbers are more than just figures, they represent our dedication to
 						making a meaningful difference and driving progress. We continue to strive
 						for excellence, aiming to create even greater impacts in the years to
 						come.
 					</p>
 				</div>
-				<div className="w-full flex justify-between gap-[14px] border border-white bg-white/15 backdrop-blur-lg px-[80px] py-[30px] rounded-[12px]">
+				<div className="w-full flex flex-wrap justify-center md:justify-between gap-[14px] border border-white bg-white/15 backdrop-blur-lg px-[8px] md:px-[40px] 2xl:px-[80px] py-[30px] rounded-[12px]">
 					{buData?.achievements.map((item, i) => (
 						<div key={i} className="flex flex-col items-center gap-[12px]">
-							<h1 className="text-5xl font-semibold">
+							<h1 className="text-2xl md:text-3xl xl:text-5xl font-semibold">
 								{inView && <CountUp end={item.end} duration={2} />}
 								{item.suffix}
 							</h1>
-							<p className="text-base font-normal">{item.label}</p>
+							<p className="text-xs md:text-sm lg:text-base font-normal">
+								{item.label}
+							</p>
 						</div>
 					))}
 				</div>
-				<div className="absolute -z-10 w-[400px] h-[400px] bg-[#137CF8] rounded-full -left-[50px] bottom-0 blur-[140px]"></div>
-				<div className="absolute -z-10 w-[400px] h-[400px] bg-[#137CF8] rounded-full right-[50px] top-0 blur-[140px]"></div>
+				<div
+					className="absolute -z-10 w-[400px] h-[400px] bg-[#137CF8] rounded-full -left-[50px] bottom-0 blur-[140px]"
+					style={{ backgroundColor: buData?.bgColor }}></div>
+				<div
+					className="absolute -z-10 w-[400px] h-[400px] bg-[#137CF8] rounded-full right-[50px] top-0 blur-[140px]"
+					style={{ backgroundColor: buData?.bgColor }}></div>
 				<img
 					className="absolute -z-10 bottom-0 left-0 w-full h-full"
 					src="/assets/img/impact-img.png"
@@ -146,39 +156,54 @@ function BusinessUnit() {
 				/>
 			</section>
 
+			{/* let's become our partner section */}
+			<BecomeOurPartners />
+
 			{/* clients reviews section */}
-			<section className="flex flex-col items-center space-y-[40px] px-96 py-[80px]">
-				<h1 className="text-5xl gilda-font">What They Say?</h1>
+			<section
+				id="ourImpact"
+				className="flex flex-col items-center space-y-[40px] px-[50px] lg:px-[90px] xl:px-40 2xl:px-80 py-[80px]">
+				<h1 className="text-3xl lg:text-4xl xl:text-5xl gilda-font">
+					What They Say?
+				</h1>
 				<div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 w-full">
 					{buData?.clientsReviews.map((reviewData, index) => (
 						<div
 							key={index}
 							className="break-inside-avoid border border-[#262626] space-y-[20px] p-[24px] mb-6 inline-block w-full">
 							<div className="space-y-[4px]">
-								<h1 className="text-lg font-semibold">{reviewData.name}</h1>
-								<h2 className="text-base font-normal">{reviewData.position}</h2>
+								<h1 className="text-base xl:text-lg font-semibold">
+									{reviewData.name}
+								</h1>
+								<h2 className="text-sm xl:text-base font-normal">
+									{reviewData.position}
+								</h2>
 							</div>
-							<p className="text-base font-normal">"{reviewData.description}"</p>
+							<p className="text-sm xl:text-base font-normal">
+								"{reviewData.description}"
+							</p>
 						</div>
 					))}
 				</div>
 			</section>
 
 			{/* previous event gallery section */}
-			<section className="px-56 py-[40px] space-y-[40px]">
-				<div className="text-center flex flex-col items-center gap-y-[20px] px-96">
-					<h1 className="text-5xl gilda-font">Previous Event Gallery</h1>
-					<p className="text-lg font-normal">
+			<section className="px-[50px] lg:px-[90px] xl:px-40 2xl:px-56 py-[40px] space-y-[40px]">
+				<div className="text-center flex flex-col items-center gap-y-[20px] px-[90px] 2xl:px-96">
+					<h1 className="text-3xl lg:text-4xl xl:text-5xl gilda-font">
+						Previous Event Gallery
+					</h1>
+					<p className="text-base xl:text-lg font-normal">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut varius, lorem
 						quis tempor suscipit, nisl enim pellentesque turpis,{" "}
 					</p>
 				</div>
-				<div className="flex justify-between px-60">
+				<div className="flex justify-center gap-x-5">
 					{buData?.previousEventGallery.map((event, index) => (
 						<div
 							onClick={() => setPrevEventGalleryPopUp(true)}
 							key={index}
-							className="relative w-[304px] h-[304px] rounded-[8px]">
+							className="relative w-[304px] h-[304px] rounded-[8px] cursor-pointer">
 							<img
 								className="w-full h-full object-cover rounded-[8px]"
 								src={event.imageUrl}
@@ -197,9 +222,11 @@ function BusinessUnit() {
 			</section>
 
 			{/* contact section */}
-			<section className="text-center flex flex-col items-center gap-y-[40px] px-56 py-[80px]">
-				<h1 className="text-5xl gilda-font">How We Can Help You?</h1>
-				<p className="text-lg font-normal">
+			<section className="text-center flex flex-col items-center gap-y-[40px] py-[80px]">
+				<h1 className="text-3xl lg:text-4xl xl:text-5xl gilda-font">
+					How We Can Help You?
+				</h1>
+				<p className="text-base xl:text-lg font-normal">
 					If you have any issues, please reach out to our designated contact person.
 				</p>
 				<div className="flex justify-between gap-x-7">
@@ -211,7 +238,7 @@ function BusinessUnit() {
 								href={contact.link}
 								target="_blank"
 								rel="noopener noreferrer">
-								<button className="flex items-center text-xl font-normal border border-white rounded-full px-[60px] py-[12px] gap-[10px]">
+								<button className="flex items-center text-base xl:text-xl font-normal border border-white rounded-full px-[60px] py-[12px] gap-[10px]">
 									{contact.title}
 									<div className="flex justify-center items-center border border-full rounded-full w-[36px] h-[36px]">
 										<Icon size={16} color="white" />
@@ -224,27 +251,29 @@ function BusinessUnit() {
 			</section>
 
 			{/* contact section */}
-			<section className="relative px-56 py-[80px] space-y-[64px]">
-				<div className="text-center flex flex-col items-center gap-y-[20px]">
-					<h2 className="text-2xl font-semibold">Contact Us</h2>
-					<h1 className="text-5xl gilda-font">
-						Stay connected with Magna Partners!
-					</h1>
-				</div>
-				<div className="flex justify-center gap-x-[56px]">
-					{buData?.contacts.bottom.map((contact, index) => {
-						const Icon = iconMapper[contact.icon];
-						return (
-							<button
-								key={index}
-								className="flex items-center text-xl font-normal gap-[10px]">
-								<div className="flex justify-center items-center border border-full rounded-full w-[36px] h-[36px]">
-									<Icon size={16} color="white" />
-								</div>
-								{contact.title}
-							</button>
-						);
-					})}
+			<section id="contactus" className="relative py-[40px] lg:py-[80px]">
+				<div className="space-y-[64px]">
+					<div className="text-center flex flex-col items-center gap-y-[20px]">
+						<h2 className="text-2xl font-semibold">Contact Us</h2>
+						<h1 className="text-3xl lg:text-4xl xl:text-5xl gilda-font">
+							Stay connected with Magna Partners!
+						</h1>
+					</div>
+					<div className="flex justify-center gap-x-[56px]">
+						{buData?.contacts.bottom.map((contact, index) => {
+							const Icon = iconMapper[contact.icon];
+							return (
+								<button
+									key={index}
+									className="flex items-center text-base xl:text-xl font-normal gap-[10px]">
+									<div className="flex justify-center items-center border border-full rounded-full w-[36px] h-[36px]">
+										<Icon size={16} color="white" />
+									</div>
+									{contact.title}
+								</button>
+							);
+						})}
+					</div>
 				</div>
 				<img
 					className="absolute -z-10 bottom-0 left-0 w-full h-full"
@@ -256,7 +285,7 @@ function BusinessUnit() {
 			{/* prev event gallery pop up */}
 			{prevEventGalleryPopUp && (
 				<section className="fixed inset-0 z-50 w-full h-screen bg-black/80 grid grid-cols-12 items-center">
-					<div className="col-start-5 col-end-9 flex flex-col items-end gap-y-[10px]">
+					<div className="col-start-3 col-end-11 xl:col-start-5 xl:col-end-9 flex flex-col items-end gap-y-[10px]">
 						<ExitIcon
 							onClick={() => setPrevEventGalleryPopUp(false)}
 							size={20}
