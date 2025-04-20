@@ -9,7 +9,7 @@ export default function Header() {
 
 	return (
 		<>
-			<header className="sticky top-0 bg-[#0B0D12] z-[50] flex justify-between py-6 px-10 md:px-12 lg:px-[90px] xl:px-[120px] items-center shadow-md">
+			<header className="sticky top-0 bg-[#0B0D12] z-[50] flex justify-between py-6 px-4 md:px-12 lg:px-[90px] xl:px-[120px] items-center shadow-md">
 				<a className="flex items-center space-x-4 cursor-pointer" href="/">
 					<img
 						src="/assets/logo/business-units/Magna.png"

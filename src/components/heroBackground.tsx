@@ -1,7 +1,7 @@
 export const HeroBackground = ({ haxColor }: { haxColor?: string }) => {
 	return (
 		<svg
-			className="absolute -z-10 left-0 bottom-0"
+			className="absolute -z-10 left-0 bottom-0 object-cover"
 			viewBox="0 0 1440 778"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg">

@@ -30,17 +30,16 @@ export const UpComingEvents = ({ upComingEventsData }: UpComingEventsProps) => {
 	return (
 		<section
 			id="ourEvent"
-			className="flex flex-col justify-center items-center space-y-[56px] px-[50px] lg:px-[90px] xl:px-52 2xl:px-96 py-[80px]">
-			<div className="text-center px-4 md:px-40 space-y-[20px]">
-				<h1 className="gilda-font text-3xl lg:text-4xl xl:text-5xl md:text-[48px] font-[400]">
+			className="flex flex-col justify-center items-center space-y-[56px] px-5 sm:px-[50px] lg:px-[90px] xl:px-52 2xl:px-96 py-[80px]">
+			<div className="text-center md:px-40 space-y-[20px]">
+				<h1 className="gilda-font text-2xl sm:text-3xl lg:text-4xl xl:text-5xl md:text-[48px] font-[400]">
 					Up Coming Events
 				</h1>
-				<p className="text-base xl:text-lg md:text-[18px]">
+				<p className="text-sm sm:text-base xl:text-lg md:text-[18px]">
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut varius, lorem
 					quis tempor suscipit, nisl enim pellentesque turpis,
 				</p>
 			</div>
-
 			<div className="relative w-full overflow-hidden">
 				<div
 					className="flex transition-transform duration-500 ease-in-out"
@@ -50,7 +49,7 @@ export const UpComingEvents = ({ upComingEventsData }: UpComingEventsProps) => {
 							key={index}
 							className="min-w-full grid grid-cols-12 items-center border-4 border-[#262626] rounded-[8px] p-5 gap-[24px] md:gap-[56px]">
 							<img
-								className="col-start-4 col-end-10 md:col-span-3 w-full h-full"
+								className="col-span-12 xs:col-start-2 xs:col-end-12 sm:col-start-4 sm:col-end-10 md:col-span-3 w-full h-full"
 								src={event.image}
 								alt={event.title}
 							/>

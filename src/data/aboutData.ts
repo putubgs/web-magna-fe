@@ -21,7 +21,7 @@ export const AboutData: AboutType[] = [
 			{
 				title: "Tagline",
 				description:
-					"Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolorsit amet Lorem .",
+					"Lorem ipsum dolor sit amet.",
 			},
 			{
 				title: "Tagline",
@@ -152,6 +152,11 @@ export const AboutData: AboutType[] = [
 					link: "https://www.instagram.com/careercompass_id/",
 				},
 				{
+					title: "Linkedin",
+					icon: "LinkedinIcon",
+					link: "https://www.instagram.com/careercompass_id/",
+				},
+				{
 					title: "WhatsApp",
 					icon: "WhatsAppIcon",
 					link: "https://wa.me/6281234567890",
@@ -197,7 +202,7 @@ export const AboutData: AboutType[] = [
 			{
 				title: "Tagline",
 				description:
-					"Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolorsit amet Lorem .",
+					"Lorem ipsum dolor sit amet.",
 			},
 			{
 				title: "Tagline",
@@ -323,6 +328,11 @@ export const AboutData: AboutType[] = [
 				{
 					title: "Instagram",
 					icon: "InstaIcon",
+					link: "https://www.instagram.com/careercompass_id/",
+				},
+				{
+					title: "Linkedin",
+					icon: "LinkedinIcon",
 					link: "https://www.instagram.com/careercompass_id/",
 				},
 				{
@@ -371,7 +381,7 @@ export const AboutData: AboutType[] = [
 			{
 				title: "Tagline",
 				description:
-					"Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolorsit amet Lorem .",
+					"Lorem ipsum dolor sit amet.",
 			},
 			{
 				title: "Tagline",
@@ -497,6 +507,11 @@ export const AboutData: AboutType[] = [
 				{
 					title: "Instagram",
 					icon: "InstaIcon",
+					link: "https://www.instagram.com/careercompass_id/",
+				},
+				{
+					title: "Linkedin",
+					icon: "LinkedinIcon",
 					link: "https://www.instagram.com/careercompass_id/",
 				},
 				{
@@ -545,7 +560,7 @@ export const AboutData: AboutType[] = [
 			{
 				title: "Tagline",
 				description:
-					"Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolorsit amet Lorem .",
+					"Lorem ipsum dolor sit amet.",
 			},
 			{
 				title: "Tagline",
@@ -671,6 +686,11 @@ export const AboutData: AboutType[] = [
 				{
 					title: "Instagram",
 					icon: "InstaIcon",
+					link: "https://www.instagram.com/careercompass_id/",
+				},
+				{
+					title: "Linkedin",
+					icon: "LinkedinIcon",
 					link: "https://www.instagram.com/careercompass_id/",
 				},
 				{
@@ -719,7 +739,7 @@ export const AboutData: AboutType[] = [
 			{
 				title: "Tagline",
 				description:
-					"Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolorsit amet Lorem .",
+					"Lorem ipsum dolor sit amet.",
 			},
 			{
 				title: "Tagline",
@@ -845,6 +865,11 @@ export const AboutData: AboutType[] = [
 				{
 					title: "Instagram",
 					icon: "InstaIcon",
+					link: "https://www.instagram.com/careercompass_id/",
+				},
+				{
+					title: "Linkedin",
+					icon: "LinkedinIcon",
 					link: "https://www.instagram.com/careercompass_id/",
 				},
 				{
@@ -893,7 +918,7 @@ export const AboutData: AboutType[] = [
 			{
 				title: "Tagline",
 				description:
-					"Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolorsit amet Lorem .",
+					"Lorem ipsum dolor sit amet.",
 			},
 			{
 				title: "Tagline",
@@ -1019,6 +1044,11 @@ export const AboutData: AboutType[] = [
 				{
 					title: "Instagram",
 					icon: "InstaIcon",
+					link: "https://www.instagram.com/careercompass_id/",
+				},
+				{
+					title: "Linkedin",
+					icon: "LinkedinIcon",
 					link: "https://www.instagram.com/careercompass_id/",
 				},
 				{
@@ -1067,7 +1097,7 @@ export const AboutData: AboutType[] = [
 			{
 				title: "Tagline",
 				description:
-					"Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolorsit amet Lorem .",
+					"Lorem ipsum dolor sit amet.",
 			},
 			{
 				title: "Tagline",
@@ -1193,6 +1223,11 @@ export const AboutData: AboutType[] = [
 				{
 					title: "Instagram",
 					icon: "InstaIcon",
+					link: "https://www.instagram.com/careercompass_id/",
+				},
+				{
+					title: "Linkedin",
+					icon: "LinkedinIcon",
 					link: "https://www.instagram.com/careercompass_id/",
 				},
 				{
