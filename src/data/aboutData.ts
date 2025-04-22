@@ -20,8 +20,7 @@ export const AboutData: AboutType[] = [
 			},
 			{
 				title: "Tagline",
-				description:
-					"Lorem ipsum dolor sit amet.",
+				description: "Lorem ipsum dolor sit amet.",
 			},
 			{
 				title: "Tagline",
@@ -30,7 +29,7 @@ export const AboutData: AboutType[] = [
 			},
 		],
 
-    // simulasi bu Career Compas ga ada up coming event
+		// simulasi bu Career Compas ga ada up coming event
 		// upComingEventsData: [
 		// 	{
 		// 		title: "Designing User Friendly Apps for the Masses",
@@ -57,6 +56,13 @@ export const AboutData: AboutType[] = [
 		// 		image: "/assets/img/event-poster.png",
 		// 	},
 		// ],
+		partners: [
+			{
+				src: "/assets/logo/company-partners/paragon.png",
+				alt: "Paragon Technology and Innovation",
+			},
+			{ src: "/assets/logo/company-partners/deloitte.png", alt: "Deloitte" },
+		],
 		clientsReviews: [
 			{
 				name: "Sophia Rodriguez",
@@ -106,6 +112,16 @@ export const AboutData: AboutType[] = [
 			{ end: 30, label: "Company Partnerships", suffix: "+" },
 		],
 		previousEventGallery: [
+			{
+				imageUrl: "/assets/img/prevEventImage.png",
+				date: "March 03, 2024",
+				title: "Judul",
+			},
+			{
+				imageUrl: "/assets/img/prevEventImage.png",
+				date: "March 03, 2024",
+				title: "Judul",
+			},
 			{
 				imageUrl: "/assets/img/prevEventImage.png",
 				date: "March 03, 2024",
@@ -201,8 +217,7 @@ export const AboutData: AboutType[] = [
 			},
 			{
 				title: "Tagline",
-				description:
-					"Lorem ipsum dolor sit amet.",
+				description: "Lorem ipsum dolor sit amet.",
 			},
 			{
 				title: "Tagline",
@@ -235,6 +250,11 @@ export const AboutData: AboutType[] = [
 				time: "10.30 - 12.30 WIB",
 				image: "/assets/img/event-poster.png",
 			},
+		],
+		partners: [
+			{ src: "/assets/logo/company-partners/bank-bca.png", alt: "Bank BCA" },
+			{ src: "/assets/logo/company-partners/tiktok.png", alt: "TikTok" },
+			{ src: "/assets/logo/company-partners/narasi.png", alt: "Narasi" },
 		],
 		clientsReviews: [
 			{
@@ -380,8 +400,7 @@ export const AboutData: AboutType[] = [
 			},
 			{
 				title: "Tagline",
-				description:
-					"Lorem ipsum dolor sit amet.",
+				description: "Lorem ipsum dolor sit amet.",
 			},
 			{
 				title: "Tagline",
@@ -413,6 +432,19 @@ export const AboutData: AboutType[] = [
 				date: "March 17, 2024",
 				time: "10.30 - 12.30 WIB",
 				image: "/assets/img/event-poster.png",
+			},
+		],
+		partners: [
+			{
+				src: "/assets/logo/company-partners/indosat-ooredoo.png",
+				alt: "Indosat Ooredoo",
+			},
+			{ src: "/assets/logo/company-partners/unilever.png", alt: "Unilever" },
+			{ src: "/assets/logo/company-partners/bank-bri.png", alt: "Bank BRI" },
+			{ src: "/assets/logo/company-partners/ula-app.png", alt: "ULA App" },
+			{
+				src: "/assets/logo/company-partners/astra-international.png",
+				alt: "Astra International",
 			},
 		],
 		clientsReviews: [
@@ -559,8 +591,7 @@ export const AboutData: AboutType[] = [
 			},
 			{
 				title: "Tagline",
-				description:
-					"Lorem ipsum dolor sit amet.",
+				description: "Lorem ipsum dolor sit amet.",
 			},
 			{
 				title: "Tagline",
@@ -593,6 +624,19 @@ export const AboutData: AboutType[] = [
 				time: "10.30 - 12.30 WIB",
 				image: "/assets/img/event-poster.png",
 			},
+		],
+		partners: [
+			{ src: "/assets/logo/company-partners/bank-ocbc.png", alt: "Bank OCBC" },
+			{
+				src: "/assets/logo/company-partners/schneider-electric.png",
+				alt: "Schneider Electric",
+			},
+			{
+				src: "/assets/logo/company-partners/mantappu-corp.png",
+				alt: "Mantappu Corp",
+			},
+			{ src: "/assets/logo/company-partners/nutrifood.png", alt: "NutriFood" },
+			{ src: "/assets/logo/company-partners/p&g.png", alt: "P&G" },
 		],
 		clientsReviews: [
 			{
@@ -738,8 +782,7 @@ export const AboutData: AboutType[] = [
 			},
 			{
 				title: "Tagline",
-				description:
-					"Lorem ipsum dolor sit amet.",
+				description: "Lorem ipsum dolor sit amet.",
 			},
 			{
 				title: "Tagline",
@@ -772,6 +815,19 @@ export const AboutData: AboutType[] = [
 				time: "10.30 - 12.30 WIB",
 				image: "/assets/img/event-poster.png",
 			},
+		],
+		partners: [
+			{ src: "/assets/logo/company-partners/lazada.png", alt: "Lazada" },
+			{ src: "/assets/logo/company-partners/shopee.png", alt: "Shopee" },
+			{
+				src: "/assets/logo/company-partners/paragon.png",
+				alt: "Paragon Technology and Innovation",
+			},
+			{ src: "/assets/logo/company-partners/deloitte.png", alt: "Deloitte" },
+			{ src: "/assets/logo/company-partners/bank-bca.png", alt: "Bank BCA" },
+			{ src: "/assets/logo/company-partners/tiktok.png", alt: "TikTok" },
+			{ src: "/assets/logo/company-partners/narasi.png", alt: "Narasi" },
+			{ src: "/assets/logo/company-partners/danone.png", alt: "Danone" },
 		],
 		clientsReviews: [
 			{
@@ -917,8 +973,7 @@ export const AboutData: AboutType[] = [
 			},
 			{
 				title: "Tagline",
-				description:
-					"Lorem ipsum dolor sit amet.",
+				description: "Lorem ipsum dolor sit amet.",
 			},
 			{
 				title: "Tagline",
@@ -950,6 +1005,23 @@ export const AboutData: AboutType[] = [
 				date: "March 17, 2024",
 				time: "10.30 - 12.30 WIB",
 				image: "/assets/img/event-poster.png",
+			},
+		],
+		partners: [
+			{
+				src: "/assets/logo/company-partners/sampoerna.png",
+				alt: "PT HM Sampoerna Tbk.",
+			},
+			{ src: "/assets/logo/company-partners/bank-ocbc.png", alt: "Bank OCBC" },
+			{
+				src: "/assets/logo/company-partners/schneider-electric.png",
+				alt: "Schneider Electric",
+			},
+			{ src: "/assets/logo/company-partners/bank-bri.png", alt: "Bank BRI" },
+			{ src: "/assets/logo/company-partners/ula-app.png", alt: "ULA App" },
+			{
+				src: "/assets/logo/company-partners/astra-international.png",
+				alt: "Astra International",
 			},
 		],
 		clientsReviews: [
@@ -1096,8 +1168,7 @@ export const AboutData: AboutType[] = [
 			},
 			{
 				title: "Tagline",
-				description:
-					"Lorem ipsum dolor sit amet.",
+				description: "Lorem ipsum dolor sit amet.",
 			},
 			{
 				title: "Tagline",
@@ -1130,6 +1201,46 @@ export const AboutData: AboutType[] = [
 				time: "10.30 - 12.30 WIB",
 				image: "/assets/img/event-poster.png",
 			},
+		],
+		partners: [
+			{
+				src: "/assets/logo/company-partners/indosat-ooredoo.png",
+				alt: "Indosat Ooredoo",
+			},
+			{ src: "/assets/logo/company-partners/unilever.png", alt: "Unilever" },
+			{ src: "/assets/logo/company-partners/bank-bri.png", alt: "Bank BRI" },
+			{ src: "/assets/logo/company-partners/ula-app.png", alt: "ULA App" },
+			{
+				src: "/assets/logo/company-partners/astra-international.png",
+				alt: "Astra International",
+			},
+			{ src: "/assets/logo/company-partners/lazada.png", alt: "Lazada" },
+			{ src: "/assets/logo/company-partners/shopee.png", alt: "Shopee" },
+			{
+				src: "/assets/logo/company-partners/paragon.png",
+				alt: "Paragon Technology and Innovation",
+			},
+			{ src: "/assets/logo/company-partners/deloitte.png", alt: "Deloitte" },
+			{ src: "/assets/logo/company-partners/bank-bca.png", alt: "Bank BCA" },
+			{ src: "/assets/logo/company-partners/tiktok.png", alt: "TikTok" },
+			{ src: "/assets/logo/company-partners/narasi.png", alt: "Narasi" },
+			{ src: "/assets/logo/company-partners/danone.png", alt: "Danone" },
+			{ src: "/assets/logo/company-partners/loreal.png", alt: "Loreal" },
+			{
+				src: "/assets/logo/company-partners/sampoerna.png",
+				alt: "PT HM Sampoerna Tbk.",
+			},
+			{ src: "/assets/logo/company-partners/bank-ocbc.png", alt: "Bank OCBC" },
+			{
+				src: "/assets/logo/company-partners/schneider-electric.png",
+				alt: "Schneider Electric",
+			},
+			{
+				src: "/assets/logo/company-partners/mantappu-corp.png",
+				alt: "Mantappu Corp",
+			},
+			{ src: "/assets/logo/company-partners/nutrifood.png", alt: "NutriFood" },
+			{ src: "/assets/logo/company-partners/p&g.png", alt: "P&G" },
 		],
 		clientsReviews: [
 			{

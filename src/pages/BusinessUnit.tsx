@@ -8,6 +8,10 @@ import { iconMapper } from "../data/iconMapperData";
 import { HeroBackground } from "../components/heroBackground";
 import ExitIcon from "../components/icons/exitIcon";
 import { BecomeOurPartners } from "../components/becomeOurPartners";
+import InstaIcon from "../components/icons/instaIcon";
+import MailIcon from "../components/icons/mailIcon";
+import LinkedinIcon from "../components/icons/linkedinIcon";
+import { PreviousEventGallery } from "../components/previousEventGallery";
 
 function BusinessUnit() {
 	const countUpRef = useRef(null);
@@ -167,7 +171,7 @@ function BusinessUnit() {
 			</section>
 
 			{/* let's become our partner section */}
-			<BecomeOurPartners />
+			{buData?.partners && <BecomeOurPartners partners={buData.partners} />}
 
 			{/* clients reviews section */}
 			<section
@@ -176,7 +180,7 @@ function BusinessUnit() {
 				<h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl gilda-font">
 					What They Say?
 				</h1>
-				<div className="hidden sm:block w-full">
+				<div className="w-full">
 					<div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
 						{buData?.clientsReviews.map((reviewData, index) => (
 							<div
@@ -197,81 +201,14 @@ function BusinessUnit() {
 						))}
 					</div>
 				</div>
-				<div className="flex flex-wrap justify-end items-start gap-6 sm:hidden w-full">
-					{buData?.clientsReviews.slice(0, 3).map((reviewData, index) => (
-						<div
-							key={index}
-							className="border border-[#262626] space-y-[20px] p-4 sm:p-[24px] w-[45%] xs:w-[40%] sm:w-[48%] lg:w-[31%] max-w-[320px]">
-							<div className="space-y-[4px]">
-								<h1 className="text-xs sm:text-base xl:text-lg font-semibold">
-									{reviewData.name}
-								</h1>
-								<h2 className="text-xs sm:text-sm xl:text-base font-normal">
-									{reviewData.position}
-								</h2>
-							</div>
-							<p className="text-xs sm:text-sm xl:text-base font-normal">
-								"{reviewData.description}"
-							</p>
-						</div>
-					))}
-				</div>
 			</section>
 
 			{/* previous event gallery section */}
-			<section className="px-5 sm:px-[50px] lg:px-[90px] xl:px-40 2xl:px-56 py-[40px] space-y-[40px]">
-				<div className="text-center flex flex-col items-center gap-y-[20px] md:px-[90px] 2xl:px-96">
-					<h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl gilda-font">
-						Previous Event Gallery
-					</h1>
-					<p className="text-xs sm:text-base xl:text-lg font-normal">
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut varius, lorem
-						quis tempor suscipit, nisl enim pellentesque turpis,{" "}
-					</p>
-				</div>
-				<div className="hidden md:flex justify-center gap-x-5">
-					{buData?.previousEventGallery.map((event, index) => (
-						<div
-							onClick={() => setPrevEventGalleryPopUp(true)}
-							key={index}
-							className="relative w-[304px] h-[304px] rounded-[8px] cursor-pointer">
-							<img
-								className="w-full h-full object-cover rounded-[8px]"
-								src={event.imageUrl}
-								alt="Previous Event Image"
-							/>
-							<div className="absolute top-0 z-10 w-full h-full bg-black/10 rounded-[8px]"></div>
-							<div className="absolute bottom-5 left-3 space-y-[12px]">
-								<p className="bg-gradient-to-r from-[#82cfff] to-[#B2EBFF] text-transparent bg-clip-text font-semibold backdrop-blur-xl px-[12px] py-[4px] rounded-[8px]">
-									{event.date}
-								</p>
-								<h1 className="text-2xl font-bold text-white">{event.title}</h1>
-							</div>
-						</div>
-					))}
-				</div>
-				<div className="flex md:hidden justify-center gap-x-5">
-					{buData?.previousEventGallery.slice(0, 2).map((event, index) => (
-						<div
-							onClick={() => setPrevEventGalleryPopUp(true)}
-							key={index}
-							className="relative w-[304px] h-[204px] rounded-[8px] cursor-pointer">
-							<img
-								className="w-full h-full object-cover rounded-[8px]"
-								src={event.imageUrl}
-								alt="Previous Event Image"
-							/>
-							<div className="absolute top-0 z-10 w-full h-full bg-black/10 rounded-[8px]"></div>
-							<div className="absolute bottom-5 left-3 space-y-[12px]">
-								<p className="bg-gradient-to-r from-[#82cfff] to-[#B2EBFF] text-transparent text-xs sm:text-base bg-clip-text font-semibold backdrop-blur-xl px-[12px] py-[4px] rounded-[8px]">
-									{event.date}
-								</p>
-								<h1 className="text-xs sm:text-2xl font-bold text-white">{event.title}</h1>
-							</div>
-						</div>
-					))}
-				</div>
-			</section>
+			{prevEventGalleryPopUp && (
+				<PreviousEventGallery
+					previousEventGalleryData={buData?.previousEventGallery}
+				/>
+			)}
 
 			{/* contact section */}
 			<section className="text-center flex flex-col items-center gap-y-[40px] px-5 md:px-[50px] py-[80px]">
@@ -303,35 +240,60 @@ function BusinessUnit() {
 			</section>
 
 			{/* contact section */}
-			<section id="contactus" className="relative px-10 sm:px-0 py-[40px] lg:py-[80px]">
-				<div className="space-y-[64px]">
-					<div className="text-center flex flex-col items-center gap-y-[20px]">
-						<h2 className="text-base sm:text-2xl font-semibold">Contact Us</h2>
-						<h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl gilda-font">
-							Stay connected with Magna Partners!
-						</h1>
-					</div>
-					<div className="flex flex-wrap justify-center gap-x-[10px] md:gap-x-[56px] px-4">
-						{buData?.contacts.bottom.map((contact, index) => {
-							const Icon = iconMapper[contact.icon];
-							return (
-								<button
-									key={index}
-									className="flex items-center text-base xl:text-xl font-normal gap-[10px]">
-									<div className="flex justify-center items-center border border-full rounded-full w-[36px] h-[36px]">
-										<Icon size={16} color="white" />
-									</div>
-									<span className="hidden md:block">{contact.title}</span>
-								</button>
-							);
-						})}
+			<section
+				id="contact"
+				className="footer-background flex flex-col items-center md:p-[80px] space-y-[40px] justify-center">
+				<div className="flex flex-col items-center text-[16px] text-center">
+					<div className="md:text-[24px] text-[16px]">Contact Us</div>
+					<div className="gilda-font md:text-[48px] text-[32px]">
+						Stay connected with Magna Partners!
 					</div>
 				</div>
-				<img
-					className="absolute -z-10 bottom-0 left-0 w-full h-full object-cover"
-					src="/assets/img/footer-bg.webp"
-					alt=""
-				/>
+				<div className="flex gap-y-6 md:gap-x-[60px] gap-x-[25px]">
+					<a
+						className="flex md:space-x-3 space-x-0 items-center"
+						href="https://www.instagram.com/magna.partners/"
+						target="_blank"
+						rel="noopener noreferrer">
+						<div className="md:flex hidden items-center justify-center rounded-full border border-white w-[30px] h-[30px]">
+							<InstaIcon size={15} color="white" />
+						</div>
+						<div
+							className="flex md:hidden items-center justify-center rounded-full border border-white w-[50px] h-[50px]"
+							aria-label="Magna Partners Instagram">
+							<InstaIcon size={25} color="white" />
+						</div>
+						<div className="md:flex hidden">@magna.partners</div>
+					</a>
+					<a
+						className="flex md:space-x-3 space-x-0 items-center"
+						href="mailto:magnainitiatives.id@gmail.com">
+						<div className="md:flex hidden items-center justify-center rounded-full border border-white w-[30px] h-[30px]">
+							<MailIcon size={15} color="white" />
+						</div>
+						<div
+							className="flex md:hidden items-center justify-center rounded-full border border-white w-[50px] h-[50px]"
+							aria-label="Magna Partners Email">
+							<MailIcon size={25} color="white" />
+						</div>
+						<div className="md:flex hidden">magnainitiatives.id@gmail.com</div>
+					</a>
+					<a
+						className="flex md:space-x-3 space-x-0 items-center"
+						href="https://www.linkedin.com/company/magna-id/"
+						target="_blank"
+						rel="noopener noreferrer">
+						<div className="md:flex hidden items-center justify-center rounded-full border border-white w-[30px] h-[30px]">
+							<LinkedinIcon size={15} color="white" />
+						</div>
+						<div
+							className="flex md:hidden items-center justify-center rounded-full border border-white w-[50px] h-[50px]"
+							aria-label="Magna Partners LinkedIn">
+							<LinkedinIcon size={25} color="white" />
+						</div>
+						<div className="md:flex hidden">Magna Partners</div>
+					</a>
+				</div>
 			</section>
 
 			{/* prev event gallery pop up */}
