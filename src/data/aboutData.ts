@@ -255,6 +255,8 @@ export const AboutData: AboutType[] = [
 			{ src: "/assets/logo/company-partners/bank-bca.png", alt: "Bank BCA" },
 			{ src: "/assets/logo/company-partners/tiktok.png", alt: "TikTok" },
 			{ src: "/assets/logo/company-partners/narasi.png", alt: "Narasi" },
+			{ src: "/assets/logo/company-partners/narasi.png", alt: "Narasi" },
+			{ src: "/assets/logo/company-partners/narasi.png", alt: "Narasi" },
 		],
 		clientsReviews: [
 			{

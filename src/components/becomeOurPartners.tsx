@@ -42,7 +42,7 @@ export const BecomeOurPartners = ({ partners }: PartnersProps) => {
 			</h1>
 			{loading ? null : (
 				<div className="flex flex-col space-y-[16px] items-center w-full max-w-screen">
-					{partners.length - 1 <= 3 ? (
+					{partners.length - 1 <= 5 ? (
 						<>
 							<ul className="hidden sm:flex">
 								{firstLine.map((logo, index) => (
