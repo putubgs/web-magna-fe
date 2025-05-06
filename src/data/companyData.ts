@@ -41,25 +41,3 @@ export const logos2 = [
 	{ src: "/assets/logo/company-partners/nutrifood.png", alt: "NutriFood" },
 	{ src: "/assets/logo/company-partners/p&g.png", alt: "P&G" },
 ];
-
-export const logos3 = [
-	{
-		src: "/assets/logo/company-partners/indosat-ooredoo.png",
-		alt: "Indosat Ooredoo",
-	},
-	{ src: "/assets/logo/company-partners/unilever.png", alt: "Unilever" },
-	{ src: "/assets/logo/company-partners/bank-bri.png", alt: "Bank BRI" },
-	{ src: "/assets/logo/company-partners/bank-bca.png", alt: "Bank BCA" },
-	{ src: "/assets/logo/company-partners/ula-app.png", alt: "ULA App" },
-	{
-		src: "/assets/logo/company-partners/astra-international.png",
-		alt: "Astra International",
-	},
-	{ src: "/assets/logo/company-partners/lazada.png", alt: "Lazada" },
-	{ src: "/assets/logo/company-partners/shopee.png", alt: "Shopee" },
-	{
-		src: "/assets/logo/company-partners/paragon.png",
-		alt: "Paragon Technology and Innovation",
-	},
-	{ src: "/assets/logo/company-partners/deloitte.png", alt: "Deloitte" },
-];

@@ -11,6 +11,11 @@ interface UpComingEventsData {
 	image: string;
 }
 
+interface Partners {
+	src: string;
+	alt: string;
+}
+
 interface ClientReview {
 	name: string;
 	position: string;
@@ -52,6 +57,7 @@ interface AboutType {
 	tagline: string;
 	taglines: Taglines[];
 	upComingEventsData?: UpComingEventsData[];
+  partners: Partners[];
 	clientsReviews: ClientReview[];
 	achievements: Achievements[];
 	previousEventGallery: PreviousEventGallery[];
