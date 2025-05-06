@@ -206,7 +206,7 @@ function BusinessUnit() {
 			{/* previous event gallery section */}
 			{prevEventGalleryPopUp && (
 				<PreviousEventGallery
-					previousEventGalleryData={buData?.previousEventGallery}
+					previousEventGalleryData={buData?.previousEventGallery ?? []}
 				/>
 			)}
 
