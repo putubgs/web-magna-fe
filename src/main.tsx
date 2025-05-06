@@ -5,6 +5,7 @@ import "./index.css";
 import App from "./App.tsx";
 import BusinessUnit from "./pages/BusinessUnit.tsx";
 import ComingSoon from "./pages/ComingSoon.tsx";
+import Admin from "./pages/admin/Admin.tsx";
 
 const router = createBrowserRouter([
 	{
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
 	{
 		path: "/coming-soon",
 		element: <ComingSoon />,
+	},
+	{
+		path: "/admin",
+		element: <Admin />,
 	},
 ]);
 
