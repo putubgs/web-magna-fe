@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 import BusinessUnit from "./pages/BusinessUnit.tsx";
-import Login from "./pages/login.tsx";
+import Login from "./pages/Login.tsx";
 
 const router = createBrowserRouter([
   {
