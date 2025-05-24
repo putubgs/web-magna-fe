@@ -1,14 +1,14 @@
 import { useLocation } from "react-router";
 import AdminSideBar from "../../components/adminSidebar";
-import EventManagement from "../../components/adminComponents/EventManagement";
-import AboutUsManagement from "../../components/adminComponents/AboutUsManagement";
-import ImpactManagement from "../../components/adminComponents/ImpactManagement";
-import PartnershipManagement from "../../components/adminComponents/PartnershipManagement";
-import TestimoniManagement from "../../components/adminComponents/TestimoniManagement";
-import GalleryManagement from "../../components/adminComponents/GalleryManagement";
+import EventManagement from "../../components/adminManagementComponents/EventManagement";
+import AboutUsManagement from "../../components/adminManagementComponents/AboutUsManagement";
+import ImpactManagement from "../../components/adminManagementComponents/ImpactManagement";
+import PartnershipManagement from "../../components/adminManagementComponents/PartnershipManagement";
+import TestimoniManagement from "../../components/adminManagementComponents/TestimoniManagement";
+import GalleryManagement from "../../components/adminManagementComponents/GalleryManagement";
 import { DoubleArrowIcon } from "../../components/icons/doubleArrowIcon";
 import { RightArrowIcon } from "../../components/icons/rightArrowIcon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Admin() {
 	const location = useLocation();
@@ -16,12 +16,34 @@ export default function Admin() {
 	const panel = url.get("panel");
 
 	const [responsiveSidebar, setResponsiveSidebar] = useState<boolean>(false);
+	const [showLogoutText, setShowLogoutText] = useState<boolean>(
+		!responsiveSidebar
+	);
+	const [showMinimizeText, setShowMinimizeText] = useState<boolean>(
+		!responsiveSidebar
+	);
 
 	function handleMobileResponsive() {
 		return responsiveSidebar
 			? setResponsiveSidebar(false)
 			: setResponsiveSidebar(true);
 	}
+
+	useEffect(() => {
+		let delay: number;
+
+		if (responsiveSidebar) {
+			setShowLogoutText(false);
+			setShowMinimizeText(false);
+		} else {
+			delay = setTimeout(() => {
+				setShowLogoutText(true);
+				setShowMinimizeText(true);
+			}, 100);
+		}
+
+		return () => clearTimeout(delay);
+	}, [responsiveSidebar]);
 
 	return (
 		<>
@@ -35,14 +57,14 @@ export default function Admin() {
 								width={30}
 								height={56}
 							/>
-							<div className="md:text-[24px] text-[18px] font-extrabold">
+							<div className="text-base lg:text-[24px] font-extrabold">
 								Magna Partners
 							</div>
 						</a>
 					</section>
-					<section className="flex items-center gap-[30px]">
+					<section className="flex items-center gap-[15px] md:gap-[30px]">
 						<div className="space-y-[6px]">
-							<h3 className="text-xl font-semibold">Link To Work</h3>
+							<h3 className="text-base lg:text-xl font-semibold">Link To Work</h3>
 							<p className="text-sm">LinkToWork@gmail.com</p>
 						</div>
 						<img
@@ -52,26 +74,23 @@ export default function Admin() {
 						/>
 					</section>
 				</header>
-				<section
-					className={`h-full ${
-						!responsiveSidebar ? "grid grid-cols-12" : "flex"
-					}  bg-[#0B0D12]`}>
+				<section className={`h-full flex bg-[#0B0D12]`}>
 					<aside
-						className={`transition-all duration-500 ease-in-out ${
-							responsiveSidebar ? "w-[100px]" : "col-span-2"
+						className={`transition-all ease-in-out duration-300 ${
+							responsiveSidebar ? "w-[100px]" : "w-[400px]"
 						} py-[40px] h-full bg-black flex flex-col justify-between p-[20px]`}>
 						<div className="flex flex-col justify-between gap-20">
 							<div></div>
 							<ul className="space-y-[20px]">
 								<li
 									onClick={handleMobileResponsive}
-									className="flex justify-center items-center text-[#737373] text-base gap-[20px] py-[10px] cursor-pointer">
-									{!responsiveSidebar && "Minimize Sidebar"}
+									className="flex justify-center items-center text-[#737373] text-sm md:text-base gap-[10px] md:gap-[20px] py-[10px] cursor-pointer">
+									{showMinimizeText && "Minimize Sidebar"}
 									{!responsiveSidebar ? (
-										<DoubleArrowIcon width={18} height={18} />
+										<DoubleArrowIcon className="w-6 lg:w-7" />
 									) : (
 										<div className="rotate-180">
-											<DoubleArrowIcon width={18} height={18} />
+											<DoubleArrowIcon className="w-6 lg:w-7" />
 										</div>
 									)}
 								</li>
@@ -79,19 +98,20 @@ export default function Admin() {
 							</ul>
 						</div>
 						<div className="flex justify-center">
-							<button
-								className={`flex items-center text-sm md:text-xl font-normal ${
+							<a
+								href="/login"
+								className={`flex items-center text-base lg:text-xl font-normal ${
 									!responsiveSidebar && "border-[2px] border-[#404040]"
-								}  rounded-full px-7 sm:px-[60px] py-[12px] gap-[10px]`}>
-								{!responsiveSidebar && "Logout"}
+								}  rounded-full px-[30px] lg:px-[60px] py-[8px] lg:py-[12px] gap-[10px]`}>
+								{showLogoutText && "Logout"}
 								<div className="flex justify-center items-center border border-full rounded-full w-[36px] h-[36px]">
-									<RightArrowIcon fill="white" width={16} height={10} />
+									<RightArrowIcon className="w-3 lg:w-5" fill="white" />
 								</div>
-							</button>
+							</a>
 						</div>
 					</aside>
 					<main
-						className={`overflow-y-auto ${
+						className={`w-full overflow-y-auto ${
 							responsiveSidebar ? "col-span-11 w-full" : "col-span-10"
 						} flex flex-col gap-[20px] px-[20px] pt-28 pb-5`}>
 						{panel == "about-us" && <AboutUsManagement />}

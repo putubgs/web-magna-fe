@@ -9,30 +9,30 @@ import Admin from "./pages/admin/Admin.tsx";
 import Login from "./pages/Login.tsx";
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/?business-unit/:bu",
-    element: <BusinessUnit />,
-  },
-  {
-	path: "/coming-soon",
-	element: <ComingSoon />,
-  },
-  {
-	path: "/admin",
-	element: <Admin />,
-  },
+	{
+		path: "/",
+		element: <App />,
+	},
+	{
+		path: "/login",
+		element: <Login />,
+	},
+	{
+		path: "/?business-unit/:bu",
+		element: <BusinessUnit />,
+	},
+	{
+		path: "/coming-soon",
+		element: <ComingSoon />,
+	},
+	{
+		path: "/admin",
+		element: <Admin />,
+	},
 ]);
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>
+	<StrictMode>
+		<RouterProvider router={router} />
+	</StrictMode>
 );

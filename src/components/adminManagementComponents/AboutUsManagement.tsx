@@ -4,7 +4,7 @@ import { EyeIcon } from "../icons/eyeIcon";
 import InstaIcon from "../icons/instaIcon";
 import LinkedinIcon from "../icons/linkedinIcon";
 import MailIcon from "../icons/mailIcon";
-import AddAboutUsPopUp from "../adminPopUpComponents/addAboutUsPopUp";
+import AddAboutUsPopUp from "../adminPopUpComponents/aboutUsPopUp";
 import AboutUsDetailPopUp from "../adminDetailPopUpComponents/aboutUsDetailPopUp";
 
 type AboutUsDataProps = {
@@ -43,6 +43,16 @@ export default function AboutUsManagement() {
 		});
 	}
 
+	function handleDeleteAboutUs(index: number) {
+		setAboutUsData((prev) => {
+			if (!prev) return null;
+
+			const result = prev.filter((_, i) => i !== index);
+
+			return result.length > 0 ? result : null;
+		});
+	}
+
 	function showDetail(index: number) {
 		setIndex(index);
 		setAboutUsDetailPopUp(true);
@@ -65,16 +75,18 @@ export default function AboutUsManagement() {
 	return (
 		<>
 			<section className="flex justify-between items-center bg-black border border-[#404040] p-[20px] rounded-[12px]">
-				<h1 className="text-2xl font-semibold">About Us Management Panel</h1>
+				<h1 className="text-lg lg:text-2xl font-semibold">
+					About Us Management Panel
+				</h1>
 				<button
 					onClick={() => {
 						setAddAboutUsPopUp(true);
 					}}
-					className="cursor-pointer bg-[#270081] text-base p-[16px] rounded-[8px]">
+					className="cursor-pointer bg-[#270081] text-sm lg:text-base p-[16px] rounded-[8px]">
 					Add About Us +
 				</button>
 			</section>
-			{aboutUsData ? (
+			{aboutUsData && aboutUsData.length > 0 ? (
 				aboutUsData.map((data, index) => (
 					<section
 						key={index}
@@ -152,7 +164,7 @@ export default function AboutUsManagement() {
 				))
 			) : (
 				<section className="h-full flex justify-center items-center bg-black border border-[#404040] rounded-[20px]">
-					<h1 className="text-3xl font-black">NO DATA</h1>
+					<h1 className="text-xl lg:text-3xl font-black">NO DATA</h1>
 				</section>
 			)}
 
@@ -167,6 +179,7 @@ export default function AboutUsManagement() {
 					open={aboutUsDetailPopUp}
 					close={() => setAboutUsDetailPopUp(false)}
 					save={handleUpdateAboutUs}
+					delete={handleDeleteAboutUs}
 					data={aboutUsDetailData}
 					index={index}
 				/>

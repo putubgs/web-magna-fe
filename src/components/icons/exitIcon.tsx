@@ -4,10 +4,12 @@ interface ExitIconProps {
 	size?: number;
 	color?: string;
 	onClick?: () => void;
+  className?: string;
 }
 
-const ExitIcon: FC<ExitIconProps> = ({ size, color, onClick }) => (
+const ExitIcon: FC<ExitIconProps> = ({ size, color, onClick, className }) => (
 	<svg
+		className={className}
 		onClick={onClick}
 		style={{
 			width: size ? `${size}px` : "100px",
