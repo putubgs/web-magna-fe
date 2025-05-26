@@ -49,10 +49,12 @@ export default function ImpactManagement() {
 	return (
 		<>
 			<section className="flex justify-between items-center bg-black border border-[#404040] p-[20px] rounded-[12px]">
-				<h1 className="text-2xl font-semibold">Impact Management Panel</h1>
+				<h1 className="text-lg md:text-2xl font-semibold">
+					Impact Management Panel
+				</h1>
 				<button
 					onClick={() => setImpactPopUp(true)}
-					className="cursor-pointer bg-[#270081] text-base p-[16px] rounded-[8px]">
+					className="cursor-pointer bg-[#270081] text-sm md:text-base p-[16px] rounded-[8px]">
 					Add Impact +
 				</button>
 			</section>

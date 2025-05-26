@@ -1,14 +1,12 @@
 interface TestimoniIconProps {
-	height: number;
-	width: number;
+	className: string;
 	color: string;
 }
 
 export const TestimoniIcon = (props: TestimoniIconProps) => {
 	return (
 		<svg
-			width={props.width}
-			height={props.height}
+			className={props.className}
 			viewBox="0 0 24 25"
 			fill={props.color}
 			xmlns="http://www.w3.org/2000/svg">

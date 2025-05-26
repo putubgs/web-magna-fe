@@ -4,6 +4,7 @@ import { PencilIcon } from "../icons/pencilIcon";
 import { TrashCanIcon } from "../icons/trashCanIcon";
 import EventPopUp from "../adminPopUpComponents/eventPopUp";
 import EventDetailPopUp from "../adminDetailPopUpComponents/eventDetailPopUp";
+import DangerPopUp from "../dialog/dangerPopUp";
 
 type EventProps = {
 	eventName: string;
@@ -26,6 +27,8 @@ export default function EventManagement() {
 	);
 	const [eventData, setEventData] = useState<EventProps[] | null>(null);
 
+	const [dangerPopUp, setDangerPopUp] = useState<boolean>(false);
+
 	function handleSubmitEvent(eventData: EventProps) {
 		setEventData((prev) => (prev ? [...prev, eventData] : [eventData]));
 	}
@@ -41,7 +44,12 @@ export default function EventManagement() {
 		});
 	}
 
-	function handleDeleteEvent(index: number) {
+	function handleDeletePopUp(index: number) {
+		setIndex(index);
+		setDangerPopUp(true);
+	}
+
+	function handleDeleteEvent() {
 		setEventData((prev) => {
 			if (!prev) return null;
 
@@ -77,37 +85,43 @@ export default function EventManagement() {
 		<>
 			<section className="bg-black border border-[#404040] p-[20px] rounded-[12px] space-y-[24px]">
 				<div className="flex justify-between items-center">
-					<h1 className="text-2xl font-semibold">Events Management Panel</h1>
+					<h1 className="text-lg lg:text-2xl font-semibold">
+						Events Management Panel
+					</h1>
 					<button
 						onClick={() => setEventPopUp(true)}
-						className="cursor-pointer bg-[#270081] text-base p-[16px] rounded-[8px]">
+						className="cursor-pointer bg-[#270081] text-sm lg:text-base p-[16px] rounded-[8px]">
 						Add Event +
 					</button>
 				</div>
 				<div className="grid grid-cols-12 gap-[31px]">
 					<div className="col-span-6 bg-[#1D1D1D] rounded-[8px] p-[20px] space-y-[11px]">
-						<h1 className="text-2xl font-semibold">0</h1>
-						<h3 className="text-base text-[#A3A3A3] font-medium">Active Event</h3>
+						<h1 className="text-xl lg:text-2xl font-semibold">0</h1>
+						<h3 className="text-sm md:text-base text-[#A3A3A3] font-medium">
+							Active Event
+						</h3>
 					</div>
 					<div className="col-span-6 bg-[#1D1D1D] rounded-[8px] p-[20px] space-y-[11px]">
-						<h1 className="text-2xl font-semibold">0</h1>
-						<h3 className="text-base text-[#A3A3A3] font-medium">Expired Event</h3>
+						<h1 className="text-xl lg:text-2xl font-semibold">0</h1>
+						<h3 className="text-sm md:text-base text-[#A3A3A3] font-medium">
+							Expired Event
+						</h3>
 					</div>
 				</div>
 			</section>
-			<section className="h-full bg-black flex flex-col justify-between border border-[#404040] p-[28px] rounded-[20px]">
-				<table className="table-auto w-full text-white">
+			<section className="overflow-scroll xl:overflow-auto h-full bg-black flex flex-col justify-between border border-[#404040] p-[28px] rounded-[20px]">
+				<table className="table-auto w-[1000px] xl:w-full h-fit text-white">
 					<thead>
-						<tr className="border-b border-[#D4 D4D4] text-left">
-							<th className="text-lg font-bold py-3 px-4">No</th>
-							<th className="text-lg font-bold py-3 px-4">Poster</th>
-							<th className="text-lg font-bold py-3 px-0">Event Name</th>
-							<th className="text-lg font-bold py-3 px-4">Date</th>
-							<th className="text-lg font-bold py-3 px-4">Actions</th>
+						<tr className="border-b border-[#D4D4D4] text-left">
+							<th className="text-base lg:text-lg font-bold py-3 px-4">No</th>
+							<th className="text-base lg:text-lg font-bold py-3 px-4">Poster</th>
+							<th className="text-base lg:text-lg font-bold py-3 px-0">Event Name</th>
+							<th className="text-base lg:text-lg font-bold py-3 px-4">Date</th>
+							<th className="text-base lg:text-lg font-bold py-3 px-4">Actions</th>
 						</tr>
 					</thead>
-					<tbody>
-						{eventData ? (
+					<tbody className="relative">
+						{eventData && eventData.length > 0 ? (
 							eventData.map((data, index) => (
 								<tr key={index} className="border-b border-[#D4D4D4]">
 									<td className="py-4 px-4 align-top text-sm font-medium">
@@ -126,9 +140,9 @@ export default function EventManagement() {
 										</p>
 									</td>
 									<td className="py-4 px-4 align-top text-base font-semibold whitespace-nowrap">
-										{`${data.date.split("-")[2]}/${data.date.split("-")[1]}/${
-											data.date.split("-")[0]
-										}`}
+										{`${data.date.split("-")[0].split("/")[1]}/${
+											data.date.split("-")[0].split("/")[0]
+										}/${data.date.split("-")[0].split("/")[2]}`}
 									</td>
 									<td className="py-4 px-4 align-top">
 										<div className="flex items-center gap-x-[16px]">
@@ -138,7 +152,7 @@ export default function EventManagement() {
 												<PencilIcon width={18} height={18} color="#FF8800" />
 											</div>
 											<div
-												onClick={() => handleDeleteEvent(index)}
+												onClick={() => handleDeletePopUp(index)}
 												className="cursor-pointer w-[34px] h-[34px] flex justify-center items-center border border-[#C00707] p-[8px] rounded-[8px]">
 												<TrashCanIcon width={14} height={18} color="#C00707" />
 											</div>
@@ -150,27 +164,30 @@ export default function EventManagement() {
 							<tr className="h-[250px]">
 								<td colSpan={5}>
 									<div className="flex flex-col justify-center items-center text-white">
-										<h1 className="text-3xl font-black">NO DATA</h1>
+										<h1 className="text-xl lg:text-3xl font-black">NO DATA</h1>
 									</div>
 								</td>
 							</tr>
 						)}
+						<div
+							className={`absolute right-3 -bottom-20 ${
+								eventData && eventData.length > 0 ? "flex" : "hidden"
+							} justify-end items-center gap-2`}>
+							<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20">
+								<LeftChevronIcon width={23} height={23} color="white" />
+							</button>
+							<div className="bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20 appearance-none">
+								<select className="bg-none p-0">
+									<option className="bg-none p-0">1</option>
+								</select>
+							</div>
+							<p className="text-white">of 1</p>
+							<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20 rotate-180">
+								<LeftChevronIcon width={23} height={23} color="white" />
+							</button>
+						</div>
 					</tbody>
 				</table>
-				<div className="flex justify-end items-center mt-4 gap-2">
-					<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20">
-						<LeftChevronIcon width={20} height={20} color="white" />
-					</button>
-					<div className="bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20 appearance-none">
-						<select className="bg-none p-0">
-							<option className="bg-none p-0">1</option>
-						</select>
-					</div>
-					<p className="text-white">of 1</p>
-					<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20 rotate-180">
-						<LeftChevronIcon width={20} height={20} color="white" />
-					</button>
-				</div>
 			</section>
 
 			<EventPopUp
@@ -184,10 +201,19 @@ export default function EventManagement() {
 					open={eventDetailPopUp}
 					close={() => setEventDetailPopUp(false)}
 					save={handleUpdateEvent}
+					delete={handleDeleteEvent}
 					data={eventDetailData}
 					index={index}
 				/>
 			)}
+
+			<DangerPopUp
+				open={dangerPopUp}
+				close={() => setDangerPopUp(false)}
+				onConfirm={handleDeleteEvent}
+				title="Delete"
+				message="Are you sure you want to delete this?"
+			/>
 		</>
 	);
 }

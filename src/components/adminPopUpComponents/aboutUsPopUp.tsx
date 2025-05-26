@@ -9,6 +9,8 @@ import Dropzone from "react-dropzone";
 import { Sketch } from "@uiw/react-color";
 import DangerPopUp from "../dialog/dangerPopUp";
 import WarningPopUp from "../dialog/warningPopUp";
+import InputField from "../adminComponents/inputField";
+import TextAreaField from "../adminComponents/textAreaField";
 
 type AboutUsDataProps = {
 	title: string;
@@ -20,23 +22,13 @@ type AboutUsDataProps = {
 	image: string;
 };
 
-type AddAboutUsPopUpProps = {
+type AboutUsPopUpProps = {
 	open: boolean;
 	close: () => void;
-	save: (aboutUsData: AboutUsDataProps, index: number) => void;
-	delete: (index: number) => void;
-	data: AboutUsDataProps[];
-	index: number;
+	save: (aboutUsData: AboutUsDataProps) => void;
 };
 
-export default function AboutUsDetailPopUp({
-	open,
-	close,
-	save,
-	delete: deleteData,
-	data,
-	index,
-}: AddAboutUsPopUpProps) {
+export default function AboutUsPopUp({ open, close, save }: AboutUsPopUpProps) {
 	const [title, setTitle] = useState<string>("");
 	const [color, setColor] = useState<string>("#ffffff");
 	const [colorPicker, setColorPicker] = useState<boolean>(false);
@@ -45,18 +37,19 @@ export default function AboutUsDetailPopUp({
 	const [instagram, setInstagram] = useState<string>("");
 	const [email, setEmail] = useState<string>("");
 	const [linkedin, setLinkedin] = useState<string>("");
+	const [imageFileName, setImageFileName] = useState<string>("");
 	const [preview, setPreview] = useState<string>("");
 	const formComplete =
 		title && color && description && instagram && email && linkedin && preview;
 	const [submited, setSubmited] = useState<string | null>(null);
-	const [editTitle, setEditTitle] = useState<boolean>(true);
-	const [editColor, setEditColor] = useState<boolean>(true);
-	const [editDescription, setEditDescription] = useState<boolean>(true);
-	const [editInstagram, setEditInstagram] = useState<boolean>(true);
-	const [editEmail, setEditEmail] = useState<boolean>(true);
-	const [editLinkedin, setEditLinkedin] = useState<boolean>(true);
-	const [editImage, setEditImage] = useState<boolean>(true);
-	const [hex, setHex] = useState<string>("#ffffff");
+	const [editTitle, setEditTitle] = useState<boolean>(false);
+	const [editColor, setEditColor] = useState<boolean>(false);
+	const [editDescription, setEditDescription] = useState<boolean>(false);
+	const [editInstagram, setEditInstagram] = useState<boolean>(false);
+	const [editEmail, setEditEmail] = useState<boolean>(false);
+	const [editLinkedin, setEditLinkedin] = useState<boolean>(false);
+	const [editImage, setEditImage] = useState<boolean>(false);
+	const [hex, setHex] = useState("#ffffff");
 
 	const [warningPopUp, setWarningPopUp] = useState<boolean>(false);
 	const [warningPopUpDescription, setWarningPopUpDescription] =
@@ -84,28 +77,23 @@ export default function AboutUsDetailPopUp({
 		setColor(hex);
 	}, [hex]);
 
-	useEffect(() => {
-		if (data && data.length > 0) {
-			setTitle(data[0].title);
-			setColor(data[0].color);
-			setHex(data[0].color);
-			setDescription(data[0].description);
-			setInstagram(data[0].instagram);
-			setEmail(data[0].email);
-			setLinkedin(data[0].linkedin);
-			setPreview(data[0].image);
-		}
-	}, [data, open]);
-
-	function resetState() {
-		setEditTitle(true);
-		setEditColor(true);
-		setEditDescription(true);
-		setEditInstagram(true);
-		setEditEmail(true);
-		setEditLinkedin(true);
-		setEditImage(true);
+	function resetForm() {
+		setTitle("");
+		setColor("#ffffff");
+		setHex("#ffffff");
+		setDescription("");
+		setInstagram("");
+		setEmail("");
+		setLinkedin("");
+		setPreview("");
 		setSubmited(null);
+		setEditTitle(false);
+		setEditColor(false);
+		setEditDescription(false);
+		setEditInstagram(false);
+		setEditEmail(false);
+		setEditLinkedin(false);
+		setEditImage(false);
 	}
 
 	function handleColorChange(newHex: string) {
@@ -116,6 +104,7 @@ export default function AboutUsDetailPopUp({
 	function handleImage(file: File[]) {
 		const image = file[0];
 
+		setImageFileName(image.name);
 		setPreview(URL.createObjectURL(image));
 	}
 
@@ -141,41 +130,45 @@ export default function AboutUsDetailPopUp({
 	function handleSubmit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 
-		const editAboutUsData: AboutUsDataProps = {
-			title,
-			color,
-			description,
-			instagram,
-			email,
-			linkedin,
-			image: preview || data[0].image,
-		};
+		if (submited == null) {
+			setSubmited("submit");
+			setEditTitle(true);
+			setEditColor(true);
+			setEditDescription(true);
+			setEditInstagram(true);
+			setEditEmail(true);
+			setEditLinkedin(true);
+			setEditImage(true);
+		} else if (submited == "submit") {
+			const aboutUsData: AboutUsDataProps = {
+				title,
+				color,
+				description,
+				instagram,
+				email,
+				linkedin,
+				image: preview,
+			};
 
-		if (!validateUrl(instagram)) {
-			setWarningPopUp(true);
-			setWarningPopUpDescription("Invalid Instagram URL");
-		} else if (!validateEmail(email)) {
-			setWarningPopUp(true);
-			setWarningPopUpDescription("Invalid Email Format");
-		} else if (!validateUrl(linkedin)) {
-			setWarningPopUp(true);
-			setWarningPopUpDescription("Invalid Linkedin URL");
-		} else {
-			save(editAboutUsData, index);
-			setSubmited("save");
-
-			resetState();
-			close();
+			if (!validateUrl(instagram)) {
+				setWarningPopUp(true);
+				setWarningPopUpDescription("Invalid Instagram URL");
+			} else if (!validateEmail(email)) {
+				setWarningPopUp(true);
+				setWarningPopUpDescription("Invalid Email Format");
+			} else if (!validateUrl(linkedin)) {
+				setWarningPopUp(true);
+				setWarningPopUpDescription("Invalid Linkedin URL");
+			} else {
+				save(aboutUsData);
+				resetForm();
+				close();
+			}
 		}
 	}
 
-	function handleDangerPopUp() {
-		setDangerPopUp(true);
-	}
-
 	function handleDelete() {
-		deleteData(index);
-		resetState();
+		resetForm();
 		close();
 	}
 
@@ -186,31 +179,32 @@ export default function AboutUsDetailPopUp({
 			<div className="col-span-12 xl:col-start-2 xl:col-end-12 2xl:col-start-3 2xl:col-end-11 rounded-t-[6px] px-2 sm:px-5 xl:px-16 2xl:px-20">
 				<div className="flex justify-between items-center border-b border-neutral-300 bg-black px-[24px] py-[10px] rounded-t-[6px]">
 					<h1 className="text-sm sm:text-xl md:text-2xl font-semibold">About Us</h1>
-					<button
-						onClick={() => {
-							resetState();
-							close();
-						}}
+					<div
+						onClick={() =>
+							title || description || instagram || email || linkedin || preview
+								? setDangerPopUp(true)
+								: close()
+						}
 						className="cursor-pointer border border-white rounded-[4px] p-2">
 						<ExitIcon size={13} />
-					</button>
+					</div>
 				</div>
 				<div className="bg-neutral-900 px-5 sm:px-[36px] py-[24px] space-y-[20px] sm:space-y-[32px]">
 					<div className="flex justify-between items-start">
 						<div
 							className={`flex items-center border-[2px] ${
-								submited !== "save" ? "border-lime-900" : "border-orange-400"
+								submited == "save" ? "border-lime-900" : "border-orange-400"
 							} py-[10px] px-[16px] rounded-[20px] gap-x-[8px]`}>
-							{submited !== "save" ? (
+							{submited == "save" ? (
 								<ApprovedIcon width={16} height={16} color="#84CC16" />
 							) : (
 								<ClockIcon width={14} height={14} color="#FB923C" />
 							)}
 							<p
 								className={`text-xs font-bold ${
-									submited !== "save" ? "text-lime-500" : "text-orange-400"
+									submited == "save" ? "text-lime-500" : "text-orange-400"
 								}`}>
-								{submited !== "save" ? "Approved" : "Waiting"}
+								{submited == "save" ? "Approved" : "Waiting"}
 							</p>
 						</div>
 						<InformationIcon width={20} height={20} color="white" />
@@ -221,31 +215,14 @@ export default function AboutUsDetailPopUp({
 						<ul className="w-full border border-neutral-700 px-[20px] py-[24px] rounded-[8px] space-y-[40px]">
 							<li className="grid grid-cols-12 gap-[20px] md:gap-[40px]">
 								<div className="col-span-12 sm:col-span-8 md:col-span-9 flex flex-col gap-y-[6px]">
-									<label className="text-xs sm:text-base font-bold" htmlFor="">
-										Title
-									</label>
-									<div className="relative flex justify-end items-center">
-										<input
-											onChange={(e) => setTitle(e.target.value)}
-											defaultValue={data[0].title}
-											className={`w-full text-xs sm:text-base font-normal border ${
-												editTitle
-													? "bg-neutral-800 border-transparent"
-													: "bg-transparent border-neutral-500"
-											} px-[12px] py-[8px] rounded-[4px] outline-none`}
-											type="text"
-											placeholder="Enter the title"
-											disabled={editTitle}
-										/>
-										{submited == null && (
-											<div
-												onClick={() => setEditTitle(!editTitle)}
-												className="cursor-pointer absolute right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[10px] px-[8px] py-[5px] rounded-[8px]">
-												<p className="text-xs text-neutral-400">Edit</p>
-												<PencilIcon width={14} height={14} color="#A3A3A3" />
-											</div>
-										)}
-									</div>
+									<InputField
+										inputLabel="Title"
+										inputPlaceholder="Enter Title"
+										setData={setTitle}
+										setEditData={setEditTitle}
+										editData={editTitle}
+										submited={`${submited}`}
+									/>
 								</div>
 								<div className="col-span-12 sm:col-span-4 md:col-span-3 flex flex-col gap-y-[6px]">
 									<label className="text-xs sm:text-base font-bold" htmlFor="">
@@ -253,29 +230,25 @@ export default function AboutUsDetailPopUp({
 									</label>
 									<div className="flex items-center gap-x-[10px] relative">
 										<div
-											onClick={() => !editColor && setColorPicker(!colorPicker)}
-											className={`w-[32px] h-[32px] border border-neutral-700 ${
-												!editColor ? "cursor-pointer" : ""
-											}`}
+											onClick={() => setColorPicker(!colorPicker)}
+											className="w-[30px] h-[25px] cursor-pointer border border-neutral-700"
 											style={{ backgroundColor: hex }}></div>
-										<div className="text-xs sm:text-base flex-1 overflow-hidden">
-											<input
-												value={hex}
-												onChange={(e) => !editColor && handleColorChange(e.target.value)}
-												className={`w-full text-xs sm:text-base font-normal border ${
-													editColor
-														? "bg-neutral-800 border-transparent"
-														: "bg-transparent border-neutral-500"
-												} px-[12px] py-[8px] rounded-[4px] outline-none`}
-												type="text"
-												placeholder="Hex code"
-												disabled={editColor}
-											/>
-										</div>
+										<input
+											value={hex}
+											onChange={(e) => handleColorChange(e.target.value)}
+											className={`w-full text-xs sm:text-base font-normal border ${
+												editColor
+													? "bg-neutral-800 border-transparent"
+													: "bg-transparent border-neutral-500"
+											} px-[12px] py-[8px] rounded-[4px] outline-none`}
+											type="text"
+											placeholder="Hex code"
+											disabled={editColor}
+										/>
 										{colorPicker && !editColor && (
 											<div
 												ref={colorPickerRef}
-												className="absolute z-10 top-full right-0 mt-2">
+												className="absolute z-10 top-full left-0 mt-2">
 												<Sketch
 													color={hex}
 													onChange={(color) => {
@@ -286,10 +259,10 @@ export default function AboutUsDetailPopUp({
 												/>
 											</div>
 										)}
-										{submited == null && (
+										{submited == "submit" && (
 											<div
 												onClick={() => setEditColor(!editColor)}
-												className="cursor-pointer absolute right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[10px] px-[8px] py-[5px] rounded-[8px]">
+												className="cursor-pointer absolute right-1 sm:right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[5px] sm:gap-x-[10px] px-[8px] py-[5px] rounded-[8px]">
 												<p className="text-xs text-neutral-400">Edit</p>
 												<PencilIcon width={14} height={14} color="#A3A3A3" />
 											</div>
@@ -299,30 +272,14 @@ export default function AboutUsDetailPopUp({
 							</li>
 							<li className="w-full gap-x-[40px]">
 								<div className="relative flex flex-col gap-y-[6px]">
-									<label className="text-xs sm:text-base font-bold" htmlFor="">
-										Organization Description
-									</label>
-									<textarea
-										onChange={(e) => setDescription(e.target.value)}
-										className={`w-full h-28 md:h-20 text-xs sm:text-base font-normal border ${
-											editDescription
-												? "bg-neutral-800 border-transparent"
-												: "bg-transparent border-neutral-500"
-										} px-[12px] py-[8px] rounded-[4px] outline-none`}
-										placeholder="Event Description"
-										disabled={editDescription}
-										name=""
-										id="">
-										{data[0].description}
-									</textarea>
-									{submited == null && (
-										<div
-											onClick={() => setEditDescription(!editDescription)}
-											className="cursor-pointer absolute right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[10px] px-[8px] py-[5px] rounded-[8px]">
-											<p className="text-xs text-neutral-400">Edit</p>
-											<PencilIcon width={14} height={14} color="#A3A3A3" />
-										</div>
-									)}
+									<TextAreaField
+										textAreaLabel="Organization Description"
+                    textAreaPlaceholder="Event Description"
+										setData={setDescription}
+										setEditData={setEditDescription}
+										editData={editDescription}
+										submited={`${submited}`}
+									/>
 								</div>
 							</li>
 							<li className="grid grid-cols-12 gap-[20px]">
@@ -330,76 +287,79 @@ export default function AboutUsDetailPopUp({
 									<label className="text-xs sm:text-base font-bold" htmlFor="">
 										Instagram
 									</label>
-									<input
-										onChange={(e) => setInstagram(e.target.value)}
-										defaultValue={data[0].instagram}
-										className={`text-xs sm:text-base font-normal border ${
-											editInstagram
-												? "bg-neutral-800 border-transparent"
-												: "bg-transparent border-neutral-500"
-										} px-[12px] py-[8px] rounded-[4px] outline-none`}
-										type="text"
-										placeholder="Instagram"
-										disabled={editInstagram}
-									/>
-									{submited == null && (
-										<div
-											onClick={() => setEditInstagram(!editInstagram)}
-											className="cursor-pointer absolute right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[10px] px-[8px] py-[5px] rounded-[8px]">
-											<p className="text-xs text-neutral-400">Edit</p>
-											<PencilIcon width={14} height={14} color="#A3A3A3" />
-										</div>
-									)}
+									<div className="flex items-center">
+										<input
+											onChange={(e) => setInstagram(e.target.value)}
+											className={`w-full text-xs sm:text-base font-normal border ${
+												editInstagram
+													? "bg-neutral-800 border-transparent"
+													: "bg-transparent border-neutral-500"
+											} px-[12px] py-[8px] rounded-[4px] outline-none`}
+											type="text"
+											placeholder="https://instagram.com/example"
+											disabled={editInstagram}
+										/>
+										{submited == "submit" && (
+											<div
+												onClick={() => setEditInstagram(!editInstagram)}
+												className="cursor-pointer absolute right-1 sm:right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[5px] sm:gap-x-[10px] px-[8px] py-[5px] rounded-[8px]">
+												<p className="text-xs text-neutral-400">Edit</p>
+												<PencilIcon width={14} height={14} color="#A3A3A3" />
+											</div>
+										)}
+									</div>
 								</div>
 								<div className="relative col-span-12 lg:col-span-4 flex flex-col gap-y-[6px]">
 									<label className="text-xs sm:text-base font-bold" htmlFor="">
 										Email
 									</label>
-									<input
-										onChange={(e) => setEmail(e.target.value)}
-										defaultValue={data[0].email}
-										className={`text-xs sm:text-base font-normal border ${
-											editEmail
-												? "bg-neutral-800 border-transparent"
-												: "bg-transparent border-neutral-500"
-										} px-[12px] py-[8px] rounded-[4px] outline-none`}
-										type="text"
-										placeholder="Email"
-										disabled={editEmail}
-									/>
-									{submited == null && (
-										<div
-											onClick={() => setEditEmail(!editEmail)}
-											className="cursor-pointer absolute right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[10px] px-[8px] py-[5px] rounded-[8px]">
-											<p className="text-xs text-neutral-400">Edit</p>
-											<PencilIcon width={14} height={14} color="#A3A3A3" />
-										</div>
-									)}
+									<div className="flex items-center">
+										<input
+											onChange={(e) => setEmail(e.target.value)}
+											className={`w-full text-xs sm:text-base font-normal border ${
+												editEmail
+													? "bg-neutral-800 border-transparent"
+													: "bg-transparent border-neutral-500"
+											} px-[12px] py-[8px] rounded-[4px] outline-none`}
+											type="text"
+											placeholder="example@gmail.com"
+											disabled={editEmail}
+										/>
+										{submited == "submit" && (
+											<div
+												onClick={() => setEditEmail(!editEmail)}
+												className="cursor-pointer absolute right-1 sm:right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[5px] sm:gap-x-[10px] px-[8px] py-[5px] rounded-[8px]">
+												<p className="text-xs text-neutral-400">Edit</p>
+												<PencilIcon width={14} height={14} color="#A3A3A3" />
+											</div>
+										)}
+									</div>
 								</div>
 								<div className="relative col-span-12 lg:col-span-4 flex flex-col gap-y-[6px]">
 									<label className="text-xs sm:text-base font-bold" htmlFor="">
 										Linkedin
 									</label>
-									<input
-										onChange={(e) => setLinkedin(e.target.value)}
-										defaultValue={data[0].linkedin}
-										className={`text-xs sm:text-base font-normal border ${
-											editLinkedin
-												? "bg-neutral-800 border-transparent"
-												: "bg-transparent border-neutral-500"
-										} px-[12px] py-[8px] rounded-[4px] outline-none`}
-										type="text"
-										placeholder="Linkedin"
-										disabled={editLinkedin}
-									/>
-									{submited == null && (
-										<div
-											onClick={() => setEditLinkedin(!editLinkedin)}
-											className="cursor-pointer absolute right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[10px] px-[8px] py-[5px] rounded-[8px]">
-											<p className="text-xs text-neutral-400">Edit</p>
-											<PencilIcon width={14} height={14} color="#A3A3A3" />
-										</div>
-									)}
+									<div className="flex items-center">
+										<input
+											onChange={(e) => setLinkedin(e.target.value)}
+											className={`w-full text-xs sm:text-base font-normal border ${
+												editLinkedin
+													? "bg-neutral-800 border-transparent"
+													: "bg-transparent border-neutral-500"
+											} px-[12px] py-[8px] rounded-[4px] outline-none`}
+											type="text"
+											placeholder="https://linkedin.com/in/example"
+											disabled={editLinkedin}
+										/>
+										{submited == "submit" && (
+											<div
+												onClick={() => setEditLinkedin(!editLinkedin)}
+												className="cursor-pointer absolute right-1 sm:right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[5px] sm:gap-x-[10px] px-[8px] py-[5px] rounded-[8px]">
+												<p className="text-xs text-neutral-400">Edit</p>
+												<PencilIcon width={14} height={14} color="#A3A3A3" />
+											</div>
+										)}
+									</div>
 								</div>
 							</li>
 							<li className="grid grid-cols-12 gap-[20px]">
@@ -433,7 +393,7 @@ export default function AboutUsDetailPopUp({
 								)}
 								<div
 									className={`${
-										submited == null
+										submited == "submit"
 											? "col-span-12 sm:col-span-4 md:col-span-3 2xl:col-span-2"
 											: "col-span-12 sm:col-span-4 md:col-span-3 lg:col-span-2"
 									} flex flex-col gap-y-[6px]`}>
@@ -444,13 +404,7 @@ export default function AboutUsDetailPopUp({
 										className={`relative h-40 flex justify-center items-center  ${
 											!preview && "border-2 border-neutral-400 border-dashed"
 										} rounded-lg`}>
-										{editImage ? (
-											<img
-												className="w-full h-full object-cover rounded-[8px]"
-												src={data[0].image}
-												alt=""
-											/>
-										) : preview ? (
+										{preview ? (
 											<img
 												className="w-full h-full object-cover rounded-[8px]"
 												src={preview}
@@ -465,31 +419,44 @@ export default function AboutUsDetailPopUp({
 													setEditImage(!editImage);
 													setPreview("");
 												}}
-												className="cursor-pointer absolute right-2 top-2 flex items-center bg-neutral-700 gap-x-[10px] px-[8px] py-[5px] rounded-[8px]">
+												className="cursor-pointer absolute right-2 top-2 flex items-center bg-neutral-700 gap-x-[5px] sm:gap-x-[10px] px-[8px] py-[5px] rounded-[8px]">
 												<p className="text-xs text-neutral-400">Edit</p>
 												<PencilIcon width={14} height={14} color="#A3A3A3" />
 											</div>
 										)}
 									</div>
 								</div>
+								{preview && (
+									<div className="col-span-12 sm:col-span-3 lg:col-span-2 flex flex-col gap-y-[6px]">
+										<label className="hidden md:block text-transparent" htmlFor="">
+											lorem
+										</label>
+										{submited !== "submit" && (
+											<div className="flex justify-between items-center bg-[#270081] px-[15px] py-[6px] rounded-[8px]">
+												<p className="text-xs">{imageFileName}</p>
+												<ExitIcon onClick={() => setPreview("")} size={10} />
+											</div>
+										)}
+									</div>
+								)}
 							</li>
 						</ul>
-						<div className="flex gap-x-[20px]">
+						<div className="flex gap-x-[10px] sm:gap-x-[20px]">
 							<div
-								onClick={() => submited == null && handleDangerPopUp()}
+								onClick={() => submited == "submit" && setDangerPopUp(!dangerPopUp)}
 								className={`w-[80px] sm:w-[150px] h-[40px] sm:h-[50px] flex justify-center items-center text-xs sm:text-base text-rose-800 ${
-									submited == null && "cursor-pointer border border-rose-800"
+									submited == "submit" && "cursor-pointer border border-rose-800"
 								} px-[24px] py-[14px] rounded-full`}>
-								{submited == null && "Delete"}
+								{submited == "submit" && "Delete"}
 							</div>
 							<button
 								type={`${formComplete ? "submit" : "button"}`}
-								className={`w-[100px] sm:w-[150px] h-[40px] sm:h-[50px] flex justify-center items-center text-xs sm:text-base ${
-									submited == null && formComplete
+								className={`w-[200px] sm:w-[300px] h-[40px] sm:h-[50px] flex justify-center items-center text-xs sm:text-base ${
+									formComplete
 										? "cursor-pointer border border-white text-white"
 										: "cursor-not-allowed border border-gray-700 text-gray-700"
 								} px-[24px] py-[14px] rounded-full`}>
-								{submited == null && "Save"}
+								Save & Request Approval
 							</button>
 						</div>
 					</form>
