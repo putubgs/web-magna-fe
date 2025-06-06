@@ -69,7 +69,7 @@ export default function DangerPopUp({
 							onConfirm();
 							close();
 						}}
-						className="cursor-pointer border border-[#270081] bg-[#270081] px-[18px] py-[8px] rounded-[8px]">
+						className="cursor-pointer border border-primary bg-primary px-[18px] py-[8px] rounded-[8px]">
 						Delete
 					</div>
 				</div>

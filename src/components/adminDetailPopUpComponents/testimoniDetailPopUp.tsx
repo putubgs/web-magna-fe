@@ -1,8 +1,11 @@
 import { FormEvent, useEffect, useState } from "react";
 import ExitIcon from "../icons/exitIcon";
 import { InformationIcon } from "../icons/informationIcon";
-import { PencilIcon } from "../icons/pencilIcon";
 import DangerPopUp from "../dialog/dangerPopUp";
+import InputField from "../adminComponents/inputField";
+import TextAreaField from "../adminComponents/textAreaField";
+import { DeleteAndSaveButtonForEdit } from "../adminComponents/deleteAndSaveButton";
+import Toolip from "../toolip";
 
 type TestimoniDataProps = {
 	name: string;
@@ -27,6 +30,8 @@ export default function TestimoniDetailPopUp({
 	data,
 	index,
 }: TestimoniPopUpProps) {
+	const [toolip, setToolip] = useState<boolean>(false);
+
 	const [name, setName] = useState<string>("");
 	const [position, setPosition] = useState<string>("");
 	const [testimoni, setTestimoni] = useState<string>("");
@@ -37,6 +42,15 @@ export default function TestimoniDetailPopUp({
 	const [editTestimoni, setEditTestimoni] = useState<boolean>(true);
 
 	const [dangerPopUp, setDangerPopUp] = useState<boolean>(false);
+
+	const toolipData = [
+		["Data", "Min", "Max"],
+		[
+			["Name", "-", "-"],
+			["Position/instution", "-", "-"],
+			["Testimoni", "-", "300 characters"],
+		],
+	];
 
 	useEffect(() => {
 		if (data && data.length > 0) {
@@ -96,114 +110,62 @@ export default function TestimoniDetailPopUp({
 					</button>
 				</div>
 				<div className="bg-neutral-900 flex flex-col items-end px-5 sm:px-[36px] py-[24px] space-y-[20px] sm:space-y-[32px]">
-					<InformationIcon width={20} height={20} color="white" />
+					<div
+						onClick={() => setToolip(!toolip)}
+						className="relative cursor-pointer">
+						<InformationIcon width={20} height={20} color="white" />
+						{toolip && (
+							<Toolip toolipData={toolipData} onClose={() => setToolip(false)} />
+						)}
+					</div>
 					<form
 						onSubmit={handleSubmit}
 						className="w-full flex flex-col items-end gap-y-[32px]">
 						<ul className="w-full border border-neutral-700 px-[20px] py-[24px] rounded-[8px] space-y-[20px] sm:space-y-[40px]">
 							<li className="w-full flex flex-col sm:flex-row gap-[20px] sm:gap-[40px]">
 								<div className="relative w-full sm:w-[50%] flex flex-col gap-y-[6px]">
-									<label className="text-xs sm:text-base font-bold" htmlFor="">
-										Name
-									</label>
-									<div className="flex items-center">
-										<input
-											onChange={(e) => setName(e.target.value)}
-											defaultValue={data[0].name}
-											className={`w-full text-xs sm:text-base font-normal border ${
-												editName
-													? "bg-neutral-800 border-transparent"
-													: "bg-transparent border-neutral-500"
-											} px-[12px] py-[8px] rounded-[4px] outline-none`}
-											type="text"
-											placeholder="Name"
-											disabled={editName}
-										/>
-										{submited == null && (
-											<div
-												onClick={() => setEditName(!editName)}
-												className="cursor-pointer absolute right-1 sm:right-2 flex items-center bg-neutral-700 gap-x-[5px] sm:gap-x-[10px] px-[8px] py-[5px] rounded-[8px] outline-none">
-												<p className="text-xs text-neutral-400">Edit</p>
-												<PencilIcon width={14} height={14} color="#A3A3A3" />
-											</div>
-										)}
-									</div>
+									<InputField
+										inputLabel="Name"
+										inputPlaceholder="Enter Name"
+										setData={setName}
+										setEditData={setEditName}
+										editData={editName}
+										submited={null}
+										data={data[0].name}
+									/>
 								</div>
 								<div className="relative w-full sm:w-[50%] flex flex-col gap-y-[6px]">
-									<label className="text-xs sm:text-base font-bold" htmlFor="">
-										Position / instution
-									</label>
-									<div className="flex items-center">
-										<input
-											onChange={(e) => setPosition(e.target.value)}
-											defaultValue={data[0].position}
-											className={`w-full text-xs sm:text-base font-normal border ${
-												editPosition
-													? "bg-neutral-800 border-transparent"
-													: "bg-transparent border-neutral-500"
-											} px-[12px] py-[8px] rounded-[4px] outline-none`}
-											type="text"
-											placeholder="Position"
-											disabled={editPosition}
-										/>
-										{submited == null && (
-											<div
-												onClick={() => setEditPosition(!editPosition)}
-												className="cursor-pointer absolute right-1 sm:right-2 flex items-center bg-neutral-700 gap-x-[5px] sm:gap-x-[10px] px-[8px] py-[5px] rounded-[8px] outline-none">
-												<p className="text-xs text-neutral-400">Edit</p>
-												<PencilIcon width={14} height={14} color="#A3A3A3" />
-											</div>
-										)}
-									</div>
+									<InputField
+										inputLabel="Position / instution"
+										inputPlaceholder="Enter Position / instution"
+										setData={setPosition}
+										setEditData={setEditPosition}
+										editData={editPosition}
+										submited={null}
+										data={data[0].position}
+									/>
 								</div>
 							</li>
 							<li className="w-full gap-x-[40px]">
 								<div className="relative w-full flex flex-col gap-y-[6px]">
-									<label className="text-xs sm:text-base font-bold" htmlFor="">
-										Testimoni
-									</label>
-									<textarea
-										onChange={(e) => setTestimoni(e.target.value)}
-										className={`w-full h-28 md:h-20 text-xs sm:text-base font-normal border ${
-											editTestimoni
-												? "bg-neutral-800 border-transparent"
-												: "bg-transparent border-neutral-500"
-										} px-[12px] py-[8px] rounded-[4px] outline-none`}
-										placeholder="Testimoni"
-										name=""
-										id=""
-										disabled={editTestimoni}>
-										{data[0].testimoni}
-									</textarea>
-									{submited == null && (
-										<div
-											onClick={() => setEditTestimoni(!editTestimoni)}
-											className="cursor-pointer absolute right-1 sm:right-2 bottom-2 flex items-center bg-neutral-700 gap-x-[5px] sm:gap-x-[10px] px-[8px] py-[5px] rounded-[8px] outline-none">
-											<p className="text-xs text-neutral-400">Edit</p>
-											<PencilIcon width={14} height={14} color="#A3A3A3" />
-										</div>
-									)}
+									<TextAreaField
+										textAreaLabel="Testimoni"
+										textAreaPlaceholder="Testimoni"
+										setData={setTestimoni}
+										setEditData={setEditTestimoni}
+										editData={editTestimoni}
+										submited={null}
+										data={data[0].testimoni}
+									/>
 								</div>
 							</li>
 						</ul>
-						<div className="flex gap-x-[20px]">
-							<div
-								onClick={() => submited == null && handleDangerPopUp()}
-								className={`w-[80px] sm:w-[150px] h-[40px] sm:h-[50px] flex justify-center items-center text-xs sm:text-base text-rose-800 ${
-									submited == null && "cursor-pointer border border-rose-800"
-								} px-[24px] py-[14px] rounded-full`}>
-								{submited == null && "Delete"}
-							</div>
-							<button
-								type={`${formComplete ? "submit" : "button"}`}
-								className={`w-[100px] sm:w-[150px] h-[40px] sm:h-[50px] flex justify-center items-center text-xs sm:text-base ${
-									submited == null && formComplete
-										? "cursor-pointer border border-white text-white"
-										: "cursor-not-allowed border border-gray-700 text-gray-700"
-								} px-[24px] py-[14px] rounded-full`}>
-								{submited == null && "Save"}
-							</button>
-						</div>
+						<DeleteAndSaveButtonForEdit
+							submited={submited}
+							formComplete={formComplete}
+							handleDangerPopUp={handleDangerPopUp}
+							saveLabel="Save"
+						/>
 					</form>
 				</div>
 			</div>

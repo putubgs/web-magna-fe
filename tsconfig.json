@@ -9,7 +9,8 @@
 		"module": "ESNext",
 		"moduleResolution": "Node",
 		"strict": true,
-		"tsx": "react-tsx",
+		// "tsx": "react-tsx",
+		"jsx": "react-jsx",
 		"baseUrl": ".",
 		"paths": {
 			"@/*": ["src/*"]

@@ -5,11 +5,17 @@ import { TrashCanIcon } from "../icons/trashCanIcon";
 import TestimoniPopUp from "../adminPopUpComponents/testimoniPopUp";
 import TestimoniDetailPopUp from "../adminDetailPopUpComponents/testimoniDetailPopUp";
 import DangerPopUp from "../dialog/dangerPopUp";
+import SuccessPopUp from "../dialog/sucessPopUp";
 
 type TestimoniProps = {
 	name: string;
 	position: string;
 	testimoni: string;
+};
+
+type SuccessPopUpProps = {
+	title: string;
+	message: string;
 };
 
 export default function TestimoniManagement() {
@@ -25,8 +31,17 @@ export default function TestimoniManagement() {
 	);
 
 	const [dangerPopUp, setDangerPopUp] = useState<boolean>(false);
+	const [successPopUp, setSuccessPopUp] = useState<boolean>(false);
+	const [successPopUpComponent, setSuccessPopUpComponent] =
+		useState<SuccessPopUpProps | null>(null);
 
 	function handleSubmitTestimoni(testimoniData: TestimoniProps) {
+		setSuccessPopUpComponent({
+			title: "Testimoni Added!",
+			message: "You've successfully added a new testimoni to the panel",
+		});
+		setSuccessPopUp(true);
+
 		setTestimoniData((prev) =>
 			prev ? [...prev, testimoniData] : [testimoniData]
 		);
@@ -36,10 +51,27 @@ export default function TestimoniManagement() {
 		setTestimoniData((prev) => {
 			if (!prev) return null;
 
-			const newData = [...prev];
-			newData[index] = updatedData;
+			const currentData = prev[index];
 
-			return newData;
+			const change =
+				currentData.name !== updatedData.name ||
+				currentData.position !== updatedData.position ||
+				currentData.testimoni !== updatedData.testimoni;
+
+			if (change) {
+				const newData = [...prev];
+				newData[index] = updatedData;
+
+				setSuccessPopUpComponent({
+					title: "Testimoni Updated!",
+					message: "The testimoni have been successfully updated",
+				});
+				setSuccessPopUp(true);
+
+				return newData;
+			} else {
+				return prev;
+			}
 		});
 	}
 
@@ -81,7 +113,7 @@ export default function TestimoniManagement() {
 				</h1>
 				<button
 					onClick={() => setTestimoniPopUp(true)}
-					className="cursor-pointer bg-[#270081] text-sm lg:text-base p-[16px] rounded-[8px]">
+					className="cursor-pointer bg-primary text-sm lg:text-base p-[16px] rounded-[8px]">
 					Add Testimoni +
 				</button>
 			</section>
@@ -104,7 +136,7 @@ export default function TestimoniManagement() {
 							</th>
 						</tr>
 					</thead>
-					<tbody className="relative h-[200px]">
+					<tbody className="relative">
 						{testimoniData && testimoniData.length > 0 ? (
 							testimoniData.map((data, index) => (
 								<tr key={index} className="align-top border-b border-[#D4D4D4]">
@@ -129,11 +161,13 @@ export default function TestimoniManagement() {
 								</tr>
 							))
 						) : (
-							<td colSpan={5}>
-								<div className="flex flex-col justify-center items-center text-white">
-									<h1 className="text-xl lg:text-3xl font-black">NO DATA</h1>
-								</div>
-							</td>
+							<tr className="h-[250px]">
+								<td colSpan={5}>
+									<div className="flex flex-col justify-center items-center text-white">
+										<h1 className="text-xl lg:text-3xl font-black">NO DATA</h1>
+									</div>
+								</td>
+							</tr>
 						)}
 						<div
 							className={`absolute right-3 -bottom-20 ${
@@ -180,6 +214,16 @@ export default function TestimoniManagement() {
 				title="Delete"
 				message="Are you sure you want to delete this?"
 			/>
+
+			{successPopUpComponent && (
+				<SuccessPopUp
+					open={successPopUp}
+					close={() => setSuccessPopUp(false)}
+					onConfirm={() => setSuccessPopUp(false)}
+					title={successPopUpComponent.title}
+					message={successPopUpComponent.message}
+				/>
+			)}
 		</>
 	);
 }

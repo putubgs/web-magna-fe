@@ -6,6 +6,7 @@ import LinkedinIcon from "../icons/linkedinIcon";
 import MailIcon from "../icons/mailIcon";
 import AddAboutUsPopUp from "../adminPopUpComponents/aboutUsPopUp";
 import AboutUsDetailPopUp from "../adminDetailPopUpComponents/aboutUsDetailPopUp";
+import SuccessPopUp from "../dialog/sucessPopUp";
 
 type AboutUsDataProps = {
 	title: string;
@@ -15,6 +16,11 @@ type AboutUsDataProps = {
 	email: string;
 	linkedin: string;
 	image: string;
+};
+
+type SuccessPopUpProps = {
+	title: string;
+	message: string;
 };
 
 export default function AboutUsManagement() {
@@ -28,7 +34,17 @@ export default function AboutUsManagement() {
 		null
 	);
 
+	const [successPopUp, setSuccessPopUp] = useState<boolean>(false);
+	const [successPopUpComponent, setSuccessPopUpComponent] =
+		useState<SuccessPopUpProps | null>(null);
+
 	function handleSubmitAboutUs(aboutUsData: AboutUsDataProps) {
+		setSuccessPopUpComponent({
+			title: "Business Unit Page Added!",
+			message: "You've successfully added a new business unit page to the panel",
+		});
+		setSuccessPopUp(true);
+
 		setAboutUsData((prev) => (prev ? [...prev, aboutUsData] : [aboutUsData]));
 	}
 
@@ -36,10 +52,31 @@ export default function AboutUsManagement() {
 		setAboutUsData((prev) => {
 			if (!prev) return null;
 
-			const newData = [...prev];
-			newData[index] = updatedData;
+			const currentData = prev[index];
 
-			return newData;
+			const change =
+				currentData.title !== updatedData.title ||
+				currentData.color !== updatedData.color ||
+				currentData.description !== updatedData.description ||
+				currentData.instagram !== updatedData.instagram ||
+				currentData.email !== updatedData.email ||
+				currentData.linkedin !== updatedData.linkedin ||
+				currentData.image !== updatedData.image;
+
+			if (change) {
+				const newData = [...prev];
+				newData[index] = updatedData;
+
+				setSuccessPopUpComponent({
+					title: "Business Unit Page Updated!",
+					message: "The business unit have been successfully updated",
+				});
+				setSuccessPopUp(true);
+
+				return newData;
+			} else {
+				return prev;
+			}
 		});
 	}
 
@@ -82,7 +119,7 @@ export default function AboutUsManagement() {
 					onClick={() => {
 						setAddAboutUsPopUp(true);
 					}}
-					className="cursor-pointer bg-[#270081] text-sm lg:text-base p-[16px] rounded-[8px]">
+					className="cursor-pointer bg-primary text-sm lg:text-base p-[16px] rounded-[8px]">
 					Add About Us +
 				</button>
 			</section>
@@ -182,6 +219,16 @@ export default function AboutUsManagement() {
 					delete={handleDeleteAboutUs}
 					data={aboutUsDetailData}
 					index={index}
+				/>
+			)}
+
+			{successPopUpComponent && (
+				<SuccessPopUp
+					open={successPopUp}
+					close={() => setSuccessPopUp(false)}
+					onConfirm={() => setSuccessPopUp(false)}
+					title={successPopUpComponent.title}
+					message={successPopUpComponent.message}
 				/>
 			)}
 		</>
