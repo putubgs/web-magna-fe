@@ -15,6 +15,7 @@ function Login() {
 		if (email == "magnaadmin@gmail.com" && password == "magnaadmin")
 			navigate("/admin?panel=about-us");
 	}
+
 	return (
 		<div className="flex justify-between h-screen bg-[#171717]">
 			<div className="md:hidden block w-[273px] h-[291px] bg-[#3D0FA8] opacity-50 blur-3xl rounded-full absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2"></div>

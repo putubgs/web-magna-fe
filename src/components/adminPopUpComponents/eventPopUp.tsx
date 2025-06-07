@@ -395,6 +395,7 @@ export default function EventPopUp({ open, close, save }: EventPopUpProps) {
 														editDate={editStartDate}
 														submited={submited}
 														datePickerPopUp={datePickerPopUp}
+														selectedDate={date}
 														selectedStartDate={startDate}
 													/>
 												</td>
@@ -409,6 +410,8 @@ export default function EventPopUp({ open, close, save }: EventPopUpProps) {
 														editDate={editEndDate}
 														submited={submited}
 														datePickerPopUp={datePickerPopUp}
+														selectedDate={date}
+														selectedStartDate={startDate}
 														selectedEndDate={endDate}
 													/>
 												</td>
