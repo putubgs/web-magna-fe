@@ -5,6 +5,7 @@ import { TrashCanIcon } from "../icons/trashCanIcon";
 import EventPopUp from "../adminPopUpComponents/eventPopUp";
 import EventDetailPopUp from "../adminDetailPopUpComponents/eventDetailPopUp";
 import DangerPopUp from "../dialog/dangerPopUp";
+import SuccessPopUp from "../dialog/sucessPopUp";
 
 type EventProps = {
 	eventName: string;
@@ -18,6 +19,11 @@ type EventProps = {
 	image: string;
 };
 
+type SuccessPopUpProps = {
+	title: string;
+	message: string;
+};
+
 export default function EventManagement() {
 	const [eventPopUp, setEventPopUp] = useState<boolean>(false);
 	const [eventDetailPopUp, setEventDetailPopUp] = useState<boolean>(false);
@@ -28,8 +34,17 @@ export default function EventManagement() {
 	const [eventData, setEventData] = useState<EventProps[] | null>(null);
 
 	const [dangerPopUp, setDangerPopUp] = useState<boolean>(false);
+	const [successPopUp, setSuccessPopUp] = useState<boolean>(false);
+	const [successPopUpComponent, setSuccessPopUpComponent] =
+		useState<SuccessPopUpProps | null>(null);
 
 	function handleSubmitEvent(eventData: EventProps) {
+		setSuccessPopUpComponent({
+			title: "Event Added!",
+			message: "You've successfully added a new event to the panel",
+		});
+		setSuccessPopUp(true);
+
 		setEventData((prev) => (prev ? [...prev, eventData] : [eventData]));
 	}
 
@@ -37,10 +52,42 @@ export default function EventManagement() {
 		setEventData((prev) => {
 			if (!prev) return null;
 
-			const newData = [...prev];
-			newData[index] = updatedData;
+			const currentData = prev[index];
 
-			return newData;
+			const compare = (
+				current: string | undefined,
+				updated: string | undefined
+			): boolean => {
+				const currentValue = current;
+				const updatedValue = updated;
+				return currentValue !== updatedValue;
+			};
+
+			const change =
+				currentData.eventName !== updatedData.eventName ||
+				currentData.date !== updatedData.date ||
+				currentData.startTime !== updatedData.startTime ||
+				currentData.endDate !== updatedData.endDate ||
+				currentData.eventDescription !== updatedData.eventDescription ||
+				currentData.image !== updatedData.image ||
+				compare(currentData.registrationUrl, updatedData.registrationUrl) ||
+				compare(currentData.startDate, updatedData.startDate) ||
+				compare(currentData.endDate, updatedData.endDate);
+
+			if (change) {
+				const newData = [...prev];
+				newData[index] = updatedData;
+
+				setSuccessPopUpComponent({
+					title: "Event Updated!",
+					message: "The event have been successfully updated",
+				});
+				setSuccessPopUp(true);
+
+				return newData;
+			} else {
+				return prev;
+			}
 		});
 	}
 
@@ -90,7 +137,7 @@ export default function EventManagement() {
 					</h1>
 					<button
 						onClick={() => setEventPopUp(true)}
-						className="cursor-pointer bg-[#270081] text-sm lg:text-base p-[16px] rounded-[8px]">
+						className="cursor-pointer bg-primary text-sm lg:text-base p-[16px] rounded-[8px]">
 						Add Event +
 					</button>
 				</div>
@@ -110,7 +157,7 @@ export default function EventManagement() {
 				</div>
 			</section>
 			<section className="overflow-scroll xl:overflow-auto h-full bg-black flex flex-col justify-between border border-[#404040] p-[28px] rounded-[20px]">
-				<table className="table-auto w-[1000px] xl:w-full h-fit text-white">
+				<table className="table-auto w-[1000px] xl:w-full text-white">
 					<thead>
 						<tr className="border-b border-[#D4D4D4] text-left">
 							<th className="text-base lg:text-lg font-bold py-3 px-4">No</th>
@@ -214,6 +261,16 @@ export default function EventManagement() {
 				title="Delete"
 				message="Are you sure you want to delete this?"
 			/>
+
+			{successPopUpComponent && (
+				<SuccessPopUp
+					open={successPopUp}
+					close={() => setSuccessPopUp(false)}
+					onConfirm={() => setSuccessPopUp(false)}
+					title={successPopUpComponent.title}
+					message={successPopUpComponent.message}
+				/>
+			)}
 		</>
 	);
 }

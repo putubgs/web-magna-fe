@@ -9,6 +9,7 @@ import GalleryManagement from "../../components/adminManagementComponents/Galler
 import { DoubleArrowIcon } from "../../components/icons/doubleArrowIcon";
 import { RightArrowIcon } from "../../components/icons/rightArrowIcon";
 import { useEffect, useState } from "react";
+import SuperAdmin from "../../components/adminManagementComponents/SuperAdmin";
 
 export default function Admin() {
 	const location = useLocation();
@@ -114,6 +115,7 @@ export default function Admin() {
 						className={`w-full overflow-y-auto ${
 							responsiveSidebar ? "col-span-11 w-full" : "col-span-10"
 						} flex flex-col gap-[20px] px-[20px] pt-28 pb-5`}>
+						{panel == "admin-manage" && <SuperAdmin />}
 						{panel == "about-us" && <AboutUsManagement />}
 						{panel == "event" && <EventManagement />}
 						{panel == "impact" && <ImpactManagement />}

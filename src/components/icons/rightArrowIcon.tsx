@@ -1,12 +1,16 @@
 interface RightArrowIconProps {
-	className: string;
+	height?: number;
+	width?: number;
+	className?: string;
 	fill: string;
 }
 
 export const RightArrowIcon = (props: RightArrowIconProps) => {
 	return (
 		<svg
-			className={props.className}
+			height={props?.height}
+			width={props?.width}
+			className={props?.className}
 			viewBox="0 0 19 16"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg">

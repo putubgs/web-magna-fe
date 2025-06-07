@@ -4,6 +4,8 @@ import { InformationIcon } from "../icons/informationIcon";
 import DangerPopUp from "../dialog/dangerPopUp";
 import InputField from "../adminComponents/inputField";
 import TextAreaField from "../adminComponents/textAreaField";
+import DeleteAndSaveButtonForAdd from "../adminComponents/deleteAndSaveButton";
+import Toolip from "../toolip";
 
 type TestimoniProps = {
 	name: string;
@@ -22,6 +24,8 @@ export default function TestimoniPopUp({
 	close,
 	save,
 }: TestimoniPopUpProps) {
+	const [toolip, setToolip] = useState<boolean>(false);
+
 	const [name, setName] = useState<string>("");
 	const [position, setPosition] = useState<string>("");
 	const [testimoni, setTestimoni] = useState<string>("");
@@ -32,6 +36,15 @@ export default function TestimoniPopUp({
 	const [editTestimoni, setEditTestimoni] = useState<boolean>(false);
 
 	const [dangerPopUp, setDangerPopUp] = useState<boolean>(false);
+
+	const toolipData = [
+		["Data", "Min", "Max"],
+		[
+			["Name", "-", "-"],
+			["Position/instution", "-", "-"],
+			["Testimoni", "-", "300 characters"],
+		],
+	];
 
 	function resetForm() {
 		setName("");
@@ -78,14 +91,21 @@ export default function TestimoniPopUp({
 					<h1 className="text-xs sm:text-xl md:text-2xl font-semibold">Testimoni</h1>
 					<div
 						onClick={() =>
-							name && position && testimoni ? setDangerPopUp(true) : close()
+							name || position || testimoni ? setDangerPopUp(true) : close()
 						}
 						className="cursor-pointer border border-white rounded-[4px] p-2">
 						<ExitIcon size={13} />
 					</div>
 				</div>
 				<div className="bg-neutral-900 flex flex-col items-end px-5 sm:px-[36px] py-[24px] space-y-[20px] sm:space-y-[32px]">
-					<InformationIcon width={20} height={20} color="white" />
+					<div
+						onClick={() => setToolip(!toolip)}
+						className="relative cursor-pointer">
+						<InformationIcon width={20} height={20} color="white" />
+						{toolip && (
+							<Toolip toolipData={toolipData} onClose={() => setToolip(false)} />
+						)}
+					</div>
 					<form
 						onSubmit={handleSubmit}
 						className="w-full flex flex-col items-end gap-y-[32px]">
@@ -125,24 +145,12 @@ export default function TestimoniPopUp({
 								</div>
 							</li>
 						</ul>
-						<div className="flex gap-x-[20px]">
-							<div
-								onClick={() => submited == "submit" && setDangerPopUp(!dangerPopUp)}
-								className={`w-[80px] sm:w-[150px] h-[40px] sm:h-[50px] flex justify-center items-center text-xs sm:text-base text-rose-800 ${
-									submited == "submit" && "cursor-pointer border border-rose-800"
-								} px-[24px] py-[14px] rounded-full`}>
-								{submited == "submit" && "Delete"}
-							</div>
-							<button
-								type={`${formComplete ? "submit" : "button"}`}
-								className={`w-[100px] sm:w-[150px] h-[40px] sm:h-[50px] flex justify-center items-center text-xs sm:text-base ${
-									formComplete
-										? "cursor-pointer border border-white text-white"
-										: "cursor-not-allowed border border-gray-700 text-gray-700"
-								} px-[24px] py-[14px] rounded-full`}>
-								Save
-							</button>
-						</div>
+						<DeleteAndSaveButtonForAdd
+							submited={submited}
+							formComplete={formComplete}
+							handleDangerPopUp={() => setDangerPopUp(!dangerPopUp)}
+							saveLabel="Save"
+						/>
 					</form>
 				</div>
 			</div>

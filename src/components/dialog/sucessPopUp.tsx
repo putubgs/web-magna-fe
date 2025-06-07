@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { WarningIcon } from "../icons/warningIcon";
 import ExitIcon from "../icons/exitIcon";
+import { SuccessIcon } from "../icons/successIcon";
 
-type WarningPopUpProps = {
+type SuccessPopUpProps = {
 	open: boolean;
 	close: () => void;
 	onConfirm: () => void;
@@ -10,13 +10,13 @@ type WarningPopUpProps = {
 	message: string;
 };
 
-export default function WarningPopUp({
+export default function SuccessPopUp({
 	open,
 	close,
 	onConfirm,
 	title,
 	message,
-}: WarningPopUpProps) {
+}: SuccessPopUpProps) {
 	const [popUpHeight, setPopUpHeight] = useState<number>(0);
 
 	useEffect(() => {
@@ -45,7 +45,7 @@ export default function WarningPopUp({
 			<section className="w-[512px] bg-neutral-800 rounded-[16px] py-[24px] space-y-[16px]">
 				<div className="flex items-start px-[16px] gap-x-[16px]">
 					<div>
-						<WarningIcon width={36} height={36} color="#FEF9C3" />
+						<SuccessIcon width={36} height={36} color="#DCFCE7" />
 					</div>
 					<div className="w-full flex justify-between items-start">
 						<div className="space-y-[8px]">
@@ -57,6 +57,7 @@ export default function WarningPopUp({
 						</div>
 					</div>
 				</div>
+				<hr className="mt-[24px] w-full bg-white" />
 				<div className="flex justify-end px-[16px] gap-x-[8px]">
 					<div
 						onClick={() => {
