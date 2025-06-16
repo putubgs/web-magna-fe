@@ -6,6 +6,10 @@ type DatePickerProps = {
 	open: boolean;
 	close: () => void;
 	data?: string;
+	picked?: string | "date" | "startDate" | "endDate";
+	selectedDate?: string;
+	selectedStartDate?: string;
+	selectedEndDate?: string;
 };
 
 export default function DatePicker({
@@ -14,9 +18,13 @@ export default function DatePicker({
 	open,
 	close,
 	data,
+	picked = "date",
+	selectedDate,
+	selectedStartDate,
+	selectedEndDate,
 }: DatePickerProps) {
 	const [currentDate, setCurrentDate] = useState(new Date());
-	const [selectedDate, setSelectedDate] = useState<string>(data || "");
+	const [selectedLocalDate, setSelectedLocalDate] = useState<string>(data || "");
 	const daysContainerRef = useRef<HTMLDivElement>(null);
 	const datepickerContainerRef = useRef<HTMLDivElement>(null);
 
@@ -28,7 +36,7 @@ export default function DatePicker({
 				const day = parseInt(dateParts[1]);
 				const year = parseInt(dateParts[2]);
 				setCurrentDate(new Date(year, month, day));
-				setSelectedDate(data);
+				setSelectedLocalDate(data);
 			}
 		}
 	}, [open, data]);
@@ -56,17 +64,91 @@ export default function DatePicker({
 		if (open && daysContainerRef.current) {
 			renderCalendar();
 		}
-	}, [currentDate, open]);
+	}, [currentDate, open, selectedDate, selectedStartDate, selectedEndDate]);
+
+	const disableDate = (day: number, month: number, year: number) => {
+		// const currentDateString = `{${month + 1}/${day}/${year}}`;
+		const currentDateRealFormat = new Date(year, month, day);
+		const today = new Date();
+		const todayDate = today.getDate();
+		const todayMonth = today.getMonth();
+		const todayYear = today.getFullYear();
+
+		const pastDate =
+			year < todayYear ||
+			(year === todayYear && month < todayMonth) ||
+			(year === todayYear && month === todayMonth && day < todayDate);
+
+		if (pastDate) return true;
+
+		if (picked == "startDate" || picked == "endDate") {
+			if (selectedDate) {
+				const [selectedMonth, selectedDay, selectedYear] = selectedDate
+					.split("/")
+					.map(Number);
+				const selectedDateRealFormat = new Date(
+					selectedYear,
+					selectedMonth - 1,
+					selectedDay
+				);
+
+				if (
+					day == selectedDay &&
+					month == selectedMonth - 1 &&
+					year == selectedYear
+				) {
+					return true;
+				} else {
+					if (currentDateRealFormat <= selectedDateRealFormat) {
+						return true;
+					}
+				}
+			}
+		}
+
+		if (picked == "endDate") {
+			if (selectedStartDate) {
+				const [startMonth, startDay, startYear] = selectedStartDate
+					.split("/")
+					.map(Number);
+				const startDateRealFormat = new Date(startYear, startMonth - 1, startDay);
+
+				if (selectedDate) {
+					const [selectedMonth, selectedDay, selectedYear] = selectedDate
+						.split("/")
+						.map(Number);
+					const selectedDateRealFormat = new Date(
+						selectedYear,
+						selectedMonth - 1,
+						selectedDay
+					);
+
+					if (
+						currentDateRealFormat >= selectedDateRealFormat &&
+						currentDateRealFormat <= startDateRealFormat
+					) {
+						return true;
+					} else {
+						if (currentDateRealFormat <= startDateRealFormat) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+
+		return false;
+	};
 
 	const renderCalendar = () => {
 		const year = currentDate.getFullYear();
 		const month = currentDate.getMonth();
 		const firstDayOfMonth = new Date(year, month, 1).getDay();
 		const daysInMonth = new Date(year, month + 1, 0).getDate();
-		const today = new Date();
-		const todayDate = today.getDate();
-		const todayMonth = today.getMonth();
-		const todayYear = today.getFullYear();
+		// const today = new Date();
+		// const todayDate = today.getDate();
+		// const todayMonth = today.getMonth();
+		// const todayYear = today.getFullYear();
 
 		const daysContainer = daysContainerRef.current;
 		if (!daysContainer) return;
@@ -82,27 +164,23 @@ export default function DatePicker({
 
 		for (let i = 1; i <= daysInMonth; i++) {
 			const dayDiv = document.createElement("div");
+			const isDisabled = disableDate(i, month, year);
 
-			const checkDate =
-				year < todayYear ||
-				(year === todayYear && month < todayMonth) ||
-				(year === todayYear && month === todayMonth && i < todayDate);
-
-			if (checkDate) {
+			if (isDisabled) {
 				dayDiv.className =
 					"flex h-[38px] w-[38px] items-center justify-center rounded-[7px] border-[.5px] border-transparent text-gray-700 cursor-not-allowed opacity-50 sm:h-[46px] sm:w-[47px] mb-2";
 			} else {
 				dayDiv.className =
 					"cursor-pointer flex h-[38px] w-[38px] items-center justify-center rounded-[7px] border-[.5px] border-transparent text-white hover:border-stroke hover:bg-gray-2 sm:h-[46px] sm:w-[47px] dark:text-white dark:hover:border-dark-3 dark:hover:bg-dark mb-2";
 
-				const isDaySelected = selectedDate === `${month + 1}/${i}/${year}`;
+				const isDaySelected = selectedLocalDate === `${month + 1}/${i}/${year}`;
 				if (isDaySelected) {
 					dayDiv.classList.add("bg-violet-800", "text-white");
 				}
 
 				dayDiv.addEventListener("click", () => {
 					const selectedDateValue = `${month + 1}/${i}/${year}`;
-					setSelectedDate(selectedDateValue);
+					setSelectedLocalDate(selectedDateValue);
 
 					if (daysContainer) {
 						daysContainer
@@ -134,9 +212,9 @@ export default function DatePicker({
 	};
 
 	const handleApply = () => {
-		if (selectedDate) {
+		if (selectedLocalDate) {
 			close();
-			date(selectedDate);
+			date(selectedLocalDate);
 		}
 	};
 
@@ -229,7 +307,7 @@ export default function DatePicker({
 					<div
 						id="cancelBtn"
 						className={`flex h-[40px] sm:h-[50px] w-full items-center justify-center rounded-md ${
-							selectedDate
+							selectedLocalDate
 								? "cursor-pointer bg-violet-800"
 								: "bg-transparent text-transparent"
 						} text-xs sm:text-base font-medium text-white"

@@ -1,16 +1,17 @@
-import Dropzone from "react-dropzone";
 import ExitIcon from "../icons/exitIcon";
 import { InformationIcon } from "../icons/informationIcon";
 import { PencilIcon } from "../icons/pencilIcon";
 import { FormEvent, useState } from "react";
-import { UploadIcon } from "../icons/uploadIcon";
-import DatePicker from "../datePicker";
-import { Calendar } from "lucide-react";
+import { Calendar, ChevronDown } from "lucide-react";
 import TimePicker from "../timePicker";
 import DangerPopUp from "../dialog/dangerPopUp";
 import WarningPopUp from "../dialog/warningPopUp";
 import InputField from "../adminComponents/inputField";
 import TextAreaField from "../adminComponents/textAreaField";
+import ImageInputField from "../adminComponents/imageInputField";
+import DeleteAndSaveButtonForAdd from "../adminComponents/deleteAndSaveButton";
+import DateInputField from "../adminComponents/dateInputField";
+import Toolip from "../toolip";
 
 type EventProps = {
 	eventName: string;
@@ -31,6 +32,8 @@ type EventPopUpProps = {
 };
 
 export default function EventPopUp({ open, close, save }: EventPopUpProps) {
+	const [toolip, setToolip] = useState<boolean>(false);
+
 	const [togel, setTogel] = useState<boolean>(false);
 	const [imageFileName, setImageFileName] = useState<string>("");
 	const [preview, setPreview] = useState<string>("");
@@ -70,6 +73,19 @@ export default function EventPopUp({ open, close, save }: EventPopUpProps) {
 		useState<string>("");
 
 	const [dangerPopUp, setDangerPopUp] = useState<boolean>(false);
+
+	const toolipData = [
+		["Data", "Min", "Max"],
+		[
+			["Event Name", "-", "100 characters"],
+			["Event Date", "-", "-"],
+			["Registration Url", "-", "-"],
+			["Registration Start Date", "-", "-"],
+			["Registration End Date", "-", "-"],
+			["Event Description", "-", "200 characters"],
+			["Poster", "1 image", "1 image"],
+		],
+	];
 
 	function resetForm() {
 		setTogel(false);
@@ -186,7 +202,14 @@ export default function EventPopUp({ open, close, save }: EventPopUpProps) {
 					</div>
 				</div>
 				<div className="bg-neutral-900 flex flex-col items-end px-5 sm:px-[36px] py-[24px] space-y-[20px] sm:space-y-[32px]">
-					<InformationIcon width={20} height={20} color="white" />
+					<div
+						onClick={() => setToolip(!toolip)}
+						className="relative cursor-pointer">
+						<InformationIcon width={20} height={20} color="white" />
+						{toolip && (
+							<Toolip toolipData={toolipData} onClose={() => setToolip(false)} />
+						)}
+					</div>
 					<form
 						onSubmit={handleSubmit}
 						className="w-full flex flex-col items-end gap-y-[32px]">
@@ -205,39 +228,18 @@ export default function EventPopUp({ open, close, save }: EventPopUpProps) {
 							</li>
 							<li className="grid grid-cols-12 gap-[20px]">
 								<div className="relative col-span-12 md:col-span-4 lg:col-span-6 flex flex-col gap-[6px]">
-									<label className="text-xs sm:text-base font-bold" htmlFor="">
-										Date
-									</label>
-									<div
-										onClick={() => setDatePickerOpen("date")}
-										className={`cursor-pointer h-full flex items-center rounded-[4px] border ${
-											editDate
-												? "bg-neutral-800 border-transparent"
-												: "bg-transparent border-neutral-500"
-										} px-4 gap-x-3 py-1 sm:py-2`}>
-										<Calendar className="w-4 sm:w-7" color="#737373" />
-										<p className="text-neutral-500 text-xs sm:text-base">
-											{date
-												? `${date.split("-")[0].split("/")[1]}/${
-														date.split("-")[0].split("/")[0]
-												  }/${date.split("-")[0].split("/")[2]}`
-												: "Pick a date"}
-										</p>
-									</div>
-									<DatePicker
-										className="top-17"
-										close={() => setDatePickerOpen("")}
-										open={datePickerPopUp == "date" && !editDate}
-										date={(value) => setDate(value)}
+									<DateInputField
+										setDatePickerOpen={setDatePickerOpen}
+										setDatePickerOpenType="date"
+										setDate={setDate}
+										date={date}
+										setEditDate={setEditDate}
+										editDate={editDate}
+										submited={submited}
+										datePickerPopUp={datePickerPopUp}
+										selectedDate={date}
+										label="Date"
 									/>
-									{submited && (
-										<div
-											onClick={() => setEditDate(!editDate)}
-											className="cursor-pointer absolute right-1 sm:right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[5px] sm:gap-x-[10px] px-[8px] py-[5px] rounded-[8px]">
-											<p className="text-xs text-neutral-400">Edit</p>
-											<PencilIcon width={14} height={14} color="#A3A3A3" />
-										</div>
-									)}
 								</div>
 								<table className="col-span-12 md:col-span-8 lg:col-span-6">
 									<thead>
@@ -260,8 +262,17 @@ export default function EventPopUp({ open, close, save }: EventPopUpProps) {
 															: "bg-transparent border-neutral-500"
 													} px-2 sm:px-4 py-[4px] sm:py-[8px] gap-x-1 sm:gap-x-3`}>
 													<Calendar className="w-4 sm:w-7" color="#737373" />
-													<p className="text-xs sm:text-base text-neutral-500">
-														{startTime ? startTime : "Select A Time"}
+													<p
+														className={`w-full flex justify-between items-center text-xs sm:text-base ${
+															startTime ? "text-white" : "text-neutral-500"
+														}`}>
+														{startTime
+															? startTime.split(" ")[0] +
+															  ":" +
+															  startTime.split(" ")[1] +
+															  startTime.split(" ")[2]
+															: "Select A Time"}
+														<ChevronDown />
 													</p>
 												</div>
 												<TimePicker
@@ -288,8 +299,17 @@ export default function EventPopUp({ open, close, save }: EventPopUpProps) {
 															: "bg-transparent border-neutral-500"
 													} px-2 sm:px-4 py-[4px] sm:py-[8px] gap-x-1 sm:gap-x-3`}>
 													<Calendar className="w-4 sm:w-7" color="#737373" />
-													<p className="text-xs sm:text-base text-neutral-500">
-														{endTime ? endTime : "Select A Time"}
+													<p
+														className={`w-full flex justify-between items-center text-xs sm:text-base ${
+															endTime ? "text-white" : "text-neutral-500"
+														}`}>
+														{endTime
+															? endTime.split(" ")[0] +
+															  ":" +
+															  endTime.split(" ")[1] +
+															  endTime.split(" ")[2]
+															: "Select A Time"}
+														<ChevronDown />
 													</p>
 												</div>
 												<TimePicker
@@ -314,7 +334,7 @@ export default function EventPopUp({ open, close, save }: EventPopUpProps) {
 								<div
 									onClick={() => setTogel(!togel)}
 									className={`w-[40px] sm:w-[60px] h-[20px] sm:h-[30px] ${
-										!togel ? "bg-[#270081]" : "bg-neutral-400"
+										!togel ? "bg-primary" : "bg-neutral-400"
 									} flex items-center rounded-full px-[5px] relative cursor-pointer`}>
 									<div
 										className={`absolute left-[5px] w-[11px] sm:w-[21px] h-[11px] sm:h-[21px] bg-white rounded-full transition-all duration-300 ${
@@ -356,76 +376,44 @@ export default function EventPopUp({ open, close, save }: EventPopUpProps) {
 									<table className="col-span-12 md:col-span-8 lg:col-span-6">
 										<thead>
 											<tr>
-												<td className="w-[50%] text-xs sm:text-base">Start Date</td>
+												<td className="w-[50%] text-xs sm:text-base font-bold">
+													Start Date
+												</td>
 												<td className="px-2 sm:px-5"></td>
-												<td className="w-[50%] text-xs sm:text-base">End Date</td>
+												<td className="w-[50%] text-xs sm:text-base font-bold">End Date</td>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
 												<td className="relative">
-													<div
-														onClick={() => setDatePickerOpen("startDate")}
-														className={`cursor-pointer flex items-center h-full mt-[6px] rounded-[4px] border ${
-															editStartDate
-																? "bg-neutral-800 border-transparent"
-																: "bg-transparent border-neutral-500"
-														} px-2 sm:px-4 py-[4px] sm:py-[8px] gap-x-1 sm:gap-x-3`}>
-														<Calendar className="w-4 sm:w-7" color="#737373" />
-														<p className="text-xs sm:text-base text-neutral-500">
-															{startDate
-																? `${startDate.split("-")[0].split("/")[1]}/${
-																		startDate.split("-")[0].split("/")[0]
-																  }/${startDate.split("-")[0].split("/")[2]}`
-																: "Pick a date"}
-														</p>
-													</div>
-													<DatePicker
-														close={() => setDatePickerOpen("")}
-														open={datePickerPopUp == "startDate" && !editStartDate}
-														date={(value) => setStartDate(value)}
+													<DateInputField
+														setDatePickerOpen={setDatePickerOpen}
+														setDatePickerOpenType="startDate"
+														setDate={setStartDate}
+														date={startDate}
+														setEditDate={setEditStartDate}
+														editDate={editStartDate}
+														submited={submited}
+														datePickerPopUp={datePickerPopUp}
+														selectedDate={date}
+														selectedStartDate={startDate}
 													/>
-													{submited && (
-														<div
-															onClick={() => setEditStartDate(!editStartDate)}
-															className="cursor-pointer absolute right-1 sm:right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[5px] sm:gap-x-[10px] px-[8px] py-[5px] rounded-[8px]">
-															<p className="text-xs text-neutral-400">Edit</p>
-															<PencilIcon width={14} height={14} color="#A3A3A3" />
-														</div>
-													)}
 												</td>
 												<td className="px-2 sm:px-5">-</td>
 												<td className="relative">
-													<div
-														onClick={() => setDatePickerOpen("endDate")}
-														className={`cursor-pointer flex items-center h-full mt-[6px] rounded-[4px] border ${
-															editEndDate
-																? "bg-neutral-800 border-transparent"
-																: "bg-transparent border-neutral-500"
-														} px-2 sm:px-4 py-[4px] sm:py-[8px] gap-x-1 sm:gap-x-3`}>
-														<Calendar className="w-4 sm:w-7" color="#737373" />
-														<p className="text-xs sm:text-base text-neutral-500">
-															{endDate
-																? `${endDate.split("-")[0].split("/")[1]}/${
-																		endDate.split("-")[0].split("/")[0]
-																  }/${endDate.split("-")[0].split("/")[2]}`
-																: "Pick a date"}
-														</p>
-													</div>
-													<DatePicker
-														className="right-0"
-														close={() => setDatePickerOpen("")}
-														open={datePickerPopUp == "endDate" && !editEndDate}
-														date={(value) => setEndDate(value)}
+													<DateInputField
+														setDatePickerOpen={setDatePickerOpen}
+														setDatePickerOpenType="endDate"
+														setDate={setEndDate}
+														date={endDate}
+														setEditDate={setEditEndDate}
+														editDate={editEndDate}
+														submited={submited}
+														datePickerPopUp={datePickerPopUp}
+														selectedDate={date}
+														selectedStartDate={startDate}
+														selectedEndDate={endDate}
 													/>
-													{submited && (
-														<div
-															onClick={() => setEditEndDate(!editEndDate)}
-															className="cursor-pointer absolute right-1 sm:right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[5px] sm:gap-x-[10px] px-[8px] py-[5px] rounded-[8px]">
-															<p className="text-xs text-neutral-400">Edit</p>
-															<PencilIcon width={14} height={14} color="#A3A3A3" />
-														</div>
-													)}
 												</td>
 											</tr>
 										</tbody>
@@ -445,99 +433,24 @@ export default function EventPopUp({ open, close, save }: EventPopUpProps) {
 								</div>
 							</li>
 							<li className="grid grid-cols-12 gap-[20px]">
-								{!editImage && (
-									<div className="col-span-12 sm:col-span-8 md:col-span-6 lg:col-span-7 flex flex-col gap-y-[6px]">
-										<label className="text-xs sm:text-base font-bold" htmlFor="">
-											Upload Poster
-										</label>
-										<div className="flex items-center justify-center w-full">
-											<Dropzone onDrop={(file) => handleImage(file)}>
-												{({ getRootProps, getInputProps }) => (
-													<label
-														{...getRootProps()}
-														htmlFor="dropzone-file"
-														className="flex flex-col items-center justify-center w-full h-40 border-2 border-neutral-400 border-dashed rounded-lg cursor-pointer">
-														<div className="flex flex-col items-center justify-center pt-5 pb-6">
-															<UploadIcon color="white" />
-															<p className="mb-2 text-xs sm:text-sm text-white">
-																Drag & drop <span className="font-semibold">or browse</span>
-															</p>
-															<p className="text-xs text-gray-500 dark:text-gray-400">
-																JPG, PNG, or SVG | MAX 10 mb
-															</p>
-														</div>
-														<input {...getInputProps()} className="hidden" />
-													</label>
-												)}
-											</Dropzone>
-										</div>
-									</div>
-								)}
-								<div
-									className={`${
-										submited == "submit"
-											? "col-span-12 sm:col-span-4 md:col-span-3 2xl:col-span-2"
-											: "col-span-12 sm:col-span-4 md:col-span-3 lg:col-span-2"
-									} flex flex-col gap-y-[6px]`}>
-									<label className="text-xs sm:text-base font-bold" htmlFor="">
-										Image Preview
-									</label>
-									<div
-										className={`relative h-40 flex justify-center items-center ${
-											!preview && "border-2 border-neutral-400 border-dashed"
-										} rounded-lg`}>
-										{preview ? (
-											<img
-												className="w-full h-full object-cover rounded-[8px]"
-												src={preview}
-												alt=""
-											/>
-										) : (
-											<p className="text-xs text-center px-7">No Image To Preview</p>
-										)}
-										{editImage && (
-											<div
-												onClick={() => setEditImage(!editImage)}
-												className="cursor-pointer absolute right-1 sm:right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[5px] sm:gap-x-[10px] px-[8px] py-[5px] rounded-[8px]">
-												<p className="text-xs text-neutral-400">Edit</p>
-												<PencilIcon width={14} height={14} color="#A3A3A3" />
-											</div>
-										)}
-									</div>
-								</div>
-								{preview && (
-									<div className="col-span-12 md:col-span-3 lg:col-span-3 xl:col-span-3 2xl:col-span-3 flex flex-col gap-y-[6px]">
-										<label className="hidden md:block text-transparent" htmlFor="">
-											lorem
-										</label>
-										{!submited && (
-											<div className="flex justify-between items-center bg-[#270081] px-[15px] py-[6px] rounded-[8px]">
-												<p className="text-xs">{imageFileName}</p>
-												<ExitIcon onClick={() => setPreview("")} size={10} />
-											</div>
-										)}
-									</div>
-								)}
+								<ImageInputField
+									type="add"
+									setPreview={setPreview}
+									preview={preview}
+									handleImage={handleImage}
+									imageFileName={imageFileName}
+									setEditImage={setEditImage}
+									editImage={editImage}
+									submited={submited}
+								/>
 							</li>
 						</ul>
-						<div className="flex gap-x-[20px]">
-							<div
-								onClick={() => submited == "submit" && setDangerPopUp(!dangerPopUp)}
-								className={`w-[80px] sm:w-[150px] h-[40px] sm:h-[50px] flex justify-center items-center text-xs sm:text-base text-rose-800 ${
-									submited == "submit" && "cursor-pointer border border-rose-800"
-								} px-[24px] py-[14px] rounded-full`}>
-								{submited == "submit" && "Delete"}
-							</div>
-							<button
-								type={`${formComplete ? "submit" : "button"}`}
-								className={`w-[100px] sm:w-[150px] h-[40px] sm:h-[50px] flex justify-center items-center text-xs sm:text-base ${
-									formComplete
-										? "cursor-pointer border border-white text-white"
-										: "cursor-not-allowed border border-gray-700 text-gray-700"
-								} px-[24px] py-[14px] rounded-full`}>
-								Save
-							</button>
-						</div>
+						<DeleteAndSaveButtonForAdd
+							submited={submited}
+							formComplete={formComplete}
+							handleDangerPopUp={() => setDangerPopUp(!dangerPopUp)}
+							saveLabel="Save"
+						/>
 					</form>
 				</div>
 			</div>
@@ -547,6 +460,7 @@ export default function EventPopUp({ open, close, save }: EventPopUpProps) {
 				close={() => setWarningPopUp(false)}
 				title="Warning!"
 				message={warningPopUpDescription}
+				onConfirm={() => setWarningPopUp(false)}
 			/>
 
 			<DangerPopUp

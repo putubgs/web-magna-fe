@@ -6,6 +6,7 @@ import { PeopleIcon } from "./icons/peopleIcon";
 import { TestimoniIcon } from "./icons/testimoniIcon";
 import { AdminCalendarIcon } from "./icons/adminCalendarIcon";
 import { PartnershipIcon } from "./icons/partnershipIcon";
+import { SuperAdminIcon } from "./icons/superAdminIcon";
 
 export default function AdminSideBar({
 	responsiveSidebar,
@@ -34,11 +35,30 @@ export default function AdminSideBar({
 	return (
 		<>
 			<hr className="border-[#A3A3A3]" />
+			<Link className="block" to={"/admin?panel=admin-manage"}>
+				<li
+					className={`flex ${responsiveSidebar && "justify-center"} items-center ${
+						panel == "admin-manage"
+							? "bg-primary text-white text-base font-bold"
+							: "bg-transparent text-[#A3A3A3] text-base font-normal"
+					} gap-[20px] p-[10px] rounded-[8px]`}>
+					<SuperAdminIcon
+						className="w-6 lg:w-7"
+						color={`${panel == "admin-manage" ? "white" : "#A3A3A3"}`}
+					/>
+					{sectionLabel && (
+						<span className="text-sm lg:text-base whitespace-nowrap transition-opacity duration-200">
+							Admin Manage
+						</span>
+					)}
+				</li>
+			</Link>
+			<hr className="border-[#A3A3A3]" />
 			<Link className="block" to={"/admin?panel=about-us"}>
 				<li
 					className={`flex ${responsiveSidebar && "justify-center"} items-center ${
 						panel == "about-us"
-							? "bg-[#270081] text-white text-base font-bold"
+							? "bg-primary text-white text-base font-bold"
 							: "bg-transparent text-[#A3A3A3] text-base font-normal"
 					} gap-[20px] p-[10px] rounded-[8px]`}>
 					<PeopleIcon
@@ -57,7 +77,7 @@ export default function AdminSideBar({
 				<li
 					className={`flex ${responsiveSidebar && "justify-center"} items-center ${
 						panel == "event"
-							? "bg-[#270081] text-white text-base font-bold"
+							? "bg-primary text-white text-base font-bold"
 							: "bg-transparent text-[#A3A3A3] text-base font-normal"
 					} gap-[20px] p-[10px] rounded-[8px]`}>
 					<AdminCalendarIcon
@@ -76,7 +96,7 @@ export default function AdminSideBar({
 				<li
 					className={`flex ${responsiveSidebar && "justify-center"} items-center ${
 						panel == "impact"
-							? "bg-[#270081] text-white text-base font-bold"
+							? "bg-primary text-white text-base font-bold"
 							: "bg-transparent text-[#A3A3A3] text-base font-normal"
 					} gap-[20px] p-[10px] rounded-[8px]`}>
 					<ImpactIcon
@@ -95,7 +115,7 @@ export default function AdminSideBar({
 				<li
 					className={`flex ${responsiveSidebar && "justify-center"} items-center ${
 						panel == "partnership"
-							? "bg-[#270081] text-white text-base font-bold"
+							? "bg-primary text-white text-base font-bold"
 							: "bg-transparent text-[#A3A3A3] text-base font-normal"
 					} gap-[20px] p-[10px] rounded-[8px]`}>
 					<PartnershipIcon
@@ -114,7 +134,7 @@ export default function AdminSideBar({
 				<li
 					className={`flex ${responsiveSidebar && "justify-center"} items-center ${
 						panel == "testimoni"
-							? "bg-[#270081] text-white text-base font-bold"
+							? "bg-primary text-white text-base font-bold"
 							: "bg-transparent text-[#A3A3A3] text-base font-normal"
 					} gap-[20px] p-[10px] rounded-[8px]`}>
 					<TestimoniIcon
@@ -133,7 +153,7 @@ export default function AdminSideBar({
 				<li
 					className={`flex ${responsiveSidebar && "justify-center"} items-center ${
 						panel == "gallery"
-							? "bg-[#270081] text-white text-base font-bold"
+							? "bg-primary text-white text-base font-bold"
 							: "bg-transparent text-[#A3A3A3] text-base font-normal"
 					} gap-[20px] p-[10px] rounded-[8px]`}>
 					<GalleryIcon

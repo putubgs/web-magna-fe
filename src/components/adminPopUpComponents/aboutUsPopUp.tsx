@@ -3,14 +3,15 @@ import { ApprovedIcon } from "../icons/approvedIcon";
 import { ClockIcon } from "../icons/clockIcon";
 import ExitIcon from "../icons/exitIcon";
 import { InformationIcon } from "../icons/informationIcon";
-import { UploadIcon } from "../icons/uploadIcon";
 import { PencilIcon } from "../icons/pencilIcon";
-import Dropzone from "react-dropzone";
 import { Sketch } from "@uiw/react-color";
 import DangerPopUp from "../dialog/dangerPopUp";
 import WarningPopUp from "../dialog/warningPopUp";
 import InputField from "../adminComponents/inputField";
 import TextAreaField from "../adminComponents/textAreaField";
+import ImageInputField from "../adminComponents/imageInputField";
+import DeleteAndSaveButtonForAdd from "../adminComponents/deleteAndSaveButton";
+import Toolip from "../toolip";
 
 type AboutUsDataProps = {
 	title: string;
@@ -29,6 +30,8 @@ type AboutUsPopUpProps = {
 };
 
 export default function AboutUsPopUp({ open, close, save }: AboutUsPopUpProps) {
+	const [toolip, setToolip] = useState<boolean>(false);
+
 	const [title, setTitle] = useState<string>("");
 	const [color, setColor] = useState<string>("#ffffff");
 	const [colorPicker, setColorPicker] = useState<boolean>(false);
@@ -56,6 +59,18 @@ export default function AboutUsPopUp({ open, close, save }: AboutUsPopUpProps) {
 		useState<string>("");
 
 	const [dangerPopUp, setDangerPopUp] = useState<boolean>(false);
+
+	const toolipData = [
+		["Data", "Min", "Max"],
+		[
+			["Slogan", "1 Word", "1 Word"],
+			["Organization Description", "-", "150 Character"],
+			["Logo", "1 Image", "1 Image"],
+			["Instagram", "1 Account", "1 Account"],
+			["Email", "1 Account", "1 Account"],
+			["Linkedin", "1 Account", "1 Account"],
+		],
+	];
 
 	useEffect(() => {
 		function handleClickOutside(event: MouseEvent) {
@@ -207,7 +222,14 @@ export default function AboutUsPopUp({ open, close, save }: AboutUsPopUpProps) {
 								{submited == "save" ? "Approved" : "Waiting"}
 							</p>
 						</div>
-						<InformationIcon width={20} height={20} color="white" />
+						<div
+							onClick={() => setToolip(!toolip)}
+							className="relative cursor-pointer">
+							<InformationIcon width={20} height={20} color="white" />
+							{toolip && (
+								<Toolip toolipData={toolipData} onClose={() => setToolip(false)} />
+							)}
+						</div>
 					</div>
 					<form
 						onSubmit={handleSubmit}
@@ -274,7 +296,7 @@ export default function AboutUsPopUp({ open, close, save }: AboutUsPopUpProps) {
 								<div className="relative flex flex-col gap-y-[6px]">
 									<TextAreaField
 										textAreaLabel="Organization Description"
-                    textAreaPlaceholder="Event Description"
+										textAreaPlaceholder="Event Description"
 										setData={setDescription}
 										setEditData={setEditDescription}
 										editData={editDescription}
@@ -363,102 +385,24 @@ export default function AboutUsPopUp({ open, close, save }: AboutUsPopUpProps) {
 								</div>
 							</li>
 							<li className="grid grid-cols-12 gap-[20px]">
-								{!editImage && (
-									<div className="col-span-12 sm:col-span-8 md:col-span-6 lg:col-span-8 flex flex-col gap-y-[6px]">
-										<label className="text-xs sm:text-base font-bold" htmlFor="">
-											Upload Logo
-										</label>
-										<div className="flex items-center justify-center w-full">
-											<Dropzone onDrop={(file) => handleImage(file)}>
-												{({ getRootProps, getInputProps }) => (
-													<label
-														{...getRootProps()}
-														htmlFor="dropzone-file"
-														className="flex flex-col items-center justify-center w-full h-40 border-2 border-neutral-400 border-dashed rounded-lg cursor-pointer">
-														<div className="flex flex-col items-center justify-center pt-5 pb-6">
-															<UploadIcon color="white" />
-															<p className="mb-2 text-xs sm:text-sm text-white">
-																Drag & drop <span className="font-semibold">or browse</span>
-															</p>
-															<p className="text-xs text-gray-500 dark:text-gray-400">
-																JPG, PNG, or SVG | MAX 10 mb
-															</p>
-														</div>
-														<input {...getInputProps()} className="hidden" />
-													</label>
-												)}
-											</Dropzone>
-										</div>
-									</div>
-								)}
-								<div
-									className={`${
-										submited == "submit"
-											? "col-span-12 sm:col-span-4 md:col-span-3 2xl:col-span-2"
-											: "col-span-12 sm:col-span-4 md:col-span-3 lg:col-span-2"
-									} flex flex-col gap-y-[6px]`}>
-									<label className="text-xs sm:text-base font-bold" htmlFor="">
-										Logo Preview
-									</label>
-									<div
-										className={`relative h-40 flex justify-center items-center  ${
-											!preview && "border-2 border-neutral-400 border-dashed"
-										} rounded-lg`}>
-										{preview ? (
-											<img
-												className="w-full h-full object-cover rounded-[8px]"
-												src={preview}
-												alt=""
-											/>
-										) : (
-											<p className="text-xs text-center px-7">No Image To Preview</p>
-										)}
-										{editImage && (
-											<div
-												onClick={() => {
-													setEditImage(!editImage);
-													setPreview("");
-												}}
-												className="cursor-pointer absolute right-2 top-2 flex items-center bg-neutral-700 gap-x-[5px] sm:gap-x-[10px] px-[8px] py-[5px] rounded-[8px]">
-												<p className="text-xs text-neutral-400">Edit</p>
-												<PencilIcon width={14} height={14} color="#A3A3A3" />
-											</div>
-										)}
-									</div>
-								</div>
-								{preview && (
-									<div className="col-span-12 sm:col-span-3 lg:col-span-2 flex flex-col gap-y-[6px]">
-										<label className="hidden md:block text-transparent" htmlFor="">
-											lorem
-										</label>
-										{submited !== "submit" && (
-											<div className="flex justify-between items-center bg-[#270081] px-[15px] py-[6px] rounded-[8px]">
-												<p className="text-xs">{imageFileName}</p>
-												<ExitIcon onClick={() => setPreview("")} size={10} />
-											</div>
-										)}
-									</div>
-								)}
+								<ImageInputField
+									type="add"
+									setPreview={setPreview}
+									preview={preview}
+									handleImage={handleImage}
+									imageFileName={imageFileName}
+									setEditImage={setEditImage}
+									editImage={editImage}
+									submited={submited}
+								/>
 							</li>
 						</ul>
-						<div className="flex gap-x-[10px] sm:gap-x-[20px]">
-							<div
-								onClick={() => submited == "submit" && setDangerPopUp(!dangerPopUp)}
-								className={`w-[80px] sm:w-[150px] h-[40px] sm:h-[50px] flex justify-center items-center text-xs sm:text-base text-rose-800 ${
-									submited == "submit" && "cursor-pointer border border-rose-800"
-								} px-[24px] py-[14px] rounded-full`}>
-								{submited == "submit" && "Delete"}
-							</div>
-							<button
-								type={`${formComplete ? "submit" : "button"}`}
-								className={`w-[200px] sm:w-[300px] h-[40px] sm:h-[50px] flex justify-center items-center text-xs sm:text-base ${
-									formComplete
-										? "cursor-pointer border border-white text-white"
-										: "cursor-not-allowed border border-gray-700 text-gray-700"
-								} px-[24px] py-[14px] rounded-full`}>
-								Save & Request Approval
-							</button>
-						</div>
+						<DeleteAndSaveButtonForAdd
+							submited={submited}
+							formComplete={formComplete}
+							handleDangerPopUp={() => setDangerPopUp(!dangerPopUp)}
+							saveLabel="Save"
+						/>
 					</form>
 				</div>
 			</div>
@@ -468,6 +412,7 @@ export default function AboutUsPopUp({ open, close, save }: AboutUsPopUpProps) {
 				close={() => setWarningPopUp(false)}
 				title="Warning!"
 				message={warningPopUpDescription}
+				onConfirm={() => setWarningPopUp(false)}
 			/>
 
 			<DangerPopUp

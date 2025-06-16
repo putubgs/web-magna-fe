@@ -5,11 +5,17 @@ import { TrashCanIcon } from "../icons/trashCanIcon";
 import GalleryPopUp from "../adminPopUpComponents/galleryPopUp";
 import GalleryDetailPopUp from "../adminDetailPopUpComponents/galleryDetailPopUp";
 import DangerPopUp from "../dialog/dangerPopUp";
+import SuccessPopUp from "../dialog/sucessPopUp";
 
 type GalleryProps = {
 	eventName: string;
 	date: string;
 	image: string;
+};
+
+type SuccessPopUpProps = {
+	title: string;
+	message: string;
 };
 
 export default function GalleryManagement() {
@@ -22,8 +28,17 @@ export default function GalleryManagement() {
 	const [galleryData, setGalleryData] = useState<GalleryProps[] | null>(null);
 
 	const [dangerPopUp, setDangerPopUp] = useState<boolean>(false);
+	const [successPopUp, setSuccessPopUp] = useState<boolean>(false);
+	const [successPopUpComponent, setSuccessPopUpComponent] =
+		useState<SuccessPopUpProps | null>(null);
 
 	function handleSubmitGallery(galleryData: GalleryProps) {
+		setSuccessPopUpComponent({
+			title: "Photo Added!",
+			message: "You've successfully added a new photo to the panel",
+		});
+		setSuccessPopUp(true);
+
 		setGalleryData((prev) => (prev ? [...prev, galleryData] : [galleryData]));
 	}
 
@@ -31,10 +46,27 @@ export default function GalleryManagement() {
 		setGalleryData((prev) => {
 			if (!prev) return null;
 
-			const newData = [...prev];
-			newData[index] = updatedData;
+			const currentData = prev[index];
 
-			return newData;
+			const change =
+				currentData.eventName !== updatedData.eventName ||
+				currentData.date !== updatedData.date ||
+				currentData.image !== updatedData.image;
+
+			if (change) {
+				const newData = [...prev];
+				newData[index] = updatedData;
+
+				setSuccessPopUpComponent({
+					title: "Gallery Updated!",
+					message: "The gallery have been successfully updated",
+				});
+				setSuccessPopUp(true);
+
+				return newData;
+			} else {
+				return prev;
+			}
 		});
 	}
 
@@ -76,7 +108,7 @@ export default function GalleryManagement() {
 				</h1>
 				<button
 					onClick={() => setGalleryPopUp(true)}
-					className="cursor-pointer bg-[#270081] text-sm lg:text-base p-[16px] rounded-[8px]">
+					className="cursor-pointer bg-primary text-sm lg:text-base p-[16px] rounded-[8px]">
 					Add Picture +
 				</button>
 			</section>
@@ -179,6 +211,16 @@ export default function GalleryManagement() {
 				title="Delete"
 				message="Are you sure you want to delete this?"
 			/>
+
+			{successPopUpComponent && (
+				<SuccessPopUp
+					open={successPopUp}
+					close={() => setSuccessPopUp(false)}
+					onConfirm={() => setSuccessPopUp(false)}
+					title={successPopUpComponent.title}
+					message={successPopUpComponent.message}
+				/>
+			)}
 		</>
 	);
 }
