@@ -13,10 +13,15 @@ export default function AdminSideBar({
 }: {
 	responsiveSidebar: boolean;
 }) {
-	const [sectionLabel, setSectionLabel] = useState<boolean>(!responsiveSidebar);
+	const [sectionLabel, setSectionLabel] = useState<boolean>(
+		!responsiveSidebar
+	);
 	const location = useLocation();
 	const url = new URLSearchParams(location.search);
 	const panel = url.get("panel");
+
+	// Pake localStorage -> get role (admin/super-admin)
+	const userRole = localStorage.getItem("userRole");
 
 	useEffect(() => {
 		let delay: number;
@@ -34,33 +39,47 @@ export default function AdminSideBar({
 
 	return (
 		<>
-			<hr className="border-[#A3A3A3]" />
-			<Link className="block" to={"/admin?panel=admin-manage"}>
-				<li
-					className={`flex ${responsiveSidebar && "justify-center"} items-center ${
-						panel == "admin-manage"
-							? "bg-primary text-white text-base font-bold"
-							: "bg-transparent text-[#A3A3A3] text-base font-normal"
-					} gap-[20px] p-[10px] rounded-[8px]`}>
-					<SuperAdminIcon
-						className="w-6 lg:w-7"
-						color={`${panel == "admin-manage" ? "white" : "#A3A3A3"}`}
-					/>
-					{sectionLabel && (
-						<span className="text-sm lg:text-base whitespace-nowrap transition-opacity duration-200">
-							Admin Manage
-						</span>
-					)}
-				</li>
-			</Link>
+			{userRole === "super-admin" && (
+				<>
+					<hr className="border-[#A3A3A3]" />
+					<Link className="block" to={"/admin?panel=admin-manage"}>
+						<li
+							className={`flex ${
+								responsiveSidebar && "justify-center"
+							} items-center ${
+								panel == "admin-manage"
+									? "bg-primary text-white text-base font-bold"
+									: "bg-transparent text-[#A3A3A3] text-base font-normal"
+							} gap-[20px] p-[10px] rounded-[8px]`}
+						>
+							<SuperAdminIcon
+								className="w-6 lg:w-7"
+								color={`${
+									panel == "admin-manage"
+										? "white"
+										: "#A3A3A3"
+								}`}
+							/>
+							{sectionLabel && (
+								<span className="text-sm lg:text-base whitespace-nowrap transition-opacity duration-200">
+									Admin Manage
+								</span>
+							)}
+						</li>
+					</Link>
+				</>
+			)}
 			<hr className="border-[#A3A3A3]" />
 			<Link className="block" to={"/admin?panel=about-us"}>
 				<li
-					className={`flex ${responsiveSidebar && "justify-center"} items-center ${
+					className={`flex ${
+						responsiveSidebar && "justify-center"
+					} items-center ${
 						panel == "about-us"
 							? "bg-primary text-white text-base font-bold"
 							: "bg-transparent text-[#A3A3A3] text-base font-normal"
-					} gap-[20px] p-[10px] rounded-[8px]`}>
+					} gap-[20px] p-[10px] rounded-[8px]`}
+				>
 					<PeopleIcon
 						className="w-6 lg:w-7"
 						color={`${panel == "about-us" ? "white" : "#A3A3A3"}`}
@@ -75,11 +94,14 @@ export default function AdminSideBar({
 			<hr className="border-[#A3A3A3]" />
 			<Link className="block" to={"/admin?panel=event"}>
 				<li
-					className={`flex ${responsiveSidebar && "justify-center"} items-center ${
+					className={`flex ${
+						responsiveSidebar && "justify-center"
+					} items-center ${
 						panel == "event"
 							? "bg-primary text-white text-base font-bold"
 							: "bg-transparent text-[#A3A3A3] text-base font-normal"
-					} gap-[20px] p-[10px] rounded-[8px]`}>
+					} gap-[20px] p-[10px] rounded-[8px]`}
+				>
 					<AdminCalendarIcon
 						className="w-6 lg:w-7"
 						color={`${panel == "event" ? "white" : "#A3A3A3"}`}
@@ -94,11 +116,14 @@ export default function AdminSideBar({
 			<hr className="border-[#A3A3A3]" />
 			<Link className="block" to={"/admin?panel=impact"}>
 				<li
-					className={`flex ${responsiveSidebar && "justify-center"} items-center ${
+					className={`flex ${
+						responsiveSidebar && "justify-center"
+					} items-center ${
 						panel == "impact"
 							? "bg-primary text-white text-base font-bold"
 							: "bg-transparent text-[#A3A3A3] text-base font-normal"
-					} gap-[20px] p-[10px] rounded-[8px]`}>
+					} gap-[20px] p-[10px] rounded-[8px]`}
+				>
 					<ImpactIcon
 						className="w-6 lg:w-7"
 						color={`${panel == "impact" ? "white" : "#A3A3A3"}`}
@@ -113,14 +138,19 @@ export default function AdminSideBar({
 			<hr className="border-[#A3A3A3]" />
 			<Link className="block" to={"/admin?panel=partnership"}>
 				<li
-					className={`flex ${responsiveSidebar && "justify-center"} items-center ${
+					className={`flex ${
+						responsiveSidebar && "justify-center"
+					} items-center ${
 						panel == "partnership"
 							? "bg-primary text-white text-base font-bold"
 							: "bg-transparent text-[#A3A3A3] text-base font-normal"
-					} gap-[20px] p-[10px] rounded-[8px]`}>
+					} gap-[20px] p-[10px] rounded-[8px]`}
+				>
 					<PartnershipIcon
 						className="w-6 lg:w-7"
-						color={`${panel == "partnership" ? "white" : "#A3A3A3"}`}
+						color={`${
+							panel == "partnership" ? "white" : "#A3A3A3"
+						}`}
 					/>
 					{sectionLabel && (
 						<span className="text-sm lg:text-base whitespace-nowrap transition-opacity duration-200">
@@ -132,11 +162,14 @@ export default function AdminSideBar({
 			<hr className="border-[#A3A3A3]" />
 			<Link className="block" to={"/admin?panel=testimoni"}>
 				<li
-					className={`flex ${responsiveSidebar && "justify-center"} items-center ${
+					className={`flex ${
+						responsiveSidebar && "justify-center"
+					} items-center ${
 						panel == "testimoni"
 							? "bg-primary text-white text-base font-bold"
 							: "bg-transparent text-[#A3A3A3] text-base font-normal"
-					} gap-[20px] p-[10px] rounded-[8px]`}>
+					} gap-[20px] p-[10px] rounded-[8px]`}
+				>
 					<TestimoniIcon
 						className="w-6 lg:w-7"
 						color={`${panel == "testimoni" ? "white" : "#A3A3A3"}`}
@@ -151,11 +184,14 @@ export default function AdminSideBar({
 			<hr className="border-[#A3A3A3]" />
 			<Link className="block" to={"/admin?panel=gallery"}>
 				<li
-					className={`flex ${responsiveSidebar && "justify-center"} items-center ${
+					className={`flex ${
+						responsiveSidebar && "justify-center"
+					} items-center ${
 						panel == "gallery"
 							? "bg-primary text-white text-base font-bold"
 							: "bg-transparent text-[#A3A3A3] text-base font-normal"
-					} gap-[20px] p-[10px] rounded-[8px]`}>
+					} gap-[20px] p-[10px] rounded-[8px]`}
+				>
 					<GalleryIcon
 						className="w-6 lg:w-7"
 						color={`${panel == "gallery" ? "white" : "#A3A3A3"}`}

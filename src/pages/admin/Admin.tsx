@@ -24,6 +24,9 @@ export default function Admin() {
 		!responsiveSidebar
 	);
 
+	// Pake localStorage -> get role (admin/super-admin)
+	const userRole = localStorage.getItem("userRole");
+
 	function handleMobileResponsive() {
 		return responsiveSidebar
 			? setResponsiveSidebar(false)
@@ -51,7 +54,10 @@ export default function Admin() {
 			<section className="h-screen flex flex-col overflow-hidden">
 				<header className="fixed w-full bg-black flex justify-between items-center p-[20px] px-[40px]">
 					<section>
-						<a className="flex items-center space-x-4 cursor-pointer" href="/">
+						<a
+							className="flex items-center space-x-4 cursor-pointer"
+							href="/"
+						>
 							<img
 								src="/assets/logo/business-units/Magna.png"
 								alt="Magna Logo"
@@ -65,7 +71,9 @@ export default function Admin() {
 					</section>
 					<section className="flex items-center gap-[15px] md:gap-[30px]">
 						<div className="space-y-[6px]">
-							<h3 className="text-base lg:text-xl font-semibold">Link To Work</h3>
+							<h3 className="text-base lg:text-xl font-semibold">
+								Link To Work
+							</h3>
 							<p className="text-sm">LinkToWork@gmail.com</p>
 						</div>
 						<img
@@ -79,13 +87,15 @@ export default function Admin() {
 					<aside
 						className={`transition-all ease-in-out duration-300 ${
 							responsiveSidebar ? "w-[100px]" : "w-[400px]"
-						} py-[40px] h-full bg-black flex flex-col justify-between p-[20px]`}>
+						} py-[40px] h-full bg-black flex flex-col justify-between p-[20px]`}
+					>
 						<div className="flex flex-col justify-between gap-20">
 							<div></div>
 							<ul className="space-y-[20px]">
 								<li
 									onClick={handleMobileResponsive}
-									className="flex justify-center items-center text-[#737373] text-sm md:text-base gap-[10px] md:gap-[20px] py-[10px] cursor-pointer">
+									className="flex justify-center items-center text-[#737373] text-sm md:text-base gap-[10px] md:gap-[20px] py-[10px] cursor-pointer"
+								>
 									{showMinimizeText && "Minimize Sidebar"}
 									{!responsiveSidebar ? (
 										<DoubleArrowIcon className="w-6 lg:w-7" />
@@ -95,27 +105,38 @@ export default function Admin() {
 										</div>
 									)}
 								</li>
-								<AdminSideBar responsiveSidebar={responsiveSidebar} />
+								<AdminSideBar
+									responsiveSidebar={responsiveSidebar}
+								/>
 							</ul>
 						</div>
 						<div className="flex justify-center">
 							<a
 								href="/login"
 								className={`flex items-center text-base lg:text-xl font-normal ${
-									!responsiveSidebar && "border-[2px] border-[#404040]"
-								}  rounded-full px-[30px] lg:px-[60px] py-[8px] lg:py-[12px] gap-[10px]`}>
+									!responsiveSidebar &&
+									"border-[2px] border-[#404040]"
+								}  rounded-full px-[30px] lg:px-[60px] py-[8px] lg:py-[12px] gap-[10px]`}
+							>
 								{showLogoutText && "Logout"}
 								<div className="flex justify-center items-center border border-full rounded-full w-[36px] h-[36px]">
-									<RightArrowIcon className="w-3 lg:w-5" fill="white" />
+									<RightArrowIcon
+										className="w-3 lg:w-5"
+										fill="white"
+									/>
 								</div>
 							</a>
 						</div>
 					</aside>
 					<main
 						className={`w-full overflow-y-auto ${
-							responsiveSidebar ? "col-span-11 w-full" : "col-span-10"
-						} flex flex-col gap-[20px] px-[20px] pt-28 pb-5`}>
-						{panel == "admin-manage" && <SuperAdmin />}
+							responsiveSidebar
+								? "col-span-11 w-full"
+								: "col-span-10"
+						} flex flex-col gap-[20px] px-[20px] pt-28 pb-5`}
+					>
+						{panel == "admin-manage" &&
+							userRole === "super-admin" && <SuperAdmin />}
 						{panel == "about-us" && <AboutUsManagement />}
 						{panel == "event" && <EventManagement />}
 						{panel == "impact" && <ImpactManagement />}
