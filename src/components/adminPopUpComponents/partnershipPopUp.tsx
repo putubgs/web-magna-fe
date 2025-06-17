@@ -37,6 +37,9 @@ export default function PartnershipPopUp({
 	const [dangerPopUp, setDangerPopUp] = useState<boolean>(false);
 
 	const toolipData = [["Data", "Min", "Max"], [["Logo", "1 image", "1 image"]]];
+	const toolipGuide = [
+		"Each organization must display a minimum of 3 partner."
+	]
 
 	function resetForm() {
 		setPartnerName("");
@@ -100,7 +103,7 @@ export default function PartnershipPopUp({
 						className="relative cursor-pointer">
 						<InformationIcon width={20} height={20} color="white" />
 						{toolip && (
-							<Toolip toolipData={toolipData} onClose={() => setToolip(false)} />
+							<Toolip toolipData={toolipData} onClose={() => setToolip(false)} toolipGuide={toolipGuide}/>
 						)}
 					</div>
 					<form

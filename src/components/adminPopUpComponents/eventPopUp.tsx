@@ -87,6 +87,11 @@ export default function EventPopUp({ open, close, save }: EventPopUpProps) {
 		],
 	];
 
+	const toolipGuide = [
+		"Each organization must display a minimum of 1 event card and maximum 5 event card.",
+		"Registration Informations is Optional",
+	]
+
 	function resetForm() {
 		setTogel(false);
 		setEventName("");
@@ -207,7 +212,7 @@ export default function EventPopUp({ open, close, save }: EventPopUpProps) {
 						className="relative cursor-pointer">
 						<InformationIcon width={20} height={20} color="white" />
 						{toolip && (
-							<Toolip toolipData={toolipData} onClose={() => setToolip(false)} />
+							<Toolip toolipData={toolipData} onClose={() => setToolip(false)} toolipGuide={toolipGuide}/>
 						)}
 					</div>
 					<form

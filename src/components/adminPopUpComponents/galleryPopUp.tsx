@@ -46,6 +46,10 @@ export default function GalleryPopUp({ open, close, save }: GalleryPopUpProps) {
 		],
 	];
 
+	const toolipGuide = [
+		"Each organization must display a minimum of 3 event photos."
+	]
+
 	function resetForm() {
 		setEventName("");
 		setDate("");
@@ -112,7 +116,7 @@ export default function GalleryPopUp({ open, close, save }: GalleryPopUpProps) {
 						className="relative cursor-pointer">
 						<InformationIcon width={20} height={20} color="white" />
 						{toolip && (
-							<Toolip toolipData={toolipData} onClose={() => setToolip(false)} />
+							<Toolip toolipData={toolipData} onClose={() => setToolip(false)} toolipGuide={toolipGuide} />
 						)}
 					</div>
 					<form
