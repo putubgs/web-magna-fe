@@ -33,7 +33,6 @@ export default function ImpactDetailPopUp({
 	save,
 	data,
 }: ImpactPopUpProps) {
-	const [toolip, setToolip] = useState<boolean>(false);
 
 	const [editData, setEditData] = useState<ImpactProps[]>([]);
 	const [submited, setSubmited] = useState<string>("submit");
@@ -150,12 +149,9 @@ export default function ImpactDetailPopUp({
 					</div>
 					<div className="bg-neutral-900 flex flex-col items-end px-[36px] py-[24px] space-y-[32px]">
 						<div
-							onClick={() => setToolip(!toolip)}
 							className="relative cursor-pointer">
 							<InformationIcon width={20} height={20} color="white" />
-							{toolip && (
-								<Toolip toolipData={toolipData} onClose={() => setToolip(false)} />
-							)}
+								<Toolip toolipData={toolipData}/>
 						</div>
 						<form
 							onSubmit={handleSubmit}
