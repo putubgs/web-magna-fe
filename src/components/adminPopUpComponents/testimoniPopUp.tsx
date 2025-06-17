@@ -107,7 +107,7 @@ export default function TestimoniPopUp({
             <InformationIcon width={20} height={20} color="white" className="group-hover:scale-110 transition-transform duration-400"/>
             <Toolip
               toolipData={toolipData}
-              className="group-hover:opacity-100 group-hover:translate-y-0 group-hover:rotate-0 group-hover:scale-100 transform duration-400 group-hover:pointer-events-auto pointer-events-none"
+              className="group-hover:opacity-100 group-hover:translate-y-0 group-hover:rotate-0 group-hover:scale-100 transform duration-400 pointer-events-none"
               toolipGuide={toolipGuide}
             />
           </div>

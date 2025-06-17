@@ -104,7 +104,7 @@ export default function PartnershipPopUp({
             <Toolip
               toolipData={toolipData}
               toolipGuide={toolipGuide}
-              className="group-hover:opacity-100 group-hover:translate-y-0 group-hover:rotate-0 group-hover:scale-100 transform duration-400 group-hover:pointer-events-auto pointer-events-none"
+              className="group-hover:opacity-100 group-hover:translate-y-0 group-hover:rotate-0 group-hover:scale-100 transform duration-400 pointer-events-none"
             />
           </div>
           <form
