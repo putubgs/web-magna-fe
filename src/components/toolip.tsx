@@ -52,7 +52,7 @@ export default function Toolip({
         </tbody>
       </table>
       {toolipGuide?.map((guide, index) => (
-        <div key={index} className="w-full bg-neutral-900 py-[12px] mt-0.5 text-center whitespace-nowrap text-neutral-200 text-sm">
+        <div key={index} className="w-full bg-neutral-900 py-[12px] border-t-[0.5px] border-white text-center whitespace-nowrap text-neutral-200 text-sm">
 		  {guide}
 		</div>
       ))}

@@ -70,10 +70,6 @@ export default function AboutUsPopUp({ open, close, save }: AboutUsPopUpProps) {
     ],
   ];
 
-  const toolipGuide = [
-    "Each organization must display a minimum of 3 taglines.",
-  ];
-
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -229,12 +225,10 @@ export default function AboutUsPopUp({ open, close, save }: AboutUsPopUpProps) {
                 {submited == "save" ? "Approved" : "Waiting"}
               </p>
             </div>
-            <div className="relative cursor-pointer group">
+            <div className="relative cursor-pointer">
               <InformationIcon width={20} height={20} color="white" />
-
               <Toolip
                 toolipData={toolipData}
-                toolipGuide={toolipGuide}
                 className="group-hover:opacity-100 group-hover:translate-y-0 group-hover:rotate-0 transform duration-300"
               />
             </div>
