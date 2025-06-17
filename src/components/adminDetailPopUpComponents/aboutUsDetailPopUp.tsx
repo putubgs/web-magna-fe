@@ -40,7 +40,6 @@ export default function AboutUsDetailPopUp({
 	data,
 	index,
 }: AddAboutUsPopUpProps) {
-	const [toolip, setToolip] = useState<boolean>(false);
 
 	const [title, setTitle] = useState<string>("");
 	const [color, setColor] = useState<string>("#ffffff");
@@ -235,12 +234,12 @@ export default function AboutUsDetailPopUp({
 							</p>
 						</div>
 						<div
-							onClick={() => setToolip(!toolip)}
+
 							className="relative cursor-pointer">
 							<InformationIcon width={20} height={20} color="white" />
-							{toolip && (
-								<Toolip toolipData={toolipData} onClose={() => setToolip(false)} toolipGuide={toolipGuide} />
-							)}
+
+								<Toolip toolipData={toolipData} toolipGuide={toolipGuide} />
+
 						</div>
 					</div>
 					<form
