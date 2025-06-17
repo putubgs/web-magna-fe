@@ -99,9 +99,13 @@ export default function PartnershipPopUp({
           </div>
         </div>
         <div className="bg-neutral-900 flex flex-col items-end px-5 sm:px-[36px] py-[24px] space-y-[20px] sm:space-y-[32px]">
-          <div className="relative cursor-pointer">
-            <InformationIcon width={20} height={20} color="white" />
-            <Toolip toolipData={toolipData} toolipGuide={toolipGuide} />
+          <div className="relative cursor-pointer group">
+            <InformationIcon width={20} height={20} color="white" className="group-hover:scale-110 transition-transform duration-400"/>
+            <Toolip
+              toolipData={toolipData}
+              toolipGuide={toolipGuide}
+              className="group-hover:opacity-100 group-hover:translate-y-0 group-hover:rotate-0 group-hover:scale-100 transform duration-400 group-hover:pointer-events-auto pointer-events-none"
+            />
           </div>
           <form
             onSubmit={handleSubmit}

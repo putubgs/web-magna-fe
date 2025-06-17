@@ -2,11 +2,13 @@ interface InformationIconProps {
 	height: number;
 	width: number;
 	color: string;
+	className?: string;
 }
 
 export const InformationIcon = (props: InformationIconProps) => {
 	return (
 		<svg
+			className={props.className}
 			width={props.width}
 			height={props.height}
 			viewBox="0 0 20 20"

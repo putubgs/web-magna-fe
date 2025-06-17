@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 
 type TooltipProps = {
   toolipData: (string | string[])[][];
@@ -14,7 +14,7 @@ export default function Toolip({
   const tooltipRef = useRef<HTMLTableElement>(null);
 
   return (
-    <div className={`absolute z-10 top-8 -right-5 flex flex-col ${className} -translate-y-190 rotate-45 opacity-0`}>
+    <div className={`absolute z-10 top-8 -right-5 flex flex-col ${className} -translate-y-190 rotate-45 opacity-0 scale-0`}>
       <div className="mr-4 flex justify-end">
         <div className="w-0 h-0 border-l-[12px] border-l-transparent border-b-[12px] border-b-neutral-800 z-20"></div>
         <div className="w-0 h-0 border-r-[12px] border-r-transparent border-b-[12px] border-b-neutral-800 z-20"></div>

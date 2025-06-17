@@ -225,11 +225,11 @@ export default function AboutUsPopUp({ open, close, save }: AboutUsPopUpProps) {
                 {submited == "save" ? "Approved" : "Waiting"}
               </p>
             </div>
-            <div className="relative cursor-pointer">
-              <InformationIcon width={20} height={20} color="white" />
+            <div className="relative cursor-pointer group">
+              <InformationIcon width={20} height={20} color="white" className="group-hover:scale-110 transition-transform duration-400" />
               <Toolip
                 toolipData={toolipData}
-                className="group-hover:opacity-100 group-hover:translate-y-0 group-hover:rotate-0 transform duration-300"
+                className="group-hover:opacity-100 group-hover:translate-y-0 group-hover:rotate-0 group-hover:scale-100 transform duration-400 group-hover:pointer-events-auto pointer-events-none"
               />
             </div>
           </div>
