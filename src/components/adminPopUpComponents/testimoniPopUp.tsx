@@ -46,6 +46,10 @@ export default function TestimoniPopUp({
 		],
 	];
 
+	const toolipGuide = [
+		"Each organization must display a minimum of 3 and maximum of 6 testimonials."
+	]
+
 	function resetForm() {
 		setName("");
 		setPosition("");
@@ -103,7 +107,7 @@ export default function TestimoniPopUp({
 						className="relative cursor-pointer">
 						<InformationIcon width={20} height={20} color="white" />
 						{toolip && (
-							<Toolip toolipData={toolipData} onClose={() => setToolip(false)} />
+							<Toolip toolipData={toolipData} onClose={() => setToolip(false)} toolipGuide={toolipGuide}/>
 						)}
 					</div>
 					<form
