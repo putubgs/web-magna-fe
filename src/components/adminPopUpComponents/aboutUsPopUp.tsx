@@ -226,10 +226,10 @@ export default function AboutUsPopUp({ open, close, save }: AboutUsPopUpProps) {
               </p>
             </div>
             <div className="relative cursor-pointer group">
-              <InformationIcon width={20} height={20} color="white" className="group-hover:scale-110 transition-transform duration-400" />
+              <InformationIcon width={20} height={20} color="white" />
               <Toolip
                 toolipData={toolipData}
-                className="group-hover:opacity-100 group-hover:translate-y-0 group-hover:rotate-0 group-hover:scale-100 transform duration-400 pointer-events-none"
+                className="group-hover:opacity-100 duration-300 pointer-events-none"
               />
             </div>
           </div>
