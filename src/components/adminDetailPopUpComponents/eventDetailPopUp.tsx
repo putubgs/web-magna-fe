@@ -14,8 +14,9 @@ import { DeleteAndSaveButtonForEdit } from "../adminComponents/deleteAndSaveButt
 import Toolip from "../toolip";
 
 type EventDataProps = {
-	eventName: string;
-	date: string;
+	buName?: string;
+	eventName?: string;
+	date?: string;
 	startTime: string;
 	endTime: string;
 	registrationUrl?: string;
@@ -98,8 +99,8 @@ export default function EventDetailPopUp({
 
 	useEffect(() => {
 		if (data && data.length > 0) {
-			setEventName(data[0].eventName);
-			setDate(data[0].date);
+			setEventName(data[0].eventName || "");
+			setDate(data[0].date || "");
 			setStartTime(data[0].startTime);
 			setEndTime(data[0].endTime);
 			setRegistrationUrl(data[0].registrationUrl ?? "");

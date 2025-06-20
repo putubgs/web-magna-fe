@@ -31,12 +31,14 @@ export default function AboutUsManagement() {
 		AboutUsDataProps[] | null
 	>(null);
 	const [aboutUsData, setAboutUsData] = useState<AboutUsDataProps[] | null>(
-		null
+		JSON.parse(localStorage.getItem("aboutUsData") || "")
 	);
 
 	const [successPopUp, setSuccessPopUp] = useState<boolean>(false);
 	const [successPopUpComponent, setSuccessPopUpComponent] =
 		useState<SuccessPopUpProps | null>(null);
+
+	localStorage.setItem("aboutUsData", JSON.stringify(aboutUsData));
 
 	function handleSubmitAboutUs(aboutUsData: AboutUsDataProps) {
 		setSuccessPopUpComponent({

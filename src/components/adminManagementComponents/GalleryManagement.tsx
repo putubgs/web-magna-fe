@@ -25,12 +25,16 @@ export default function GalleryManagement() {
 	const [galleryDetailData, setGalleryDetailData] = useState<
 		GalleryProps[] | null
 	>(null);
-	const [galleryData, setGalleryData] = useState<GalleryProps[] | null>(null);
+	const [galleryData, setGalleryData] = useState<GalleryProps[] | null>(
+		JSON.parse(localStorage.getItem("galleryData") || "")
+	);
 
 	const [dangerPopUp, setDangerPopUp] = useState<boolean>(false);
 	const [successPopUp, setSuccessPopUp] = useState<boolean>(false);
 	const [successPopUpComponent, setSuccessPopUpComponent] =
 		useState<SuccessPopUpProps | null>(null);
+
+	localStorage.setItem("galleryData", JSON.stringify(galleryData));
 
 	function handleSubmitGallery(galleryData: GalleryProps) {
 		setSuccessPopUpComponent({

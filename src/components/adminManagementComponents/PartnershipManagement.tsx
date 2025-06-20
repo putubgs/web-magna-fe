@@ -29,12 +29,14 @@ export default function PartnershipManagement() {
 	>(null);
 	const [partnershipData, setPartnershipData] = useState<
 		PartnershipProps[] | null
-	>(null);
+	>(JSON.parse(localStorage.getItem("partnershipData") || ""));
 
 	const [dangerPopUp, setDangerPopUp] = useState<boolean>(false);
 	const [successPopUp, setSuccessPopUp] = useState<boolean>(false);
 	const [successPopUpComponent, setSuccessPopUpComponent] =
 		useState<SuccessPopUpProps | null>(null);
+
+	localStorage.setItem("partnershipData", JSON.stringify(partnershipData));
 
 	const handleCheck = (index: number) => {
 		setPartnershipData((prev) => {

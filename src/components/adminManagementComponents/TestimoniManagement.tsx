@@ -27,13 +27,15 @@ export default function TestimoniManagement() {
 		TestimoniProps[] | null
 	>(null);
 	const [testimoniData, setTestimoniData] = useState<TestimoniProps[] | null>(
-		null
+		JSON.parse(localStorage.getItem("testimoniData") || "")
 	);
 
 	const [dangerPopUp, setDangerPopUp] = useState<boolean>(false);
 	const [successPopUp, setSuccessPopUp] = useState<boolean>(false);
 	const [successPopUpComponent, setSuccessPopUpComponent] =
 		useState<SuccessPopUpProps | null>(null);
+
+	localStorage.setItem("testimoniData", JSON.stringify(testimoniData));
 
 	function handleSubmitTestimoni(testimoniData: TestimoniProps) {
 		setSuccessPopUpComponent({
