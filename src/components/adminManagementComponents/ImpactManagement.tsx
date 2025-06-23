@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ImpactPopUp from "../adminPopUpComponents/impactPopUp";
 import SuccessPopUp from "../dialog/sucessPopUp";
 import { PencilIcon } from "lucide-react";
@@ -26,15 +26,33 @@ export default function ImpactManagement() {
 	const [impactDetailData, setImpactDetailData] = useState<
 		ImpactDetailProps[] | null
 	>(null);
-	const [impactData, setImpactData] = useState<ImpactProps[] | null>(
-		JSON.parse(localStorage.getItem("impactData") || "")
-	);
+	const [impactData, setImpactData] = useState<ImpactProps[] | null>(() => {
+		try {
+			const getData = localStorage.getItem("impactData");
+
+			if (getData == null || getData == "") {
+				return null;
+			}
+
+			const parsedData = JSON.parse(getData);
+
+			return parsedData.length > 0 ? parsedData : null;
+		} catch {
+			localStorage.removeItem("impactData");
+		}
+	});
 
 	const [successPopUp, setSuccessPopUp] = useState<boolean>(false);
 	const [successPopUpComponent, setSuccessPopUpComponent] =
 		useState<SuccessPopUpProps | null>(null);
 
-	localStorage.setItem("impactData", JSON.stringify(impactData));
+	useEffect(() => {
+		if (impactData == null) {
+			localStorage.removeItem("impactData");
+		} else {
+			localStorage.setItem("impactData", JSON.stringify(impactData));
+		}
+	});
 
 	function handleSubmitImpact(impactData: ImpactProps) {
 		setSuccessPopUpComponent({

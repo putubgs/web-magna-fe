@@ -110,7 +110,7 @@ export default function SuperAdminEventManagement() {
 			const newData = [...prev];
 			newData.splice(index, 1);
 
-			localStorage.setItem("eventData", null);
+			localStorage.removeItem("eventData");
 
 			return newData;
 		});
@@ -146,6 +146,26 @@ export default function SuperAdminEventManagement() {
 			]);
 		}
 	}
+
+	const getData = (): SuperAdminEventManagementProps[] => {
+		try {
+			const eventData = localStorage.getItem("eventData");
+
+			if (!eventData || eventData === "") {
+				return [];
+			}
+
+			const parsedData = JSON.parse(eventData);
+
+			return Array.isArray(parsedData) ? parsedData : [];
+		} catch {
+			localStorage.removeItem("eventData");
+
+			return [];
+		}
+	};
+
+	const eventData = getData();
 
 	return (
 		<>
@@ -187,38 +207,36 @@ export default function SuperAdminEventManagement() {
 						</tr>
 					</thead>
 					<tbody className="relative">
-						{JSON.parse(localStorage.getItem("eventData") || "") !== null ? (
-							JSON.parse(localStorage.getItem("eventData") || "").map(
-								(data: SuperAdminEventManagementProps, index: number) => (
-									<tr className="border-b border-[#D4D4D4]">
-										<td className="py-4 px-4 align-top text-sm font-medium">
-											{index + 1}
-										</td>
-										<td className="py-4 px-4 align-top text-sm font-medium">
-											{data.buName}
-										</td>
-										<td className="py-4 px-10 align-top">
-											<p className="text-base font-medium leading-tight">
-												{data.eventName}
-											</p>
-										</td>
-										<td className="py-4 px-0 align-top text-base font-normal whitespace-nowrap">
-											{data.date}
-										</td>
-										<td className="py-4 px-4 align-top">
-											<div className="flex items-center gap-x-[16px]">
-												<div className="cursor-pointer w-[34px] h-[34px] flex justify-center items-center border border-[#FF8800] p-[8px] rounded-[8px]">
-													<div
-														onClick={() => showDetail(index)}
-														className="cursor-pointer w-[34px] h-[34px] flex justify-center items-center border border-[#FF8800] p-[8px] rounded-[8px]">
-														<PencilIcon width={18} height={18} color="#FF8800" />
-													</div>
+						{eventData.length > 0 ? (
+							eventData.map((data: SuperAdminEventManagementProps, index: number) => (
+								<tr className="border-b border-[#D4D4D4]">
+									<td className="py-4 px-4 align-top text-sm font-medium">
+										{index + 1}
+									</td>
+									<td className="py-4 px-4 align-top text-sm font-medium">
+										{data.buName}
+									</td>
+									<td className="py-4 px-10 align-top">
+										<p className="text-base font-medium leading-tight">
+											{data.eventName}
+										</p>
+									</td>
+									<td className="py-4 px-0 align-top text-base font-normal whitespace-nowrap">
+										{data.date}
+									</td>
+									<td className="py-4 px-4 align-top">
+										<div className="flex items-center gap-x-[16px]">
+											<div className="cursor-pointer w-[34px] h-[34px] flex justify-center items-center border border-[#FF8800] p-[8px] rounded-[8px]">
+												<div
+													onClick={() => showDetail(index)}
+													className="cursor-pointer w-[34px] h-[34px] flex justify-center items-center border border-[#FF8800] p-[8px] rounded-[8px]">
+													<PencilIcon width={18} height={18} color="#FF8800" />
 												</div>
 											</div>
-										</td>
-									</tr>
-								)
-							)
+										</div>
+									</td>
+								</tr>
+							))
 						) : (
 							<tr className="h-[250px]">
 								<td colSpan={5}>

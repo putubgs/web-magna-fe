@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LeftChevronIcon } from "../icons/leftChevronIcon";
 import { PencilIcon } from "../icons/pencilIcon";
 import { TrashCanIcon } from "../icons/trashCanIcon";
@@ -33,16 +33,34 @@ export default function EventManagement() {
 	const [eventDetailData, setEventDetailData] = useState<EventProps[] | null>(
 		null
 	);
-	const [eventData, setEventData] = useState<EventProps[] | null>(
-		JSON.parse(localStorage.getItem("eventData") || "")
-	);
+	const [eventData, setEventData] = useState<EventProps[] | null>(() => {
+		try {
+			const getData = localStorage.getItem("eventData");
+
+			if (!getData || getData == null || getData == "") {
+				return null;
+			}
+
+			const parsedData = JSON.parse(getData);
+
+			return parsedData.length > 0 ? parsedData : null;
+		} catch {
+			localStorage.removeItem("eventData");
+		}
+	});
 
 	const [dangerPopUp, setDangerPopUp] = useState<boolean>(false);
 	const [successPopUp, setSuccessPopUp] = useState<boolean>(false);
 	const [successPopUpComponent, setSuccessPopUpComponent] =
 		useState<SuccessPopUpProps | null>(null);
 
-	localStorage.setItem("eventData", JSON.stringify(eventData));
+	useEffect(() => {
+		if (eventData == null) {
+			localStorage.removeItem("eventData");
+		} else {
+			localStorage.setItem("eventData", JSON.stringify(eventData));
+		}
+	}, [eventData]);
 
 	function handleSubmitEvent(eventData: EventProps) {
 		setSuccessPopUpComponent({
