@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LeftChevronIcon } from "../icons/leftChevronIcon";
 import { PencilIcon } from "../icons/pencilIcon";
 import { TrashCanIcon } from "../icons/trashCanIcon";
@@ -25,16 +25,34 @@ export default function GalleryManagement() {
 	const [galleryDetailData, setGalleryDetailData] = useState<
 		GalleryProps[] | null
 	>(null);
-	const [galleryData, setGalleryData] = useState<GalleryProps[] | null>(
-		JSON.parse(localStorage.getItem("galleryData") || "")
-	);
+	const [galleryData, setGalleryData] = useState<GalleryProps[] | null>(() => {
+		try {
+			const getData = localStorage.getItem("galleryData");
+
+			if (!getData || getData == null || getData == "") {
+				return null;
+			}
+
+			const parsedData = JSON.parse(getData);
+
+			return parsedData.length > 0 ? parsedData : null;
+		} catch {
+			localStorage.removeItem("galleryData");
+		}
+	});
 
 	const [dangerPopUp, setDangerPopUp] = useState<boolean>(false);
 	const [successPopUp, setSuccessPopUp] = useState<boolean>(false);
 	const [successPopUpComponent, setSuccessPopUpComponent] =
 		useState<SuccessPopUpProps | null>(null);
 
-	localStorage.setItem("galleryData", JSON.stringify(galleryData));
+	useEffect(() => {
+		if (galleryData == null) {
+			localStorage.removeItem("galleryData");
+		} else {
+			localStorage.setItem("galleryData", JSON.stringify(galleryData));
+		}
+	}, [galleryData]);
 
 	function handleSubmitGallery(galleryData: GalleryProps) {
 		setSuccessPopUpComponent({
@@ -116,7 +134,7 @@ export default function GalleryManagement() {
 					Add Picture +
 				</button>
 			</section>
-			<section className="overflow-scroll xl:overflow-auto h-[500px] bg-black flex flex-col justify-between border border-[#404040] rounded-[20px] p-4">
+			<section className="overflow-scroll xl:overflow-auto h-[500px] bg-black flex flex-col justify-start border border-[#404040] rounded-[20px] p-4">
 				<table className="table-auto w-[1000px] xl:w-full text-white">
 					<thead>
 						<tr className="border-b border-[#D4D4D4] text-left">
@@ -170,25 +188,25 @@ export default function GalleryManagement() {
 								</td>
 							</tr>
 						)}
-						<div
-							className={`absolute right-3 -bottom-20 ${
-								galleryData && galleryData.length > 0 ? "flex" : "hidden"
-							} justify-end items-center gap-2`}>
-							<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20">
-								<LeftChevronIcon width={23} height={23} color="white" />
-							</button>
-							<div className="bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20 appearance-none">
-								<select className="bg-none p-0">
-									<option className="bg-none p-0">1</option>
-								</select>
-							</div>
-							<p className="text-white">of 1</p>
-							<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20 rotate-180">
-								<LeftChevronIcon width={23} height={23} color="white" />
-							</button>
-						</div>
 					</tbody>
 				</table>
+				<div
+					className={`w-[1000px] xl:w-full mt-3 ${
+						galleryData && galleryData.length > 0 ? "flex" : "hidden"
+					} justify-end items-center gap-2`}>
+					<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20">
+						<LeftChevronIcon width={23} height={23} color="white" />
+					</button>
+					<div className="bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20 appearance-none">
+						<select className="bg-none p-0">
+							<option className="bg-none p-0">1</option>
+						</select>
+					</div>
+					<p className="text-white">of 1</p>
+					<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20 rotate-180">
+						<LeftChevronIcon width={23} height={23} color="white" />
+					</button>
+				</div>
 			</section>
 
 			<GalleryPopUp

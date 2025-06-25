@@ -186,7 +186,7 @@ export default function EventManagement() {
 							</div>
 						</div>
 					</section>
-					<section className="overflow-scroll xl:overflow-auto h-full bg-black flex flex-col justify-between border border-[#404040] p-[28px] rounded-[20px]">
+					<section className="overflow-scroll xl:overflow-auto relative h-full bg-black flex flex-col justify-start items-end border border-[#404040] p-[28px] rounded-[20px]">
 						<table className="table-auto w-[1000px] xl:w-full text-white">
 							<thead>
 								<tr className="border-b border-[#D4D4D4] text-left">
@@ -248,25 +248,25 @@ export default function EventManagement() {
 										</td>
 									</tr>
 								)}
-								<div
-									className={`absolute right-3 -bottom-20 ${
-										eventData && eventData.length > 0 ? "flex" : "hidden"
-									} justify-end items-center gap-2`}>
-									<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20">
-										<LeftChevronIcon width={23} height={23} color="white" />
-									</button>
-									<div className="bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20 appearance-none">
-										<select className="bg-none p-0">
-											<option className="bg-none p-0">1</option>
-										</select>
-									</div>
-									<p className="text-white">of 1</p>
-									<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20 rotate-180">
-										<LeftChevronIcon width={23} height={23} color="white" />
-									</button>
-								</div>
 							</tbody>
 						</table>
+						<div
+							className={`mt-3 w-[1000px] xl:w-full ${
+								eventData && eventData.length > 0 ? "flex" : "hidden"
+							} justify-end items-center gap-2`}>
+							<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20">
+								<LeftChevronIcon width={23} height={23} color="white" />
+							</button>
+							<div className="bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20 appearance-none">
+								<select className="bg-none p-0">
+									<option className="bg-none p-0">1</option>
+								</select>
+							</div>
+							<p className="text-white">of 1</p>
+							<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20 rotate-180">
+								<LeftChevronIcon width={23} height={23} color="white" />
+							</button>
+						</div>
 					</section>
 				</>
 			) : (

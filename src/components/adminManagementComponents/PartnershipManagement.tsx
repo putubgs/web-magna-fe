@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LeftChevronIcon } from "../icons/leftChevronIcon";
 import { PencilIcon } from "../icons/pencilIcon";
 import PartnershipPopUp from "../adminPopUpComponents/partnershipPopUp";
@@ -29,14 +29,34 @@ export default function PartnershipManagement() {
 	>(null);
 	const [partnershipData, setPartnershipData] = useState<
 		PartnershipProps[] | null
-	>(JSON.parse(localStorage.getItem("partnershipData") || ""));
+	>(() => {
+		try {
+			const getData = localStorage.getItem("partnershipData");
+
+			if (!getData || getData == null || getData == "") {
+				return null;
+			}
+
+			const parsedData = JSON.parse(getData);
+
+			return parsedData.length > 0 ? parsedData : null;
+		} catch {
+			localStorage.removeItem("partnershipData");
+		}
+	});
 
 	const [dangerPopUp, setDangerPopUp] = useState<boolean>(false);
 	const [successPopUp, setSuccessPopUp] = useState<boolean>(false);
 	const [successPopUpComponent, setSuccessPopUpComponent] =
 		useState<SuccessPopUpProps | null>(null);
 
-	localStorage.setItem("partnershipData", JSON.stringify(partnershipData));
+	useEffect(() => {
+		if (partnershipData == null) {
+			localStorage.removeItem("partnershipData");
+		} else {
+			localStorage.setItem("partnershipData", JSON.stringify(partnershipData));
+		}
+	}, [partnershipData]);
 
 	const handleCheck = (index: number) => {
 		setPartnershipData((prev) => {
@@ -150,7 +170,7 @@ export default function PartnershipManagement() {
 					</section>
 				)}
 			</section>
-			<section className="overflow-scroll xl:overflow-auto h-[500px] bg-black flex flex-col justify-between border border-[#404040] rounded-[20px] p-4">
+			<section className="overflow-scroll xl:overflow-auto h-[500px] bg-black flex flex-col justify-start border border-[#404040] rounded-[20px] p-4">
 				<table className="table-auto w-[700px] xl:w-full h-fit text-white">
 					<thead>
 						<tr className="border-b border-[#D4D4D4] text-left">
@@ -207,41 +227,41 @@ export default function PartnershipManagement() {
 								</td>
 							</tr>
 						)}
-						<section
-							className={`w-full absolute -bottom-20 ${
-								partnershipData && partnershipData.length > 0 ? "flex" : "hidden"
-							} ${
-								partnershipData &&
-								partnershipData.length > 0 &&
-								partnershipData?.filter((item) => item.checked == true).length < 3
-									? "justify-between"
-									: "justify-end"
-							} items-center`}>
-							{partnershipData &&
-								partnershipData.length > 0 &&
-								partnershipData?.filter((item) => item.checked == true).length < 3 && (
-									<div className="flex items-center text-[#FB923C] gap-x-[10px]">
-										<TriangleAlert />
-										<p>Please select minimum 3 partners to display.</p>
-									</div>
-								)}
-							<div className="flex justify-end items-center gap-2">
-								<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20">
-									<LeftChevronIcon width={23} height={23} color="white" />
-								</button>
-								<div className="bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20 appearance-none">
-									<select className="bg-none p-0">
-										<option className="bg-none p-0">1</option>
-									</select>
-								</div>
-								<p className="text-white">of 1</p>
-								<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20 rotate-180">
-									<LeftChevronIcon width={23} height={23} color="white" />
-								</button>
-							</div>
-						</section>
 					</tbody>
 				</table>
+				<div
+					className={`mt-3 w-[1000px] xl:w-full ${
+						partnershipData && partnershipData.length > 0 ? "flex" : "hidden"
+					} ${
+						partnershipData &&
+						partnershipData.length > 0 &&
+						partnershipData?.filter((item) => item.checked == true).length < 3
+							? "justify-between"
+							: "justify-end"
+					} items-center`}>
+					{partnershipData &&
+						partnershipData.length > 0 &&
+						partnershipData?.filter((item) => item.checked == true).length < 3 && (
+							<div className="flex items-center text-[#FB923C] gap-x-[10px]">
+								<TriangleAlert />
+								<p>Please select minimum 3 partners to display.</p>
+							</div>
+						)}
+					<div className="flex justify-end items-center gap-2">
+						<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20">
+							<LeftChevronIcon width={23} height={23} color="white" />
+						</button>
+						<div className="bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20 appearance-none">
+							<select className="bg-none p-0">
+								<option className="bg-none p-0">1</option>
+							</select>
+						</div>
+						<p className="text-white">of 1</p>
+						<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20 rotate-180">
+							<LeftChevronIcon width={23} height={23} color="white" />
+						</button>
+					</div>
+				</div>
 			</section>
 
 			<PartnershipPopUp

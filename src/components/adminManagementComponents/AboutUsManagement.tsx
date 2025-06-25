@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ApprovedIcon } from "../icons/approvedIcon";
 import { EyeIcon } from "../icons/eyeIcon";
 import InstaIcon from "../icons/instaIcon";
@@ -31,14 +31,34 @@ export default function AboutUsManagement() {
 		AboutUsDataProps[] | null
 	>(null);
 	const [aboutUsData, setAboutUsData] = useState<AboutUsDataProps[] | null>(
-		JSON.parse(localStorage.getItem("aboutUsData") || "")
+		() => {
+			try {
+				const getData = localStorage.getItem("aboutUsData");
+
+				if (!getData || getData == null || getData == "") {
+					return null;
+				}
+
+				const parsedData = JSON.parse(getData);
+
+				return parsedData.length > 0 ? parsedData : null;
+			} catch {
+				localStorage.removeItem("aboutUsData");
+			}
+		}
 	);
 
 	const [successPopUp, setSuccessPopUp] = useState<boolean>(false);
 	const [successPopUpComponent, setSuccessPopUpComponent] =
 		useState<SuccessPopUpProps | null>(null);
 
-	localStorage.setItem("aboutUsData", JSON.stringify(aboutUsData));
+	useEffect(() => {
+		if (aboutUsData == null) {
+			localStorage.removeItem("aboutUsData");
+		} else {
+			localStorage.setItem("aboutUsData", JSON.stringify(aboutUsData));
+		}
+	}, [aboutUsData]);
 
 	function handleSubmitAboutUs(aboutUsData: AboutUsDataProps) {
 		setSuccessPopUpComponent({

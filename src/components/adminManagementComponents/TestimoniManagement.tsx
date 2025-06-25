@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LeftChevronIcon } from "../icons/leftChevronIcon";
 import { PencilIcon } from "../icons/pencilIcon";
 import { TrashCanIcon } from "../icons/trashCanIcon";
@@ -27,7 +27,21 @@ export default function TestimoniManagement() {
 		TestimoniProps[] | null
 	>(null);
 	const [testimoniData, setTestimoniData] = useState<TestimoniProps[] | null>(
-		JSON.parse(localStorage.getItem("testimoniData") || "")
+		() => {
+			try {
+				const getData = localStorage.getItem("testimoniData");
+
+				if (!getData || getData == null || getData == "") {
+					return null;
+				}
+
+				const parsedData = JSON.parse(getData);
+
+				return parsedData.length > 0 ? parsedData : null;
+			} catch {
+				localStorage.removeItem("testimoniData");
+			}
+		}
 	);
 
 	const [dangerPopUp, setDangerPopUp] = useState<boolean>(false);
@@ -35,7 +49,13 @@ export default function TestimoniManagement() {
 	const [successPopUpComponent, setSuccessPopUpComponent] =
 		useState<SuccessPopUpProps | null>(null);
 
-	localStorage.setItem("testimoniData", JSON.stringify(testimoniData));
+	useEffect(() => {
+		if (testimoniData == null) {
+			localStorage.removeItem("testimoniData");
+		} else {
+			localStorage.setItem("testimoniData", JSON.stringify(testimoniData));
+		}
+	}, [testimoniData]);
 
 	function handleSubmitTestimoni(testimoniData: TestimoniProps) {
 		setSuccessPopUpComponent({
@@ -119,7 +139,7 @@ export default function TestimoniManagement() {
 					Add Testimoni +
 				</button>
 			</section>
-			<section className="overflow-scroll xl:overflow-auto h-[500px] bg-black flex flex-col justify-between border border-[#404040] rounded-[20px] p-4">
+			<section className="overflow-scroll xl:overflow-auto h-[500px] bg-black flex flex-col justify-start border border-[#404040] rounded-[20px] p-4">
 				<table className="table-fixed w-full text-white">
 					<thead>
 						<tr className="border-b border-[#D4D4D4] text-left">
@@ -171,25 +191,25 @@ export default function TestimoniManagement() {
 								</td>
 							</tr>
 						)}
-						<div
-							className={`absolute right-3 -bottom-20 ${
-								testimoniData && testimoniData.length > 0 ? "flex" : "hidden"
-							} justify-end items-center gap-2`}>
-							<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20">
-								<LeftChevronIcon width={23} height={23} color="white" />
-							</button>
-							<div className="bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20 appearance-none">
-								<select className="bg-none p-0">
-									<option className="bg-none p-0">1</option>
-								</select>
-							</div>
-							<p className="text-white">of 1</p>
-							<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20 rotate-180">
-								<LeftChevronIcon width={23} height={23} color="white" />
-							</button>
-						</div>
 					</tbody>
 				</table>
+				<div
+					className={`mt-3 w-[1000px] xl:w-full ${
+						testimoniData && testimoniData.length > 0 ? "flex" : "hidden"
+					} justify-end items-center gap-2`}>
+					<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20">
+						<LeftChevronIcon width={23} height={23} color="white" />
+					</button>
+					<div className="bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20 appearance-none">
+						<select className="bg-none p-0">
+							<option className="bg-none p-0">1</option>
+						</select>
+					</div>
+					<p className="text-white">of 1</p>
+					<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20 rotate-180">
+						<LeftChevronIcon width={23} height={23} color="white" />
+					</button>
+				</div>
 			</section>
 
 			<TestimoniPopUp

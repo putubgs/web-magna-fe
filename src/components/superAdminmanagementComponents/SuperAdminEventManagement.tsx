@@ -209,7 +209,7 @@ export default function SuperAdminEventManagement() {
 					<tbody className="relative">
 						{eventData.length > 0 ? (
 							eventData.map((data: SuperAdminEventManagementProps, index: number) => (
-								<tr className="border-b border-[#D4D4D4]">
+								<tr key={index} className="border-b border-[#D4D4D4]">
 									<td className="py-4 px-4 align-top text-sm font-medium">
 										{index + 1}
 									</td>
@@ -246,28 +246,27 @@ export default function SuperAdminEventManagement() {
 								</td>
 							</tr>
 						)}
-						<div
-							className={`absolute right-3 -bottom-20 ${
-								superAdminEventManagementData &&
-								superAdminEventManagementData.length > 0
-									? "flex"
-									: "hidden"
-							} justify-end items-center gap-2`}>
-							<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20">
-								<LeftChevronIcon width={23} height={23} color="white" />
-							</button>
-							<div className="bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20 appearance-none">
-								<select className="bg-none p-0">
-									<option className="bg-none p-0">1</option>
-								</select>
-							</div>
-							<p className="text-white">of 1</p>
-							<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20 rotate-180">
-								<LeftChevronIcon width={23} height={23} color="white" />
-							</button>
-						</div>
 					</tbody>
 				</table>
+				<div
+					className={`w-[1000px] xl:w-full ${
+						superAdminEventManagementData && superAdminEventManagementData.length > 0
+							? "flex"
+							: "hidden"
+					} justify-end items-center gap-2`}>
+					<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20">
+						<LeftChevronIcon width={23} height={23} color="white" />
+					</button>
+					<div className="bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20 appearance-none">
+						<select className="bg-none p-0">
+							<option className="bg-none p-0">1</option>
+						</select>
+					</div>
+					<p className="text-white">of 1</p>
+					<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20 rotate-180">
+						<LeftChevronIcon width={23} height={23} color="white" />
+					</button>
+				</div>
 			</section>
 
 			{superAdminEventManagementDetailData && (

@@ -16,9 +16,9 @@ export const SuccessIcon = (props: SuccessIconProps) => {
 			<path
 				d="M12.5 21.25L18.5 27.25L27.5 13.75"
 				stroke="#22C55E"
-				stroke-width="1.5"
-				stroke-linecap="round"
-				stroke-linejoin="round"
+				strokeWidth="1.5"
+				strokeLinecap="round"
+				strokeLinejoin="round"
 			/>
 		</svg>
 	);
