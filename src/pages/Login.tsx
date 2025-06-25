@@ -14,10 +14,12 @@ function Login() {
 
 		if (email === "magnaadmin@gmail.com" && password === "magnaadmin") {
 			localStorage.setItem("userRole", "super-admin");
-			navigate("/admin?panel=about-us");
+			navigate("/admin?panel=admin-manage");
 		} else if (email === "admin@gmail.com" && password === "admin") {
 			localStorage.setItem("userRole", "admin");
 			navigate("/admin?panel=about-us");
+		} else {
+			alert("Wrong email or password");
 		}
 	}
 
@@ -87,7 +89,7 @@ function Login() {
 						<div className="flex rounded md:w-1/3 p-2 mt-4 bg-[#303030] cursor-pointer w-full">
 							<button
 								type="submit"
-								className="w-full bg-white rounded-md text-black text-center py-2"
+								className="w-full bg-white rounded-md text-black  cursor-pointer text-center py-2"
 							>
 								Login
 							</button>
