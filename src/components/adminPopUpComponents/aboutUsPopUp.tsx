@@ -11,7 +11,8 @@ import InputField from "../adminComponents/inputField";
 import TextAreaField from "../adminComponents/textAreaField";
 import ImageInputField from "../adminComponents/imageInputField";
 import DeleteAndSaveButtonForAdd from "../adminComponents/deleteAndSaveButton";
-import Toolip from "../toolip";
+import Tooltip from "../tooltip";
+import { Backdrop } from "../backdrop";
 
 type AboutUsDataProps = {
   title: string;
@@ -58,7 +59,7 @@ export default function AboutUsPopUp({ open, close, save }: AboutUsPopUpProps) {
 
   const [dangerPopUp, setDangerPopUp] = useState<boolean>(false);
 
-  const toolipData = [
+  const tooltipData = [
     ["Data", "Min", "Max"],
     [
       ["Slogan", "1 Word", "1 Word"],
@@ -190,229 +191,251 @@ export default function AboutUsPopUp({ open, close, save }: AboutUsPopUpProps) {
   return (
     <section className="overflow-y-auto absolute top-0 left-0 w-full h-full grid grid-cols-12 items-center bg-white/20 backdrop-blur-[4px] py-10">
       <div className="col-span-12 xl:col-start-2 xl:col-end-12 2xl:col-start-3 2xl:col-end-11 rounded-t-[6px] px-2 sm:px-5 xl:px-16 2xl:px-20">
-        <div className="flex justify-between items-center border-b border-neutral-300 bg-black px-[24px] py-[10px] rounded-t-[6px]">
-          <h1 className="text-sm sm:text-xl md:text-2xl font-semibold">
-            About Us
-          </h1>
-          <div
-            onClick={() =>
-              title || description || instagram || email || linkedin || preview
-                ? setDangerPopUp(true)
-                : close()
-            }
-            className="cursor-pointer border border-white rounded-[4px] p-2"
-          >
-            <ExitIcon size={13} />
-          </div>
-        </div>
-        <div className="bg-neutral-900 px-5 sm:px-[36px] py-[24px] space-y-[20px] sm:space-y-[32px]">
-          <div className="flex justify-between items-start">
+        <div className="relative">
+          <div className="flex justify-between items-center border-b border-neutral-300 bg-black px-[24px] py-[10px] rounded-t-[6px]">
+            <h1 className="text-sm sm:text-xl md:text-2xl font-semibold">
+              About Us
+            </h1>
             <div
-              className={`flex items-center border-[2px] ${
-                submited == "save" ? "border-lime-900" : "border-orange-400"
-              } py-[10px] px-[16px] rounded-[20px] gap-x-[8px]`}
+              onClick={() =>
+                title ||
+                description ||
+                instagram ||
+                email ||
+                linkedin ||
+                preview
+                  ? setDangerPopUp(true)
+                  : close()
+              }
+              className="cursor-pointer border border-white rounded-[4px] p-2"
             >
-              {submited == "save" ? (
-                <ApprovedIcon width={16} height={16} color="#84CC16" />
-              ) : (
-                <ClockIcon width={14} height={14} color="#FB923C" />
-              )}
-              <p
-                className={`text-xs font-bold ${
-                  submited == "save" ? "text-lime-500" : "text-orange-400"
-                }`}
-              >
-                {submited == "save" ? "Approved" : "Waiting"}
-              </p>
-            </div>
-            <div className="relative cursor-pointer group">
-              <InformationIcon width={20} height={20} color="white" />
-              <Toolip
-                toolipData={toolipData}
-                className="group-hover:opacity-100 duration-300 pointer-events-none"
-              />
+              <ExitIcon size={13} />
             </div>
           </div>
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col items-end gap-y-[32px]"
-          >
-            <ul className="w-full border border-neutral-700 px-[20px] py-[24px] rounded-[8px] space-y-[40px]">
-              <li className="grid grid-cols-12 gap-[20px] md:gap-[40px]">
-                <div className="col-span-12 sm:col-span-8 md:col-span-9 flex flex-col gap-y-[6px]">
-                  <InputField
-                    inputLabel="Title"
-                    inputPlaceholder="Enter Title"
-                    setData={setTitle}
-                    setEditData={setEditTitle}
-                    editData={editTitle}
-                    submited={`${submited}`}
+          <div className="bg-neutral-900 px-5 sm:px-[36px] py-[24px] space-y-[20px] sm:space-y-[32px]">
+            <div className="flex justify-between items-start">
+              <div
+                className={`flex items-center border-[2px] ${
+                  submited == "save" ? "border-lime-900" : "border-orange-400"
+                } py-[10px] px-[16px] rounded-[20px] gap-x-[8px]`}
+              >
+                {submited == "save" ? (
+                  <ApprovedIcon width={16} height={16} color="#84CC16" />
+                ) : (
+                  <ClockIcon width={14} height={14} color="#FB923C" />
+                )}
+                <p
+                  className={`text-xs font-bold ${
+                    submited == "save" ? "text-lime-500" : "text-orange-400"
+                  }`}
+                >
+                  {submited == "save" ? "Approved" : "Waiting"}
+                </p>
+              </div>
+              <div className="cursor-pointer group">
+                <Backdrop className="z-1 bg-white/10 group-hover:opacity-95 duration-300" />
+                <div className="relative z-2">
+                  <InformationIcon width={20} height={20} color="white" />
+                  <Tooltip
+                    tooltipData={tooltipData}
+                    className="group-hover:opacity-100 duration-300 pointer-events-none"
                   />
                 </div>
-                <div className="col-span-12 sm:col-span-4 md:col-span-3 flex flex-col gap-y-[6px]">
-                  <label className="text-xs sm:text-base font-bold" htmlFor="">
-                    Color
-                  </label>
-                  <div className="flex items-center gap-x-[10px] relative">
-                    <div
-                      onClick={() => setColorPicker(!colorPicker)}
-                      className="w-[30px] h-[25px] cursor-pointer border border-neutral-700"
-                      style={{ backgroundColor: hex }}
-                    ></div>
-                    <input
-                      value={hex}
-                      onChange={(e) => handleColorChange(e.target.value)}
-                      className={`w-full text-xs sm:text-base font-normal border ${
-                        editColor
-                          ? "bg-neutral-800 border-transparent"
-                          : "bg-transparent border-neutral-500"
-                      } px-[12px] py-[8px] rounded-[4px] outline-none`}
-                      type="text"
-                      placeholder="Hex code"
-                      disabled={editColor}
+              </div>
+            </div>
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col items-end gap-y-[32px]"
+            >
+              <ul className="w-full border border-neutral-700 px-[20px] py-[24px] rounded-[8px] space-y-[40px]">
+                <li className="grid grid-cols-12 gap-[20px] md:gap-[40px]">
+                  <div className="col-span-12 sm:col-span-8 md:col-span-9 flex flex-col gap-y-[6px]">
+                    <InputField
+                      inputLabel="Title"
+                      inputPlaceholder="Enter Title"
+                      setData={setTitle}
+                      setEditData={setEditTitle}
+                      editData={editTitle}
+                      submited={`${submited}`}
                     />
-                    {colorPicker && !editColor && (
-                      <div
-                        ref={colorPickerRef}
-                        className="absolute z-10 top-full left-0 mt-2"
-                      >
-                        <Sketch
-                          color={hex}
-                          onChange={(color) => {
-                            handleColorChange(color.hex);
-                          }}
-                          disableAlpha={true}
-                          presetColors={[]}
-                        />
-                      </div>
-                    )}
-                    {submited == "submit" && (
-                      <div
-                        onClick={() => setEditColor(!editColor)}
-                        className="cursor-pointer absolute right-1 sm:right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[5px] sm:gap-x-[10px] px-[8px] py-[5px] rounded-[8px]"
-                      >
-                        <p className="text-xs text-neutral-400">Edit</p>
-                        <PencilIcon width={14} height={14} color="#A3A3A3" />
-                      </div>
-                    )}
                   </div>
-                </div>
-              </li>
-              <li className="w-full gap-x-[40px]">
-                <div className="relative flex flex-col gap-y-[6px]">
-                  <TextAreaField
-                    textAreaLabel="Organization Description"
-                    textAreaPlaceholder="Event Description"
-                    setData={setDescription}
-                    setEditData={setEditDescription}
-                    editData={editDescription}
-                    submited={`${submited}`}
+                  <div className="col-span-12 sm:col-span-4 md:col-span-3 flex flex-col gap-y-[6px]">
+                    <label
+                      className="text-xs sm:text-base font-bold"
+                      htmlFor=""
+                    >
+                      Color
+                    </label>
+                    <div className="flex items-center gap-x-[10px] relative">
+                      <div
+                        onClick={() => setColorPicker(!colorPicker)}
+                        className="w-[30px] h-[25px] cursor-pointer border border-neutral-700"
+                        style={{ backgroundColor: hex }}
+                      ></div>
+                      <input
+                        value={hex}
+                        onChange={(e) => handleColorChange(e.target.value)}
+                        className={`w-full text-xs sm:text-base font-normal border ${
+                          editColor
+                            ? "bg-neutral-800 border-transparent"
+                            : "bg-transparent border-neutral-500"
+                        } px-[12px] py-[8px] rounded-[4px] outline-none`}
+                        type="text"
+                        placeholder="Hex code"
+                        disabled={editColor}
+                      />
+                      {colorPicker && !editColor && (
+                        <div
+                          ref={colorPickerRef}
+                          className="absolute z-10 top-full left-0 mt-2"
+                        >
+                          <Sketch
+                            color={hex}
+                            onChange={(color) => {
+                              handleColorChange(color.hex);
+                            }}
+                            disableAlpha={true}
+                            presetColors={[]}
+                          />
+                        </div>
+                      )}
+                      {submited == "submit" && (
+                        <div
+                          onClick={() => setEditColor(!editColor)}
+                          className="cursor-pointer absolute right-1 sm:right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[5px] sm:gap-x-[10px] px-[8px] py-[5px] rounded-[8px]"
+                        >
+                          <p className="text-xs text-neutral-400">Edit</p>
+                          <PencilIcon width={14} height={14} color="#A3A3A3" />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </li>
+                <li className="w-full gap-x-[40px]">
+                  <div className="relative flex flex-col gap-y-[6px]">
+                    <TextAreaField
+                      textAreaLabel="Organization Description"
+                      textAreaPlaceholder="Event Description"
+                      setData={setDescription}
+                      setEditData={setEditDescription}
+                      editData={editDescription}
+                      submited={`${submited}`}
+                    />
+                  </div>
+                </li>
+                <li className="grid grid-cols-12 gap-[20px]">
+                  <div className="relative col-span-12 lg:col-span-4 flex flex-col gap-y-[6px]">
+                    <label
+                      className="text-xs sm:text-base font-bold"
+                      htmlFor=""
+                    >
+                      Instagram
+                    </label>
+                    <div className="flex items-center">
+                      <input
+                        onChange={(e) => setInstagram(e.target.value)}
+                        className={`w-full text-xs sm:text-base font-normal border ${
+                          editInstagram
+                            ? "bg-neutral-800 border-transparent"
+                            : "bg-transparent border-neutral-500"
+                        } px-[12px] py-[8px] rounded-[4px] outline-none`}
+                        type="text"
+                        placeholder="https://instagram.com/example"
+                        disabled={editInstagram}
+                      />
+                      {submited == "submit" && (
+                        <div
+                          onClick={() => setEditInstagram(!editInstagram)}
+                          className="cursor-pointer absolute right-1 sm:right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[5px] sm:gap-x-[10px] px-[8px] py-[5px] rounded-[8px]"
+                        >
+                          <p className="text-xs text-neutral-400">Edit</p>
+                          <PencilIcon width={14} height={14} color="#A3A3A3" />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="relative col-span-12 lg:col-span-4 flex flex-col gap-y-[6px]">
+                    <label
+                      className="text-xs sm:text-base font-bold"
+                      htmlFor=""
+                    >
+                      Email
+                    </label>
+                    <div className="flex items-center">
+                      <input
+                        onChange={(e) => setEmail(e.target.value)}
+                        className={`w-full text-xs sm:text-base font-normal border ${
+                          editEmail
+                            ? "bg-neutral-800 border-transparent"
+                            : "bg-transparent border-neutral-500"
+                        } px-[12px] py-[8px] rounded-[4px] outline-none`}
+                        type="text"
+                        placeholder="example@gmail.com"
+                        disabled={editEmail}
+                      />
+                      {submited == "submit" && (
+                        <div
+                          onClick={() => setEditEmail(!editEmail)}
+                          className="cursor-pointer absolute right-1 sm:right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[5px] sm:gap-x-[10px] px-[8px] py-[5px] rounded-[8px]"
+                        >
+                          <p className="text-xs text-neutral-400">Edit</p>
+                          <PencilIcon width={14} height={14} color="#A3A3A3" />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="relative col-span-12 lg:col-span-4 flex flex-col gap-y-[6px]">
+                    <label
+                      className="text-xs sm:text-base font-bold"
+                      htmlFor=""
+                    >
+                      Linkedin
+                    </label>
+                    <div className="flex items-center">
+                      <input
+                        onChange={(e) => setLinkedin(e.target.value)}
+                        className={`w-full text-xs sm:text-base font-normal border ${
+                          editLinkedin
+                            ? "bg-neutral-800 border-transparent"
+                            : "bg-transparent border-neutral-500"
+                        } px-[12px] py-[8px] rounded-[4px] outline-none`}
+                        type="text"
+                        placeholder="https://linkedin.com/in/example"
+                        disabled={editLinkedin}
+                      />
+                      {submited == "submit" && (
+                        <div
+                          onClick={() => setEditLinkedin(!editLinkedin)}
+                          className="cursor-pointer absolute right-1 sm:right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[5px] sm:gap-x-[10px] px-[8px] py-[5px] rounded-[8px]"
+                        >
+                          <p className="text-xs text-neutral-400">Edit</p>
+                          <PencilIcon width={14} height={14} color="#A3A3A3" />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </li>
+                <li className="grid grid-cols-12 gap-[20px]">
+                  <ImageInputField
+                    type="add"
+                    setPreview={setPreview}
+                    preview={preview}
+                    handleImage={handleImage}
+                    imageFileName={imageFileName}
+                    setEditImage={setEditImage}
+                    editImage={editImage}
+                    submited={submited}
                   />
-                </div>
-              </li>
-              <li className="grid grid-cols-12 gap-[20px]">
-                <div className="relative col-span-12 lg:col-span-4 flex flex-col gap-y-[6px]">
-                  <label className="text-xs sm:text-base font-bold" htmlFor="">
-                    Instagram
-                  </label>
-                  <div className="flex items-center">
-                    <input
-                      onChange={(e) => setInstagram(e.target.value)}
-                      className={`w-full text-xs sm:text-base font-normal border ${
-                        editInstagram
-                          ? "bg-neutral-800 border-transparent"
-                          : "bg-transparent border-neutral-500"
-                      } px-[12px] py-[8px] rounded-[4px] outline-none`}
-                      type="text"
-                      placeholder="https://instagram.com/example"
-                      disabled={editInstagram}
-                    />
-                    {submited == "submit" && (
-                      <div
-                        onClick={() => setEditInstagram(!editInstagram)}
-                        className="cursor-pointer absolute right-1 sm:right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[5px] sm:gap-x-[10px] px-[8px] py-[5px] rounded-[8px]"
-                      >
-                        <p className="text-xs text-neutral-400">Edit</p>
-                        <PencilIcon width={14} height={14} color="#A3A3A3" />
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className="relative col-span-12 lg:col-span-4 flex flex-col gap-y-[6px]">
-                  <label className="text-xs sm:text-base font-bold" htmlFor="">
-                    Email
-                  </label>
-                  <div className="flex items-center">
-                    <input
-                      onChange={(e) => setEmail(e.target.value)}
-                      className={`w-full text-xs sm:text-base font-normal border ${
-                        editEmail
-                          ? "bg-neutral-800 border-transparent"
-                          : "bg-transparent border-neutral-500"
-                      } px-[12px] py-[8px] rounded-[4px] outline-none`}
-                      type="text"
-                      placeholder="example@gmail.com"
-                      disabled={editEmail}
-                    />
-                    {submited == "submit" && (
-                      <div
-                        onClick={() => setEditEmail(!editEmail)}
-                        className="cursor-pointer absolute right-1 sm:right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[5px] sm:gap-x-[10px] px-[8px] py-[5px] rounded-[8px]"
-                      >
-                        <p className="text-xs text-neutral-400">Edit</p>
-                        <PencilIcon width={14} height={14} color="#A3A3A3" />
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className="relative col-span-12 lg:col-span-4 flex flex-col gap-y-[6px]">
-                  <label className="text-xs sm:text-base font-bold" htmlFor="">
-                    Linkedin
-                  </label>
-                  <div className="flex items-center">
-                    <input
-                      onChange={(e) => setLinkedin(e.target.value)}
-                      className={`w-full text-xs sm:text-base font-normal border ${
-                        editLinkedin
-                          ? "bg-neutral-800 border-transparent"
-                          : "bg-transparent border-neutral-500"
-                      } px-[12px] py-[8px] rounded-[4px] outline-none`}
-                      type="text"
-                      placeholder="https://linkedin.com/in/example"
-                      disabled={editLinkedin}
-                    />
-                    {submited == "submit" && (
-                      <div
-                        onClick={() => setEditLinkedin(!editLinkedin)}
-                        className="cursor-pointer absolute right-1 sm:right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[5px] sm:gap-x-[10px] px-[8px] py-[5px] rounded-[8px]"
-                      >
-                        <p className="text-xs text-neutral-400">Edit</p>
-                        <PencilIcon width={14} height={14} color="#A3A3A3" />
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </li>
-              <li className="grid grid-cols-12 gap-[20px]">
-                <ImageInputField
-                  type="add"
-                  setPreview={setPreview}
-                  preview={preview}
-                  handleImage={handleImage}
-                  imageFileName={imageFileName}
-                  setEditImage={setEditImage}
-                  editImage={editImage}
-                  submited={submited}
-                />
-              </li>
-            </ul>
-            <DeleteAndSaveButtonForAdd
-              submited={submited}
-              formComplete={formComplete}
-              handleDangerPopUp={() => setDangerPopUp(!dangerPopUp)}
-              saveLabel="Save"
-            />
-          </form>
+                </li>
+              </ul>
+              <DeleteAndSaveButtonForAdd
+                submited={submited}
+                formComplete={formComplete}
+                handleDangerPopUp={() => setDangerPopUp(!dangerPopUp)}
+                saveLabel="Save"
+              />
+            </form>
+          </div>
         </div>
       </div>
 

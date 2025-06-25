@@ -8,7 +8,7 @@ import DangerPopUp from "../dialog/dangerPopUp";
 import InputField from "../adminComponents/inputField";
 import ImageInputField from "../adminComponents/imageInputField";
 import { DeleteAndSaveButtonForEdit } from "../adminComponents/deleteAndSaveButton";
-import Toolip from "../toolip";
+import Tooltip from "../tooltip";
 
 type GalleryDataProps = {
   eventName: string;
@@ -46,7 +46,7 @@ export default function GalleryDetailPopUp({
 
   const [dangerPopUp, setDangerPopUp] = useState<boolean>(false);
 
-  const toolipData = [
+  const tooltipData = [
     ["Data", "Min", "Max"],
     [
       ["Name", "-", "100 characters"],
@@ -127,7 +127,7 @@ export default function GalleryDetailPopUp({
         <div className="bg-neutral-900 flex flex-col items-end px-5 sm:px-[36px] py-[24px] space-y-[20px] sm:space-y-[32px]">
           <div className="relative cursor-pointer">
             <InformationIcon width={20} height={20} color="white" />
-            <Toolip toolipData={toolipData} />
+            <Tooltip tooltipData={tooltipData} />
           </div>
           <form
             onSubmit={handleSubmit}

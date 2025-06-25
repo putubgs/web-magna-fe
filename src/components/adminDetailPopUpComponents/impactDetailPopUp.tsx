@@ -3,7 +3,7 @@ import ExitIcon from "../icons/exitIcon";
 import { InformationIcon } from "../icons/informationIcon";
 import InputField from "../adminComponents/inputField";
 import WarningPopUp from "../dialog/warningPopUp";
-import Toolip from "../toolip";
+import Tooltip from "../tooltip";
 
 type ImpactProps = {
 	displayed?: boolean;
@@ -42,7 +42,7 @@ export default function ImpactDetailPopUp({
 	const [warningPopUpComponent, setWarningPopUpComponent] =
 		useState<WarningPopUpProps | null>(null);
 
-	const toolipData = [
+	const tooltipData = [
 		["Data", "Min", "Max"],
 		[["Displayed Impact", "3 impacts", "5 impacts"]],
 	];
@@ -151,7 +151,7 @@ export default function ImpactDetailPopUp({
 						<div
 							className="relative cursor-pointer">
 							<InformationIcon width={20} height={20} color="white" />
-								<Toolip toolipData={toolipData}/>
+								<Tooltip tooltipData={tooltipData}/>
 						</div>
 						<form
 							onSubmit={handleSubmit}

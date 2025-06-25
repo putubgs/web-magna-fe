@@ -5,7 +5,8 @@ import DangerPopUp from "../dialog/dangerPopUp";
 import InputField from "../adminComponents/inputField";
 import TextAreaField from "../adminComponents/textAreaField";
 import DeleteAndSaveButtonForAdd from "../adminComponents/deleteAndSaveButton";
-import Toolip from "../toolip";
+import Tooltip from "../tooltip";
+import { Backdrop } from "../backdrop";
 
 type TestimoniProps = {
   name: string;
@@ -35,7 +36,7 @@ export default function TestimoniPopUp({
 
   const [dangerPopUp, setDangerPopUp] = useState<boolean>(false);
 
-  const toolipData = [
+  const tooltipData = [
     ["Data", "Min", "Max"],
     [
       ["Name", "-", "-"],
@@ -44,7 +45,7 @@ export default function TestimoniPopUp({
     ],
   ];
 
-  const toolipGuide = [
+  const tooltipGuide = [
     "Each organization must display a minimum of 3 and maximum of 6 testimonials.",
   ];
 
@@ -89,75 +90,80 @@ export default function TestimoniPopUp({
   return (
     <section className="overflow-y-auto absolute top-0 left-0 w-full h-full grid grid-cols-12 items-center bg-white/20 backdrop-blur-[4px] py-10">
       <div className="col-span-12 xl:col-start-2 xl:col-end-12 2xl:col-start-3 2xl:col-end-11 rounded-t-[6px] px-2 sm:px-5 xl:px-28">
-        <div className="flex justify-between items-center border-b border-neutral-300 bg-black px-[24px] py-[10px] rounded-t-[6px]">
-          <h1 className="text-xs sm:text-xl md:text-2xl font-semibold">
-            Testimoni
-          </h1>
-          <div
-            onClick={() =>
-              name || position || testimoni ? setDangerPopUp(true) : close()
-            }
-            className="cursor-pointer border border-white rounded-[4px] p-2"
-          >
-            <ExitIcon size={13} />
+        <div className="relative">
+          <div className="flex justify-between items-center border-b border-neutral-300 bg-black px-[24px] py-[10px] rounded-t-[6px]">
+            <h1 className="text-xs sm:text-xl md:text-2xl font-semibold">
+              Testimoni
+            </h1>
+            <div
+              onClick={() =>
+                name || position || testimoni ? setDangerPopUp(true) : close()
+              }
+              className="cursor-pointer border border-white rounded-[4px] p-2"
+            >
+              <ExitIcon size={13} />
+            </div>
           </div>
-        </div>
-        <div className="bg-neutral-900 flex flex-col items-end px-5 sm:px-[36px] py-[24px] space-y-[20px] sm:space-y-[32px]">
-          <div className="relative cursor-pointer group">
-            <InformationIcon width={20} height={20} color="white" />
-            <Toolip
-              toolipData={toolipData}
-              className="group-hover:opacity-100 duration-300 pointer-events-none"
-              toolipGuide={toolipGuide}
-            />
+          <div className="bg-neutral-900 flex flex-col items-end px-5 sm:px-[36px] py-[24px] space-y-[20px] sm:space-y-[32px]">
+            <div className="cursor-pointer group">
+              <Backdrop className="z-1 bg-white/10 group-hover:opacity-95 duration-300" />
+              <div className="relative z-2">
+                <InformationIcon width={20} height={20} color="white" />
+                <Tooltip
+                  tooltipGuide={tooltipGuide}
+                  tooltipData={tooltipData}
+                  className="group-hover:opacity-100 duration-300 pointer-events-none"
+                />
+              </div>
+            </div>
+            <form
+              onSubmit={handleSubmit}
+              className="w-full flex flex-col items-end gap-y-[32px]"
+            >
+              <ul className="w-full border border-neutral-700 px-[20px] py-[24px] rounded-[8px] space-y-[20px] sm:space-y-[40px]">
+                <li className="w-full flex flex-col sm:flex-row gap-[20px] sm:gap-[40px]">
+                  <div className="relative w-full sm:w-[50%] flex flex-col gap-y-[6px]">
+                    <InputField
+                      inputLabel="Name"
+                      inputPlaceholder="Name"
+                      setData={setName}
+                      setEditData={setEditName}
+                      editData={editName}
+                      submited={`${submited}`}
+                    />
+                  </div>
+                  <div className="relative w-full sm:w-[50%] flex flex-col gap-y-[6px]">
+                    <InputField
+                      inputLabel="Position / instution"
+                      inputPlaceholder="Position / instution"
+                      setData={setPosition}
+                      setEditData={setEditPosition}
+                      editData={editPosition}
+                      submited={`${submited}`}
+                    />
+                  </div>
+                </li>
+                <li className="gap-x-[40px]">
+                  <div className="relative flex flex-col gap-y-[6px]">
+                    <TextAreaField
+                      textAreaLabel="Testimoni"
+                      textAreaPlaceholder="Testimoni"
+                      setData={setTestimoni}
+                      setEditData={setEditTestimoni}
+                      editData={editTestimoni}
+                      submited={`${submited}`}
+                    />
+                  </div>
+                </li>
+              </ul>
+              <DeleteAndSaveButtonForAdd
+                submited={submited}
+                formComplete={formComplete}
+                handleDangerPopUp={() => setDangerPopUp(!dangerPopUp)}
+                saveLabel="Save"
+              />
+            </form>
           </div>
-          <form
-            onSubmit={handleSubmit}
-            className="w-full flex flex-col items-end gap-y-[32px]"
-          >
-            <ul className="w-full border border-neutral-700 px-[20px] py-[24px] rounded-[8px] space-y-[20px] sm:space-y-[40px]">
-              <li className="w-full flex flex-col sm:flex-row gap-[20px] sm:gap-[40px]">
-                <div className="relative w-full sm:w-[50%] flex flex-col gap-y-[6px]">
-                  <InputField
-                    inputLabel="Name"
-                    inputPlaceholder="Name"
-                    setData={setName}
-                    setEditData={setEditName}
-                    editData={editName}
-                    submited={`${submited}`}
-                  />
-                </div>
-                <div className="relative w-full sm:w-[50%] flex flex-col gap-y-[6px]">
-                  <InputField
-                    inputLabel="Position / instution"
-                    inputPlaceholder="Position / instution"
-                    setData={setPosition}
-                    setEditData={setEditPosition}
-                    editData={editPosition}
-                    submited={`${submited}`}
-                  />
-                </div>
-              </li>
-              <li className="gap-x-[40px]">
-                <div className="relative flex flex-col gap-y-[6px]">
-                  <TextAreaField
-                    textAreaLabel="Testimoni"
-                    textAreaPlaceholder="Testimoni"
-                    setData={setTestimoni}
-                    setEditData={setEditTestimoni}
-                    editData={editTestimoni}
-                    submited={`${submited}`}
-                  />
-                </div>
-              </li>
-            </ul>
-            <DeleteAndSaveButtonForAdd
-              submited={submited}
-              formComplete={formComplete}
-              handleDangerPopUp={() => setDangerPopUp(!dangerPopUp)}
-              saveLabel="Save"
-            />
-          </form>
         </div>
       </div>
 

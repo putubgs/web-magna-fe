@@ -11,7 +11,7 @@ import ImageInputField from "../adminComponents/imageInputField";
 import InputField from "../adminComponents/inputField";
 import TextAreaField from "../adminComponents/textAreaField";
 import { DeleteAndSaveButtonForEdit } from "../adminComponents/deleteAndSaveButton";
-import Toolip from "../toolip";
+import Tooltip from "../tooltip";
 
 type EventDataProps = {
   eventName: string;
@@ -81,7 +81,7 @@ export default function EventDetailPopUp({
 
   const [dangerPopUp, setDangerPopUp] = useState<boolean>(false);
 
-  const toolipData = [
+  const tooltipData = [
     ["Data", "Min", "Max"],
     [
       ["Event Name", "-", "100 characters"],
@@ -200,7 +200,7 @@ export default function EventDetailPopUp({
           <div className="relative cursor-pointer">
             <InformationIcon width={20} height={20} color="white" />
 
-            <Toolip toolipData={toolipData} />
+            <Tooltip tooltipData={tooltipData} />
           </div>
           <form
             onSubmit={handleSubmit}

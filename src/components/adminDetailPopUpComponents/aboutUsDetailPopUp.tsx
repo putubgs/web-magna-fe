@@ -11,7 +11,7 @@ import InputField from "../adminComponents/inputField";
 import TextAreaField from "../adminComponents/textAreaField";
 import ImageInputField from "../adminComponents/imageInputField";
 import { DeleteAndSaveButtonForEdit } from "../adminComponents/deleteAndSaveButton";
-import Toolip from "../toolip";
+import Tooltip from "../tooltip";
 
 type AboutUsDataProps = {
   title: string;
@@ -67,7 +67,7 @@ export default function AboutUsDetailPopUp({
 
   const [dangerPopUp, setDangerPopUp] = useState<boolean>(false);
 
-  const toolipData = [
+  const tooltipData = [
     ["Data", "Min", "Max"],
     [
       ["Slogan", "1 Word", "1 Word"],
@@ -235,7 +235,7 @@ export default function AboutUsDetailPopUp({
             </div>
             <div className="relative cursor-pointer">
               <InformationIcon width={20} height={20} color="white" />
-              <Toolip toolipData={toolipData}/>
+              <Tooltip tooltipData={tooltipData}/>
             </div>
           </div>
           <form
