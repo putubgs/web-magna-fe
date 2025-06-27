@@ -86,8 +86,6 @@ export default function ImpactManagement() {
 		}
 	}
 
-	localStorage.setItem("userRole", "super-admin");
-
 	const userRole = localStorage.getItem("userRole");
 
 	return (
@@ -145,7 +143,7 @@ export default function ImpactManagement() {
 					)}
 				</>
 			) : (
-				<SuperAdminImpactManagement />
+				<SuperAdminImpactManagement addImpactOnClick={() =>setImpactPopUp(true)}/>
 			)}
 
 			<ImpactPopUp

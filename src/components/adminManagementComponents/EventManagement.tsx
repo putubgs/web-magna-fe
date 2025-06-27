@@ -152,8 +152,6 @@ export default function EventManagement() {
     }
   }
 
-	localStorage.setItem("userRole", "super-admin");
-
 	const userRole = localStorage.getItem("userRole");
 
 	return (
@@ -270,7 +268,7 @@ export default function EventManagement() {
 					</section>
 				</>
 			) : (
-				<SuperAdminEventManagement />
+				<SuperAdminEventManagement addEventOnClick={() => setEventPopUp(true)} />
 			)}
 
       <EventPopUp
