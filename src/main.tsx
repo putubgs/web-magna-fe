@@ -10,17 +10,17 @@ const ComingSoon = lazy(() => import("./pages/ComingSoon.tsx"));
 const Admin = lazy(() => import("./pages/admin/Admin.tsx"));
 
 const router = createBrowserRouter([
-  { path: "/", element: <App /> },
-  { path: "/login", element: <Login /> },
-  { path: "/business-unit/:bu", element: <BusinessUnit /> },
-  { path: "/coming-soon", element: <ComingSoon /> },
-  { path: "/admin", element: <Admin /> },
+	{ path: "/", element: <App /> },
+	{ path: "/login", element: <Login /> },
+	{ path: "/business-unit/:bu", element: <BusinessUnit /> },
+	{ path: "/coming-soon", element: <ComingSoon /> },
+	{ path: "/admin", element: <Admin /> },
 ]);
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <Suspense fallback={<div>Loading…</div>}>
-      <RouterProvider router={router} />
-    </Suspense>
-  </StrictMode>
+	<StrictMode>
+		<Suspense fallback={<div>Loading…</div>}>
+			<RouterProvider router={router} />
+		</Suspense>
+	</StrictMode>
 );
