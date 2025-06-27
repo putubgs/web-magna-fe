@@ -3,7 +3,7 @@ import ExitIcon from "../icons/exitIcon";
 import { InformationIcon } from "../icons/informationIcon";
 import InputField from "../adminComponents/inputField";
 import WarningPopUp from "../dialog/warningPopUp";
-import Toolip from "../toolip";
+import Tooltip from "../tooltip";
 
 type ImpactProps = {
 	displayed?: boolean;
@@ -33,7 +33,6 @@ export default function ImpactDetailPopUp({
 	save,
 	data,
 }: ImpactPopUpProps) {
-	const [toolip, setToolip] = useState<boolean>(false);
 
 	const [editData, setEditData] = useState<ImpactProps[]>([]);
 	const [submited, setSubmited] = useState<string>("submit");
@@ -43,7 +42,7 @@ export default function ImpactDetailPopUp({
 	const [warningPopUpComponent, setWarningPopUpComponent] =
 		useState<WarningPopUpProps | null>(null);
 
-	const toolipData = [
+	const tooltipData = [
 		["Data", "Min", "Max"],
 		[["Displayed Impact", "3 impacts", "5 impacts"]],
 	];
@@ -150,12 +149,9 @@ export default function ImpactDetailPopUp({
 					</div>
 					<div className="bg-neutral-900 flex flex-col items-end px-[36px] py-[24px] space-y-[32px]">
 						<div
-							onClick={() => setToolip(!toolip)}
 							className="relative cursor-pointer">
 							<InformationIcon width={20} height={20} color="white" />
-							{toolip && (
-								<Toolip toolipData={toolipData} onClose={() => setToolip(false)} />
-							)}
+								<Tooltip tooltipData={tooltipData}/>
 						</div>
 						<form
 							onSubmit={handleSubmit}
