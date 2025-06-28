@@ -6,7 +6,7 @@ import EventPopUp from "../adminPopUpComponents/eventPopUp";
 import EventDetailPopUp from "../adminDetailPopUpComponents/eventDetailPopUp";
 import DangerPopUp from "../dialog/dangerPopUp";
 import SuccessPopUp from "../dialog/sucessPopUp";
-import SuperAdminEventManagement from "../superAdminmanagementComponents/SuperAdminEventManagement";
+import SuperAdminEventManagement from "../superAdminManagementComponents/SuperAdminEventManagement";
 
 type EventProps = {
 	buName?: string;
@@ -268,7 +268,7 @@ export default function EventManagement() {
 					</section>
 				</>
 			) : (
-				<SuperAdminEventManagement addEventOnClick={() => setEventPopUp(true)} />
+				<SuperAdminEventManagement />
 			)}
 
       <EventPopUp
