@@ -16,7 +16,7 @@ export default function ToolTip({
   return (
     <div>
       <div
-        className={`absolute z-10 top-8 -right-5 flex flex-col ${className} opacity-0 backdrop-blur`}
+        className={`absolute z-0 top-8 -right-5 flex flex-col ${className} opacity-0 backdrop-blur`}
       >
         <div className="mr-4 flex justify-end">
           <div className="w-0 h-0 border-l-[12px] border-l-transparent border-b-[12px] border-b-neutral-800 z-20"></div>
