@@ -7,6 +7,7 @@ import EventDetailPopUp from "../adminDetailPopUpComponents/eventDetailPopUp";
 import DangerPopUp from "../dialog/dangerPopUp";
 import SuccessPopUp from "../dialog/sucessPopUp";
 import SuperAdminEventManagement from "../superAdminManagementComponents/SuperAdminEventManagement";
+// import SuperAdminEventManagement from "../superAdminManagementComponents/SuperAdminEventManagement";
 
 type EventProps = {
 	buName?: string;
