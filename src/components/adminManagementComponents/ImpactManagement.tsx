@@ -3,8 +3,7 @@ import ImpactPopUp from "../adminPopUpComponents/impactPopUp";
 import SuccessPopUp from "../dialog/sucessPopUp";
 import { PencilIcon } from "lucide-react";
 import ImpactDetailPopUp from "../adminDetailPopUpComponents/impactDetailPopUp";
-import SuperAdminImpactManagement from "../superAdminmanagementComponents/SuperAdminImpactManagement";
-// import SuperAdminImpactManagement from "../superAdminManagementComponents/SuperAdminImpactManagement";
+import SuperAdminImpactManagement from "../superAdminManagementComponents/SuperAdminImpactManagement";
 
 type ImpactProps = {
   displayed?: boolean;

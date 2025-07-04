@@ -9,8 +9,7 @@ import GalleryManagement from "../../components/adminManagementComponents/Galler
 import { DoubleArrowIcon } from "../../components/icons/doubleArrowIcon";
 import { RightArrowIcon } from "../../components/icons/rightArrowIcon";
 import { useEffect, useState } from "react";
-import SuperAdmin from "../../components/superAdminmanagementComponents/SuperAdmin";
-// import SuperAdmin from "../../components/superAdminManagementComponents/SuperAdmin";
+import SuperAdmin from "../../components/superAdminManagementComponents/SuperAdmin";
 
 export default function Admin() {
 	const location = useLocation();
