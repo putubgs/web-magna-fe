@@ -60,6 +60,7 @@ export default function SuperAdminAboutUsPopUp({
     tagline.length > 2 &&
     taglineDesc.length > 2;
   const [submited, setSubmited] = useState<string | null>(null);
+  const [editOrganization, setEditOrganization] = useState<boolean>(false);
   const [editTitle, setEditTitle] = useState<boolean>(false);
   const [editColor, setEditColor] = useState<boolean>(false);
   const [editDescription, setEditDescription] = useState<boolean>(false);
@@ -142,6 +143,7 @@ export default function SuperAdminAboutUsPopUp({
     setEditSlogan(false);
     setEditTagline([false, false, false]);
     setEditTaglineDesc([false, false, false]);
+    setEditOrganization(false);
   }
 
   function handleColorChange(newHex: string) {
@@ -188,8 +190,9 @@ export default function SuperAdminAboutUsPopUp({
       setEditLinkedin(true);
       setEditImage(true);
       setEditSlogan(true);
-      setEditTagline([true,true,true]);
-      setEditTaglineDesc([true,true,true]);
+      setEditTagline([true, true, true]);
+      setEditTaglineDesc([true, true, true]);
+      setEditOrganization(true);
     } else if (submited == "submit") {
       const aboutUsData: SuperAdminAboutUsManagementProps = {
         organization,
@@ -277,6 +280,9 @@ export default function SuperAdminAboutUsPopUp({
                 <li className="gap-x-[40px]">
                   <div className="relative w-full flex flex-col gap-y-[6px]">
                     <OrganizationDropdown
+                      setEditData={setEditOrganization}
+                      editData={editOrganization}
+                      submited={`${submited}`}
                       organization={organization}
                       setOrganization={setOrganization}
                     />

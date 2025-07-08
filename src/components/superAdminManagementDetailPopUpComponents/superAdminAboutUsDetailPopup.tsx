@@ -13,6 +13,7 @@ import { Sketch } from "@uiw/react-color";
 import TextAreaField from "../adminComponents/textAreaField";
 import Status from "../status";
 import StatusChange from "../statusChange";
+import OrganizationDropdown from "../organizationDropdown";
 
 type AboutUsDetailPopUpProps = {
   open: boolean;
@@ -64,16 +65,17 @@ export default function SuperAdminAboutUsDetailPopup({
     slogan &&
     tagline.length > 2 &&
     taglineDesc.length > 2;
-  const [editSlogan, setEditSlogan] = useState<boolean>(false);
+    const [editOrganization, setEditOrganization] = useState<boolean>(true);
+  const [editSlogan, setEditSlogan] = useState<boolean>(true);
   const [editTagline, setEditTagline] = useState<boolean[]>([
-    false,
-    false,
-    false,
+    true,
+    true,
+    true,
   ]);
   const [editTaglineDesc, setEditTaglineDesc] = useState<boolean[]>([
-    false,
-    false,
-    false,
+    true,
+    true,
+    true,
   ]);
   const [submited, setSubmited] = useState<string | null>(null);
   const [editTitle, setEditTitle] = useState<boolean>(true);
@@ -264,6 +266,17 @@ export default function SuperAdminAboutUsDetailPopup({
             className="flex flex-col items-end gap-y-[32px]"
           >
             <ul className="w-full border border-neutral-700 px-[20px] py-[24px] rounded-[8px] space-y-[40px]">
+              <li className="gap-x-[40px]">
+                <div className="relative w-full flex flex-col gap-y-[6px]">
+                  <OrganizationDropdown
+                    setEditData={setEditOrganization}
+                    editData={editOrganization}
+                    submited={null}
+                    organization={organization}
+                    setOrganization={setOrganization}
+                  />
+                </div>
+              </li>
               <li className="grid grid-cols-12 gap-[20px] md:gap-[40px]">
                 <div className="col-span-12 sm:col-span-8 md:col-span-9 flex flex-col gap-y-[6px]">
                   <InputField
