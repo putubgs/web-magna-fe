@@ -154,6 +154,7 @@ export default function SuperAdminAboutUsDetailPopup({
     setEditSlogan(true);
     setEditTagline([true, true, true]);
     setEditTaglineDesc([true, true, true]);
+    setEditOrganization(true);
     setSubmited(null);
   }
 
