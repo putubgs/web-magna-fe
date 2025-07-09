@@ -7,6 +7,7 @@ import MailIcon from "../icons/mailIcon";
 import AddAboutUsPopUp from "../adminPopUpComponents/aboutUsPopUp";
 import AboutUsDetailPopUp from "../adminDetailPopUpComponents/aboutUsDetailPopUp";
 import SuccessPopUp from "../dialog/sucessPopUp";
+import SuperAdminAboutUsManagement from "../superAdminManagementComponents/SuperAdminAboutUsManagement";
 
 type AboutUsDataProps = {
 	title: string;
@@ -131,9 +132,13 @@ export default function AboutUsManagement() {
 		}
 	}
 
+	const userRole = localStorage.getItem("userRole");
+	
 	return (
 		<>
-			<section className="flex justify-between items-center bg-black border border-[#404040] p-[20px] rounded-[12px]">
+		{userRole == "admin" ? (
+				<>
+				  <section className="flex justify-between items-center bg-black border border-[#404040] p-[20px] rounded-[12px]">
 				<h1 className="text-lg lg:text-2xl font-semibold">
 					About Us Management Panel
 				</h1>
@@ -226,6 +231,10 @@ export default function AboutUsManagement() {
 					<h1 className="text-xl lg:text-3xl font-black">NO DATA</h1>
 				</section>
 			)}
+				</>
+			  ) : (
+				<SuperAdminAboutUsManagement />
+			  )}
 
 			<AddAboutUsPopUp
 				open={addAboutUsPopUp}
