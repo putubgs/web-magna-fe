@@ -14,6 +14,7 @@ import TextAreaField from "../adminComponents/textAreaField";
 import Status from "../status";
 import StatusChange from "../statusChange";
 import OrganizationDropdown from "../organizationDropdown";
+import { Backdrop } from "../backdrop";
 
 type AboutUsDetailPopUpProps = {
   open: boolean;
@@ -65,13 +66,9 @@ export default function SuperAdminAboutUsDetailPopup({
     slogan &&
     tagline.length > 2 &&
     taglineDesc.length > 2;
-    const [editOrganization, setEditOrganization] = useState<boolean>(true);
+  const [editOrganization, setEditOrganization] = useState<boolean>(true);
   const [editSlogan, setEditSlogan] = useState<boolean>(true);
-  const [editTagline, setEditTagline] = useState<boolean[]>([
-    true,
-    true,
-    true,
-  ]);
+  const [editTagline, setEditTagline] = useState<boolean[]>([true, true, true]);
   const [editTaglineDesc, setEditTaglineDesc] = useState<boolean[]>([
     true,
     true,
@@ -240,102 +237,212 @@ export default function SuperAdminAboutUsDetailPopup({
   return (
     <section className="overflow-y-auto absolute top-0 left-0 w-full h-full grid grid-cols-12 items-center bg-white/20 backdrop-blur-[4px] py-10">
       <div className="col-span-12 xl:col-start-2 xl:col-end-12 2xl:col-start-3 2xl:col-end-11 rounded-t-[6px] px-2 sm:px-5 xl:px-16 2xl:px-20">
-        <div className="flex justify-between items-center border-b border-neutral-300 bg-black px-[24px] py-[10px] rounded-t-[6px]">
-          <h1 className="text-sm sm:text-xl md:text-2xl font-semibold">
-            About Us
-          </h1>
-          <button
-            onClick={() => {
-              resetState();
-              close();
-            }}
-            className="cursor-pointer border border-white rounded-[4px] p-2"
-          >
-            <ExitIcon size={13} />
-          </button>
-        </div>
-        <div className="bg-neutral-900 px-5 sm:px-[36px] py-[24px] space-y-[20px] sm:space-y-[32px]">
-          <div className="flex justify-between items-start">
-            <Status status={status} />
-            <div className="relative cursor-pointer">
-              <InformationIcon width={20} height={20} color="white" />
-              <Tooltip tooltipData={tooltipData} />
-            </div>
+        <div className="relative">
+          <div className="flex justify-between items-center border-b border-neutral-300 bg-black px-[24px] py-[10px] rounded-t-[6px]">
+            <h1 className="text-sm sm:text-xl md:text-2xl font-semibold">
+              About Us
+            </h1>
+            <button
+              onClick={() => {
+                resetState();
+                close();
+              }}
+              className="cursor-pointer border border-white rounded-[4px] p-2"
+            >
+              <ExitIcon size={13} />
+            </button>
           </div>
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col items-end gap-y-[32px]"
-          >
-            <ul className="w-full border border-neutral-700 px-[20px] py-[24px] rounded-[8px] space-y-[40px]">
-              <li className="gap-x-[40px]">
-                <div className="relative w-full flex flex-col gap-y-[6px]">
-                  <OrganizationDropdown
-                    setEditData={setEditOrganization}
-                    editData={editOrganization}
-                    submited={null}
-                    organization={organization}
-                    setOrganization={setOrganization}
+          <div className="bg-neutral-900 px-5 sm:px-[36px] py-[24px] space-y-[20px] sm:space-y-[32px]">
+            <div className="flex justify-between items-start">
+              <Status status={status} />
+              <div className="cursor-pointer group">
+                <Backdrop className="z-1 bg-white/10 group-hover:opacity-95 duration-300" />
+                <div className="relative z-2">
+                  <InformationIcon width={20} height={20} color="white" />
+                  <Tooltip
+                    tooltipData={tooltipData}
+                    className="group-hover:opacity-100 duration-300 pointer-events-none"
                   />
                 </div>
-              </li>
-              <li className="grid grid-cols-12 gap-[20px] md:gap-[40px]">
-                <div className="col-span-12 sm:col-span-8 md:col-span-9 flex flex-col gap-y-[6px]">
-                  <InputField
-                    inputLabel="Title"
-                    inputPlaceholder="Enter Title"
-                    setData={setTitle}
-                    setEditData={setEditTitle}
-                    editData={editTitle}
-                    submited={null}
-                    data={data[0]?.title}
-                  />
-                </div>
-                <div className="col-span-12 sm:col-span-4 md:col-span-3 flex flex-col gap-y-[6px]">
-                  <label className="text-xs sm:text-base font-bold" htmlFor="">
-                    Color
-                  </label>
-                  <div className="flex items-center gap-x-[10px] relative">
-                    <div
-                      onClick={() => !editColor && setColorPicker(!colorPicker)}
-                      className={`w-[32px] h-[32px] border border-neutral-700 ${
-                        !editColor ? "cursor-pointer" : ""
-                      }`}
-                      style={{ backgroundColor: hex }}
-                    ></div>
-                    <div className="text-xs sm:text-base flex-1 overflow-hidden">
-                      <input
-                        value={hex}
-                        onChange={(e) =>
-                          !editColor && handleColorChange(e.target.value)
-                        }
-                        className={`w-full text-xs sm:text-base font-normal border ${
-                          editColor
-                            ? "bg-neutral-800 border-transparent"
-                            : "bg-transparent border-neutral-500"
-                        } px-[12px] py-[8px] rounded-[4px] outline-none`}
-                        type="text"
-                        placeholder="Hex code"
-                        disabled={editColor}
-                      />
-                    </div>
-                    {colorPicker && !editColor && (
+              </div>
+            </div>
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col items-end gap-y-[32px]"
+            >
+              <ul className="w-full border border-neutral-700 px-[20px] py-[24px] rounded-[8px] space-y-[40px]">
+                <li className="gap-x-[40px]">
+                  <div className="relative w-full flex flex-col gap-y-[6px]">
+                    <OrganizationDropdown
+                      setEditData={setEditOrganization}
+                      editData={editOrganization}
+                      submited={null}
+                      organization={organization}
+                      setOrganization={setOrganization}
+                    />
+                  </div>
+                </li>
+                <li className="grid grid-cols-12 gap-[20px] md:gap-[40px]">
+                  <div className="col-span-12 sm:col-span-8 md:col-span-9 flex flex-col gap-y-[6px]">
+                    <InputField
+                      inputLabel="Title"
+                      inputPlaceholder="Enter Title"
+                      setData={setTitle}
+                      setEditData={setEditTitle}
+                      editData={editTitle}
+                      submited={null}
+                      data={data[0]?.title}
+                    />
+                  </div>
+                  <div className="col-span-12 sm:col-span-4 md:col-span-3 flex flex-col gap-y-[6px]">
+                    <label
+                      className="text-xs sm:text-base font-bold"
+                      htmlFor=""
+                    >
+                      Color
+                    </label>
+                    <div className="flex items-center gap-x-[10px] relative">
                       <div
-                        ref={colorPickerRef}
-                        className="absolute z-10 top-full right-0 mt-2"
-                      >
-                        <Sketch
-                          color={hex}
-                          onChange={(color) => {
-                            handleColorChange(color.hex);
-                          }}
-                          disableAlpha={true}
-                          presetColors={[]}
+                        onClick={() =>
+                          !editColor && setColorPicker(!colorPicker)
+                        }
+                        className={`w-[32px] h-[32px] border border-neutral-700 ${
+                          !editColor ? "cursor-pointer" : ""
+                        }`}
+                        style={{ backgroundColor: hex }}
+                      ></div>
+                      <div className="text-xs sm:text-base flex-1 overflow-hidden">
+                        <input
+                          value={hex}
+                          onChange={(e) =>
+                            !editColor && handleColorChange(e.target.value)
+                          }
+                          className={`w-full text-xs sm:text-base font-normal border ${
+                            editColor
+                              ? "bg-neutral-800 border-transparent"
+                              : "bg-transparent border-neutral-500"
+                          } px-[12px] py-[8px] rounded-[4px] outline-none`}
+                          type="text"
+                          placeholder="Hex code"
+                          disabled={editColor}
                         />
                       </div>
-                    )}
+                      {colorPicker && !editColor && (
+                        <div
+                          ref={colorPickerRef}
+                          className="absolute z-10 top-full right-0 mt-2"
+                        >
+                          <Sketch
+                            color={hex}
+                            onChange={(color) => {
+                              handleColorChange(color.hex);
+                            }}
+                            disableAlpha={true}
+                            presetColors={[]}
+                          />
+                        </div>
+                      )}
+                      {submited == null && (
+                        <div
+                          onClick={() => setEditColor(!editColor)}
+                          className="cursor-pointer absolute right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[10px] px-[8px] py-[5px] rounded-[8px]"
+                        >
+                          <p className="text-xs text-neutral-400">Edit</p>
+                          <PencilIcon width={14} height={14} color="#A3A3A3" />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </li>
+                <li className="w-full gap-x-[40px]">
+                  <InputField
+                    inputLabel="Slogan"
+                    editData={editSlogan}
+                    inputPlaceholder={data[0]?.slogan}
+                    setData={setSlogan}
+                    setEditData={setEditSlogan}
+                    submited={null}
+                    data={data[0]?.slogan}
+                  />
+                </li>
+                <li className="w-full gap-x-[40px]">
+                  <div className="relative flex flex-col gap-y-[6px]">
+                    <TextAreaField
+                      textAreaLabel="Organization Description"
+                      textAreaPlaceholder="Enter The Organization Description"
+                      setData={setDescription}
+                      setEditData={setEditDescription}
+                      editData={editDescription}
+                      submited={null}
+                      data={data[0]?.description}
+                    />
+                  </div>
+                </li>
+                {tagline.map((_, index) => (
+                  <li key={index} className="w-full flex flex-row gap-5">
+                    <div className="w-3/10">
+                      <InputField
+                        inputLabel={`Tagline ${index + 1}`}
+                        data={tagline[index]}
+                        editData={editTagline[index]}
+                        inputPlaceholder={`Tagline ${index + 1}`}
+                        setData={(value: string) => {
+                          const newTagline = [...tagline];
+                          newTagline[index] = value;
+                          setTagline(newTagline);
+                        }}
+                        setEditData={(value: boolean) => {
+                          const newEditTagline = [...editTagline];
+                          newEditTagline[index] = value;
+                          setEditTagline(newEditTagline);
+                        }}
+                        submited={null}
+                      />
+                    </div>
+                    <div className="w-7/10">
+                      <InputField
+                        inputLabel={`Description Tagline ${index + 1}`}
+                        data={taglineDesc[index]}
+                        editData={editTaglineDesc[index]}
+                        inputPlaceholder={`Description Tagline ${index + 1}`}
+                        setData={(value: string) => {
+                          const newDesc = [...taglineDesc];
+                          newDesc[index] = value;
+                          setTaglineDesc(newDesc);
+                        }}
+                        setEditData={(value: boolean) => {
+                          const newEditTaglineDesc = [...editTaglineDesc];
+                          newEditTaglineDesc[index] = value;
+                          setEditTaglineDesc(newEditTaglineDesc);
+                        }}
+                        submited={null}
+                      />
+                    </div>
+                  </li>
+                ))}
+                <li className="grid grid-cols-12 gap-[20px]">
+                  <div className="relative col-span-12 lg:col-span-4 flex flex-col gap-y-[6px]">
+                    <label
+                      className="text-xs sm:text-base font-bold"
+                      htmlFor=""
+                    >
+                      Instagram
+                    </label>
+                    <input
+                      onChange={(e) => setInstagram(e.target.value)}
+                      defaultValue={data[0]?.instagram}
+                      className={`text-xs sm:text-base font-normal border ${
+                        editInstagram
+                          ? "bg-neutral-800 border-transparent"
+                          : "bg-transparent border-neutral-500"
+                      } px-[12px] py-[8px] rounded-[4px] outline-none`}
+                      type="text"
+                      placeholder="Instagram"
+                      disabled={editInstagram}
+                    />
                     {submited == null && (
                       <div
-                        onClick={() => setEditColor(!editColor)}
+                        onClick={() => setEditInstagram(!editInstagram)}
                         className="cursor-pointer absolute right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[10px] px-[8px] py-[5px] rounded-[8px]"
                       >
                         <p className="text-xs text-neutral-400">Edit</p>
@@ -343,176 +450,88 @@ export default function SuperAdminAboutUsDetailPopup({
                       </div>
                     )}
                   </div>
-                </div>
-              </li>
-              <li className="w-full gap-x-[40px]">
-                <InputField
-                  inputLabel="Slogan"
-                  editData={editSlogan}
-                  inputPlaceholder={data[0]?.slogan}
-                  setData={setSlogan}
-                  setEditData={setEditSlogan}
-                  submited={null}
-                  data={data[0]?.slogan}
-                />
-              </li>
-              <li className="w-full gap-x-[40px]">
-                <div className="relative flex flex-col gap-y-[6px]">
-                  <TextAreaField
-                    textAreaLabel="Organization Description"
-                    textAreaPlaceholder="Enter The Organization Description"
-                    setData={setDescription}
-                    setEditData={setEditDescription}
-                    editData={editDescription}
-                    submited={null}
-                    data={data[0]?.description}
-                  />
-                </div>
-              </li>
-              {tagline.map((_, index) => (
-                <li key={index} className="w-full flex flex-row gap-5">
-                  <div className="w-3/10">
-                    <InputField
-                      inputLabel={`Tagline ${index + 1}`}
-                      data={tagline[index]}
-                      editData={editTagline[index]}
-                      inputPlaceholder={`Tagline ${index + 1}`}
-                      setData={(value: string) => {
-                        const newTagline = [...tagline];
-                        newTagline[index] = value;
-                        setTagline(newTagline);
-                      }}
-                      setEditData={(value: boolean) => {
-                        const newEditTagline = [...editTagline];
-                        newEditTagline[index] = value;
-                        setEditTagline(newEditTagline);
-                      }}
-                      submited={null}
+                  <div className="relative col-span-12 lg:col-span-4 flex flex-col gap-y-[6px]">
+                    <label
+                      className="text-xs sm:text-base font-bold"
+                      htmlFor=""
+                    >
+                      Email
+                    </label>
+                    <input
+                      onChange={(e) => setEmail(e.target.value)}
+                      defaultValue={data[0]?.email}
+                      className={`text-xs sm:text-base font-normal border ${
+                        editEmail
+                          ? "bg-neutral-800 border-transparent"
+                          : "bg-transparent border-neutral-500"
+                      } px-[12px] py-[8px] rounded-[4px] outline-none`}
+                      type="text"
+                      placeholder="Email"
+                      disabled={editEmail}
                     />
+                    {submited == null && (
+                      <div
+                        onClick={() => setEditEmail(!editEmail)}
+                        className="cursor-pointer absolute right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[10px] px-[8px] py-[5px] rounded-[8px]"
+                      >
+                        <p className="text-xs text-neutral-400">Edit</p>
+                        <PencilIcon width={14} height={14} color="#A3A3A3" />
+                      </div>
+                    )}
                   </div>
-                  <div className="w-7/10">
-                    <InputField
-                      inputLabel={`Description Tagline ${index + 1}`}
-                      data={taglineDesc[index]}
-                      editData={editTaglineDesc[index]}
-                      inputPlaceholder={`Description Tagline ${index + 1}`}
-                      setData={(value: string) => {
-                        const newDesc = [...taglineDesc];
-                        newDesc[index] = value;
-                        setTaglineDesc(newDesc);
-                      }}
-                      setEditData={(value: boolean) => {
-                        const newEditTaglineDesc = [...editTaglineDesc];
-                        newEditTaglineDesc[index] = value;
-                        setEditTaglineDesc(newEditTaglineDesc);
-                      }}
-                      submited={null}
+                  <div className="relative col-span-12 lg:col-span-4 flex flex-col gap-y-[6px]">
+                    <label
+                      className="text-xs sm:text-base font-bold"
+                      htmlFor=""
+                    >
+                      Linkedin
+                    </label>
+                    <input
+                      onChange={(e) => setLinkedin(e.target.value)}
+                      defaultValue={data[0]?.linkedin}
+                      className={`text-xs sm:text-base font-normal border ${
+                        editLinkedin
+                          ? "bg-neutral-800 border-transparent"
+                          : "bg-transparent border-neutral-500"
+                      } px-[12px] py-[8px] rounded-[4px] outline-none`}
+                      type="text"
+                      placeholder="Linkedin"
+                      disabled={editLinkedin}
                     />
+                    {submited == null && (
+                      <div
+                        onClick={() => setEditLinkedin(!editLinkedin)}
+                        className="cursor-pointer absolute right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[10px] px-[8px] py-[5px] rounded-[8px]"
+                      >
+                        <p className="text-xs text-neutral-400">Edit</p>
+                        <PencilIcon width={14} height={14} color="#A3A3A3" />
+                      </div>
+                    )}
                   </div>
                 </li>
-              ))}
-              <li className="grid grid-cols-12 gap-[20px]">
-                <div className="relative col-span-12 lg:col-span-4 flex flex-col gap-y-[6px]">
-                  <label className="text-xs sm:text-base font-bold" htmlFor="">
-                    Instagram
-                  </label>
-                  <input
-                    onChange={(e) => setInstagram(e.target.value)}
-                    defaultValue={data[0]?.instagram}
-                    className={`text-xs sm:text-base font-normal border ${
-                      editInstagram
-                        ? "bg-neutral-800 border-transparent"
-                        : "bg-transparent border-neutral-500"
-                    } px-[12px] py-[8px] rounded-[4px] outline-none`}
-                    type="text"
-                    placeholder="Instagram"
-                    disabled={editInstagram}
+                <li className="grid grid-cols-12 gap-[20px]">
+                  <ImageInputField
+                    setPreview={setPreview}
+                    preview={preview}
+                    handleImage={handleImage}
+                    setEditImage={setEditImage}
+                    editImage={editImage}
+                    submited={submited}
                   />
-                  {submited == null && (
-                    <div
-                      onClick={() => setEditInstagram(!editInstagram)}
-                      className="cursor-pointer absolute right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[10px] px-[8px] py-[5px] rounded-[8px]"
-                    >
-                      <p className="text-xs text-neutral-400">Edit</p>
-                      <PencilIcon width={14} height={14} color="#A3A3A3" />
-                    </div>
-                  )}
-                </div>
-                <div className="relative col-span-12 lg:col-span-4 flex flex-col gap-y-[6px]">
-                  <label className="text-xs sm:text-base font-bold" htmlFor="">
-                    Email
-                  </label>
-                  <input
-                    onChange={(e) => setEmail(e.target.value)}
-                    defaultValue={data[0]?.email}
-                    className={`text-xs sm:text-base font-normal border ${
-                      editEmail
-                        ? "bg-neutral-800 border-transparent"
-                        : "bg-transparent border-neutral-500"
-                    } px-[12px] py-[8px] rounded-[4px] outline-none`}
-                    type="text"
-                    placeholder="Email"
-                    disabled={editEmail}
-                  />
-                  {submited == null && (
-                    <div
-                      onClick={() => setEditEmail(!editEmail)}
-                      className="cursor-pointer absolute right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[10px] px-[8px] py-[5px] rounded-[8px]"
-                    >
-                      <p className="text-xs text-neutral-400">Edit</p>
-                      <PencilIcon width={14} height={14} color="#A3A3A3" />
-                    </div>
-                  )}
-                </div>
-                <div className="relative col-span-12 lg:col-span-4 flex flex-col gap-y-[6px]">
-                  <label className="text-xs sm:text-base font-bold" htmlFor="">
-                    Linkedin
-                  </label>
-                  <input
-                    onChange={(e) => setLinkedin(e.target.value)}
-                    defaultValue={data[0]?.linkedin}
-                    className={`text-xs sm:text-base font-normal border ${
-                      editLinkedin
-                        ? "bg-neutral-800 border-transparent"
-                        : "bg-transparent border-neutral-500"
-                    } px-[12px] py-[8px] rounded-[4px] outline-none`}
-                    type="text"
-                    placeholder="Linkedin"
-                    disabled={editLinkedin}
-                  />
-                  {submited == null && (
-                    <div
-                      onClick={() => setEditLinkedin(!editLinkedin)}
-                      className="cursor-pointer absolute right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[10px] px-[8px] py-[5px] rounded-[8px]"
-                    >
-                      <p className="text-xs text-neutral-400">Edit</p>
-                      <PencilIcon width={14} height={14} color="#A3A3A3" />
-                    </div>
-                  )}
-                </div>
-              </li>
-              <li className="grid grid-cols-12 gap-[20px]">
-                <ImageInputField
-                  setPreview={setPreview}
-                  preview={preview}
-                  handleImage={handleImage}
-                  setEditImage={setEditImage}
-                  editImage={editImage}
-                  submited={submited}
-                />
-              </li>
-            </ul>
-            <div className="flex flex-row items-center gap-3 w-full">
-              <p className="text-white text-xl font-bold">Status: </p>
-              <StatusChange status={status} onClick={setStatus} />
-            </div>
-            <DeleteAndSaveButtonForEdit
-              submited={submited}
-              formComplete={formComplete}
-              handleDangerPopUp={handleDangerPopUp}
-              saveLabel="Save"
-            />
-          </form>
+                </li>
+              </ul>
+              <div className="flex flex-row items-center gap-3 w-full">
+                <p className="text-white text-xl font-bold">Status: </p>
+                <StatusChange status={status} onClick={setStatus} />
+              </div>
+              <DeleteAndSaveButtonForEdit
+                submited={submited}
+                formComplete={formComplete}
+                handleDangerPopUp={handleDangerPopUp}
+                saveLabel="Save"
+              />
+            </form>
+          </div>
         </div>
       </div>
 
