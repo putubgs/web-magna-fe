@@ -7,7 +7,7 @@ import SuccessPopUp from "../dialog/sucessPopUp";
 import { AdminCalendarIcon } from "../icons/adminCalendarIcon";
 import { ChevronDown, Search } from "lucide-react";
 
-import SuperAdminGalleryManagementPopUp from "../superAdminManagementPopUpComponents/SuperAdminGalleryManagementPopUp";
+import SuperAdminGalleryManagementPopUp from "../superAdminManagementPopUpComponents/superAdminGalleryManagementPopUp";
 import SuperAdminGalleryManagementDetailPopUp from "../superAdminManagementDetailPopUpComponents/superAdminGalleryManagementDetailPopUp";
 
 type SuperAdminGalleryProps = {
