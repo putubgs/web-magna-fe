@@ -11,7 +11,6 @@ import Tooltip from "../tooltip";
 import InputField from "../adminComponents/inputField";
 import { Sketch } from "@uiw/react-color";
 import TextAreaField from "../adminComponents/textAreaField";
-import Status from "../status";
 import StatusChange from "../statusChange";
 import OrganizationDropdown from "../organizationDropdown";
 import { Backdrop } from "../backdrop";

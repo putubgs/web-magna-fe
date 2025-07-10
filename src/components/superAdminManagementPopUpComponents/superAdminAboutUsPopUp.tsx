@@ -12,7 +12,6 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 import { PencilIcon } from "../icons/pencilIcon";
 import ExitIcon from "../icons/exitIcon";
 import { Sketch } from "@uiw/react-color";
-import Status from "../status";
 import OrganizationDropdown from "../organizationDropdown";
 
 type AboutPopUpProps = {
