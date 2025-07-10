@@ -10,8 +10,10 @@ import GalleryManagement from "../../components/adminManagementComponents/Galler
 import { DoubleArrowIcon } from "../../components/icons/doubleArrowIcon";
 import { RightArrowIcon } from "../../components/icons/rightArrowIcon";
 import { useEffect, useState } from "react";
+
 import SuperAdmin from "../../components/superAdminManagementComponents/SuperAdmin";
 import SuperAdminPartnershipManagement from "../../components/superAdminManagementComponents/SuperAdminPartnershipManagement";
+import SuperAdminGalleryManagement from "../../components/superAdminManagementComponents/SuperAdminGalleryManagement";
 
 export default function Admin() {
 	const location = useLocation();
@@ -149,7 +151,12 @@ export default function Admin() {
 								<PartnershipManagement />
 							) : null)}
 						{panel == "testimoni" && <TestimoniManagement />}
-						{panel == "gallery" && <GalleryManagement />}
+						{panel == "gallery" &&
+							(userRole === "super-admin" ? (
+								<SuperAdminGalleryManagement />
+							) : userRole === "admin" ? (
+								<GalleryManagement />
+							) : null)}
 					</main>
 				</section>
 			</section>
