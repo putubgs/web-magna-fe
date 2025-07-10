@@ -44,8 +44,6 @@ export default function SuperAdminAboutUsPopUp({
   const [imageFileName, setImageFileName] = useState<string>("");
   const [preview, setPreview] = useState<string>("");
   const [organization, setOrganization] = useState<string>("");
-  const [tagline, setTagline] = useState<string[]>(["", "", ""]);
-  const [taglineDesc, setTaglineDesc] = useState<string[]>(["", "", ""]);
   const [slogan, setSlogan] = useState<string>("");
   const formComplete =
     organization &&
@@ -56,9 +54,7 @@ export default function SuperAdminAboutUsPopUp({
     email &&
     linkedin &&
     preview &&
-    slogan &&
-    tagline.length > 2 &&
-    taglineDesc.length > 2;
+    slogan;
   const [submited, setSubmited] = useState<string | null>(null);
   const [editOrganization, setEditOrganization] = useState<boolean>(false);
   const [editTitle, setEditTitle] = useState<boolean>(false);
@@ -69,16 +65,6 @@ export default function SuperAdminAboutUsPopUp({
   const [editLinkedin, setEditLinkedin] = useState<boolean>(false);
   const [editImage, setEditImage] = useState<boolean>(false);
   const [editSlogan, setEditSlogan] = useState<boolean>(false);
-  const [editTagline, setEditTagline] = useState<boolean[]>([
-    false,
-    false,
-    false,
-  ]);
-  const [editTaglineDesc, setEditTaglineDesc] = useState<boolean[]>([
-    false,
-    false,
-    false,
-  ]);
   const [hex, setHex] = useState("#ffffff");
 
   const [warningPopUp, setWarningPopUp] = useState<boolean>(false);
@@ -130,8 +116,6 @@ export default function SuperAdminAboutUsPopUp({
     setLinkedin("");
     setPreview("");
     setSlogan("");
-    setTagline(["", "", ""]);
-    setTaglineDesc(["", "", ""]);
     setSubmited(null);
     setEditTitle(false);
     setEditColor(false);
@@ -141,8 +125,6 @@ export default function SuperAdminAboutUsPopUp({
     setEditLinkedin(false);
     setEditImage(false);
     setEditSlogan(false);
-    setEditTagline([false, false, false]);
-    setEditTaglineDesc([false, false, false]);
     setEditOrganization(false);
   }
 
@@ -190,8 +172,6 @@ export default function SuperAdminAboutUsPopUp({
       setEditLinkedin(true);
       setEditImage(true);
       setEditSlogan(true);
-      setEditTagline([true, true, true]);
-      setEditTaglineDesc([true, true, true]);
       setEditOrganization(true);
     } else if (submited == "submit") {
       const aboutUsData: SuperAdminAboutUsManagementProps = {
@@ -200,8 +180,6 @@ export default function SuperAdminAboutUsPopUp({
         color,
         slogan,
         description,
-        tagline,
-        taglineDesc,
         instagram,
         email,
         linkedin,
@@ -259,8 +237,7 @@ export default function SuperAdminAboutUsPopUp({
             </div>
           </div>
           <div className="bg-neutral-900 px-5 sm:px-[36px] py-[24px] space-y-[20px] sm:space-y-[32px]">
-            <div className="flex justify-between items-start">
-              <Status status="waiting" />
+            <div className="flex justify-end items-start">
               <div className="cursor-pointer group">
                 <Backdrop className="z-1 bg-white/10 group-hover:opacity-95 duration-300" />
                 <div className="relative z-2">
@@ -373,49 +350,6 @@ export default function SuperAdminAboutUsPopUp({
                     />
                   </div>
                 </li>
-                {tagline.map((_, index) => (
-                  <li key={index} className="w-full flex flex-row gap-5">
-                    <div className="w-3/10">
-                      <InputField
-                        inputLabel={`Tagline ${index + 1}`}
-                        data={tagline[index]}
-                        editData={editTagline[index]}
-                        inputPlaceholder={`Tagline ${index + 1}`}
-                        setData={(value: string) => {
-                          const newTagline = [...tagline];
-                          newTagline[index] = value;
-                          setTagline(newTagline);
-                        }}
-                        setEditData={(value: boolean) => {
-                          const newEditTagline = [...editTagline];
-                          newEditTagline[index] = value;
-                          setEditTagline(newEditTagline);
-                        }}
-                        submited={`${submited}`}
-                      />
-                    </div>
-                    <div className="w-7/10">
-                      <InputField
-                        inputLabel={`Description Tagline ${index + 1}`}
-                        data={taglineDesc[index]}
-                        editData={editTaglineDesc[index]}
-                        inputPlaceholder={`Description Tagline ${index + 1}`}
-                        setData={(value: string) => {
-                          const newDesc = [...taglineDesc];
-                          newDesc[index] = value;
-                          setTaglineDesc(newDesc);
-                        }}
-                        setEditData={(value: boolean) => {
-                          const newEditTaglineDesc = [...editTaglineDesc];
-                          newEditTaglineDesc[index] = value;
-                          setEditTaglineDesc(newEditTaglineDesc);
-                        }}
-                        submited={`${submited}`}
-                      />
-                    </div>
-                  </li>
-                ))}
-
                 <li className="grid grid-cols-12 gap-[20px]">
                   <div className="relative col-span-12 lg:col-span-4 flex flex-col gap-y-[6px]">
                     <label

@@ -49,8 +49,6 @@ export default function SuperAdminAboutUsDetailPopup({
     data[0]?.status
   );
   const [organization, setOrganization] = useState<string>("");
-  const [taglineDesc, setTaglineDesc] = useState<string[]>(["", "", ""]);
-  const [tagline, setTagline] = useState<string[]>(["", "", ""]);
   const [slogan, setSlogan] = useState<string>("");
 
   const formComplete =
@@ -63,17 +61,9 @@ export default function SuperAdminAboutUsDetailPopup({
     linkedin &&
     preview &&
     status &&
-    slogan &&
-    tagline.length > 2 &&
-    taglineDesc.length > 2;
+    slogan;
   const [editOrganization, setEditOrganization] = useState<boolean>(true);
   const [editSlogan, setEditSlogan] = useState<boolean>(true);
-  const [editTagline, setEditTagline] = useState<boolean[]>([true, true, true]);
-  const [editTaglineDesc, setEditTaglineDesc] = useState<boolean[]>([
-    true,
-    true,
-    true,
-  ]);
   const [submited, setSubmited] = useState<string | null>(null);
   const [editTitle, setEditTitle] = useState<boolean>(true);
   const [editColor, setEditColor] = useState<boolean>(true);
@@ -135,8 +125,6 @@ export default function SuperAdminAboutUsDetailPopup({
       setPreview(data[0]?.image);
       setStatus(data[0]?.status);
       setSlogan(data[0]?.slogan);
-      setTagline(data[0]?.tagline);
-      setTaglineDesc(data[0]?.taglineDesc);
     }
   }, [data, open]);
 
@@ -149,8 +137,6 @@ export default function SuperAdminAboutUsDetailPopup({
     setEditLinkedin(true);
     setEditImage(true);
     setEditSlogan(true);
-    setEditTagline([true, true, true]);
-    setEditTaglineDesc([true, true, true]);
     setEditOrganization(true);
     setSubmited(null);
   }
@@ -194,8 +180,6 @@ export default function SuperAdminAboutUsDetailPopup({
       color,
       slogan,
       description,
-      tagline,
-      taglineDesc,
       instagram,
       email,
       linkedin,
@@ -253,8 +237,7 @@ export default function SuperAdminAboutUsDetailPopup({
             </button>
           </div>
           <div className="bg-neutral-900 px-5 sm:px-[36px] py-[24px] space-y-[20px] sm:space-y-[32px]">
-            <div className="flex justify-between items-start">
-              <Status status={status} />
+            <div className="flex justify-end items-start">
               <div className="cursor-pointer group">
                 <Backdrop className="z-1 bg-white/10 group-hover:opacity-95 duration-300" />
                 <div className="relative z-2">
@@ -378,48 +361,6 @@ export default function SuperAdminAboutUsDetailPopup({
                     />
                   </div>
                 </li>
-                {tagline.map((_, index) => (
-                  <li key={index} className="w-full flex flex-row gap-5">
-                    <div className="w-3/10">
-                      <InputField
-                        inputLabel={`Tagline ${index + 1}`}
-                        data={tagline[index]}
-                        editData={editTagline[index]}
-                        inputPlaceholder={`Tagline ${index + 1}`}
-                        setData={(value: string) => {
-                          const newTagline = [...tagline];
-                          newTagline[index] = value;
-                          setTagline(newTagline);
-                        }}
-                        setEditData={(value: boolean) => {
-                          const newEditTagline = [...editTagline];
-                          newEditTagline[index] = value;
-                          setEditTagline(newEditTagline);
-                        }}
-                        submited={null}
-                      />
-                    </div>
-                    <div className="w-7/10">
-                      <InputField
-                        inputLabel={`Description Tagline ${index + 1}`}
-                        data={taglineDesc[index]}
-                        editData={editTaglineDesc[index]}
-                        inputPlaceholder={`Description Tagline ${index + 1}`}
-                        setData={(value: string) => {
-                          const newDesc = [...taglineDesc];
-                          newDesc[index] = value;
-                          setTaglineDesc(newDesc);
-                        }}
-                        setEditData={(value: boolean) => {
-                          const newEditTaglineDesc = [...editTaglineDesc];
-                          newEditTaglineDesc[index] = value;
-                          setEditTaglineDesc(newEditTaglineDesc);
-                        }}
-                        submited={null}
-                      />
-                    </div>
-                  </li>
-                ))}
                 <li className="grid grid-cols-12 gap-[20px]">
                   <div className="relative col-span-12 lg:col-span-4 flex flex-col gap-y-[6px]">
                     <label

@@ -14,8 +14,6 @@ export type SuperAdminAboutUsManagementProps = {
   color: string;
   slogan: string;
   description: string;
-  tagline: string[];
-  taglineDesc: string[];
   instagram: string;
   email: string;
   linkedin: string;
@@ -40,7 +38,7 @@ export default function SuperAdminAboutUsManagement() {
     SuperAdminAboutUsManagementProps[] | null
   >(() => {
     try {
-      const getData = localStorage.getItem("aboutUsData");
+      const getData = localStorage.getItem("superAdminAboutUsData");
 
       if (!getData || getData == null || getData == "") {
         return null;
@@ -50,7 +48,7 @@ export default function SuperAdminAboutUsManagement() {
 
       return parsedData.length > 0 ? parsedData : null;
     } catch {
-      localStorage.removeItem("aboutUsData");
+      localStorage.removeItem("superAdminAboutUsData");
     }
   });
 
@@ -60,9 +58,9 @@ export default function SuperAdminAboutUsManagement() {
 
   useEffect(() => {
     if (aboutUsData == null) {
-      localStorage.removeItem("aboutUsData");
+      localStorage.removeItem("superAdminAboutUsData");
     } else {
-      localStorage.setItem("aboutUsData", JSON.stringify(aboutUsData));
+      localStorage.setItem("superAdminAboutUsData", JSON.stringify(aboutUsData));
     }
   }, [aboutUsData]);
 
@@ -96,9 +94,7 @@ export default function SuperAdminAboutUsManagement() {
         currentData.image !== updatedData.image ||
         currentData.status !== updatedData.status ||
         currentData.organization !== updatedData.organization ||
-        currentData.slogan !== updatedData.slogan ||
-        currentData.tagline !== updatedData.tagline ||
-        currentData.taglineDesc !== updatedData.taglineDesc;
+        currentData.slogan !== updatedData.slogan;
 
       if (change) {
         const newData = [...prev];
@@ -139,8 +135,6 @@ export default function SuperAdminAboutUsManagement() {
           color: aboutUsData[index].color,
           slogan: aboutUsData[index].slogan,
           description: aboutUsData[index].description,
-          tagline: aboutUsData[index].tagline,
-          taglineDesc: aboutUsData[index].taglineDesc,
           instagram: aboutUsData[index].instagram,
           email: aboutUsData[index].email,
           linkedin: aboutUsData[index].linkedin,
