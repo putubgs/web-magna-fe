@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { LeftChevronIcon } from "../icons/leftChevronIcon";
 import { PencilIcon } from "../icons/pencilIcon";
-import PartnershipPopUp from "../adminPopUpComponents/partnershipPopUp";
-import PartnershipDetailPopUp from "../adminDetailPopUpComponents/partnershipDetailPopUp";
+import SuperAdminPartnershipPopUp from "../superAdminManagementPopUpComponents/superAdminPartnershipPopUp";
+import SuperAdminPartnershipDetailPopUp from "../superAdminManagementDetailPopUpComponents/superAdminPartnershipDetailPopUp";
 import { Search, TriangleAlert } from "lucide-react";
 import { TrashCanIcon } from "../icons/trashCanIcon";
 import DangerPopUp from "../dialog/dangerPopUp";
 import SuccessPopUp from "../dialog/sucessPopUp";
 
-type PartnershipProps = {
+type SuperAdminPartnershipProps = {
 	checked?: boolean;
 	partnerName: string;
 	image: string;
@@ -19,16 +19,16 @@ type SuccessPopUpProps = {
 	message: string;
 };
 
-export default function PartnershipManagement() {
+export default function SuperAdminPartnershipManagement() {
 	const [partnershipPopUp, setPartnershipPopUp] = useState<boolean>(false);
 	const [partnershipDetailPopUp, setPartnershipDetailPopUp] =
 		useState<boolean>(false);
 	const [index, setIndex] = useState<number>(-1);
 	const [partnershipDetailData, setPartnershipDetailData] = useState<
-		PartnershipProps[] | null
+		SuperAdminPartnershipProps[] | null
 	>(null);
 	const [partnershipData, setPartnershipData] = useState<
-		PartnershipProps[] | null
+		SuperAdminPartnershipProps[] | null
 	>(() => {
 		try {
 			const getData = localStorage.getItem("partnershipData");
@@ -75,7 +75,9 @@ export default function PartnershipManagement() {
 		});
 	};
 
-	function handleSubmitPartnership(partnershipData: PartnershipProps) {
+	function handleSubmitPartnership(
+		partnershipData: SuperAdminPartnershipProps
+	) {
 		setSuccessPopUpComponent({
 			title: "Partner Added!",
 			message: "You've successfully added a new partner to the panel",
@@ -88,7 +90,7 @@ export default function PartnershipManagement() {
 	}
 
 	function handleUpdatePartnership(
-		updatedData: PartnershipProps,
+		updatedData: SuperAdminPartnershipProps,
 		index: number
 	) {
 		setPartnershipData((prev) => {
@@ -189,7 +191,7 @@ export default function PartnershipManagement() {
 								Logo
 							</th>
 							<th className="text-base lg:text-lg font-bold py-3 px-4">
-								Name
+								Partner
 							</th>
 							<th className="text-base lg:text-lg font-bold py-3 px-1">
 								Actions
@@ -317,14 +319,14 @@ export default function PartnershipManagement() {
 				</div>
 			</section>
 
-			<PartnershipPopUp
+			<SuperAdminPartnershipPopUp
 				open={partnershipPopUp}
 				close={() => setPartnershipPopUp(false)}
 				save={handleSubmitPartnership}
 			/>
 
 			{partnershipDetailData && (
-				<PartnershipDetailPopUp
+				<SuperAdminPartnershipDetailPopUp
 					open={partnershipDetailPopUp}
 					close={() => setPartnershipDetailPopUp(false)}
 					save={handleUpdatePartnership}

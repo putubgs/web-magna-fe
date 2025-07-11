@@ -33,7 +33,9 @@ export default function SuperAdminImpactManagement() {
 	const [superAdminImpactManagementData, setSuperAdminImpactManagementData] =
 		useState<SuperAdminImpactManagementProps[]>(() => {
 			try {
-				const getData = localStorage.getItem("superAdminImpactManagementData");
+				const getData = localStorage.getItem(
+					"superAdminImpactManagementData"
+				);
 
 				if (!getData || getData == null || getData == "") {
 					return null;
@@ -95,7 +97,8 @@ export default function SuperAdminImpactManagement() {
 			const currentData = prev[0].impactDetail;
 
 			const hasChanges =
-				JSON.stringify(currentData) !== JSON.stringify(updatedDataArray);
+				JSON.stringify(currentData) !==
+				JSON.stringify(updatedDataArray);
 
 			if (hasChanges) {
 				setSuperAdminImpactManagementData(updatedDataArray);
@@ -109,7 +112,8 @@ export default function SuperAdminImpactManagement() {
 
 				setSuccessPopUpComponent({
 					title: "Impact Updated!",
-					message: "The impact metrics have been successfully updated",
+					message:
+						"The impact metrics have been successfully updated",
 				});
 
 				setSuccessPopUp(true);
@@ -164,7 +168,8 @@ export default function SuperAdminImpactManagement() {
 					</h1>
 					<button
 						onClick={() => setImpactPopUp(true)}
-						className="cursor-pointer bg-primary text-sm lg:text-base p-[16px] rounded-[8px]">
+						className="cursor-pointer bg-primary text-sm lg:text-base p-[16px] rounded-[8px]"
+					>
 						Add Impact +
 					</button>
 				</section>
@@ -174,7 +179,7 @@ export default function SuperAdminImpactManagement() {
 						<input
 							className="w-full h-full text-white placeholder-white outline-none"
 							type="text"
-							placeholder="Sarch"
+							placeholder="Search"
 						/>
 					</div>
 					<div className="col-span-1 bg-neutral-800 flex justify-center items-center gap-x-[10px] rounded-[8px]">
@@ -195,8 +200,13 @@ export default function SuperAdminImpactManagement() {
 							<div className="flex p-[8px] rounded-[8px] gap-x-[16px]">
 								<div
 									onClick={() => showDetail()}
-									className="cursor-pointer w-[34px] h-[34px] flex justify-center items-center border border-[#FF8800] p-[8px] rounded-[8px]">
-									<PencilIcon width={18} height={18} color="#FF8800" />
+									className="cursor-pointer w-[34px] h-[34px] flex justify-center items-center border border-[#FF8800] p-[8px] rounded-[8px]"
+								>
+									<PencilIcon
+										width={18}
+										height={18}
+										color="#FF8800"
+									/>
 								</div>
 							</div>
 						)}
@@ -206,14 +216,25 @@ export default function SuperAdminImpactManagement() {
 						<table className="table-auto text-white text-base">
 							<tbody>
 								{superAdminImpactData.map(
-									(data: SuperAdminImpactManagementProps, index) => (
+									(
+										data: SuperAdminImpactManagementProps,
+										index
+									) => (
 										<tr key={index} className="align-top">
-											<td className="text-neutral-500 py-2">{data.metric}</td>
-											<td className="text-neutral-500 pl-5 pr-3 py-2">:</td>
+											<td className="text-neutral-500 py-2">
+												{data.metric}
+											</td>
+											<td className="text-neutral-500 pl-5 pr-3 py-2">
+												:
+											</td>
 											<td className="py-2 font-bold whitespace-nowrap">
 												{data.metricValue.length > 4
-													? data.metricValue[0] + "" + data.metricValue[1] + "K"
-													: data.metricValue.length > 3
+													? data.metricValue[0] +
+													  "" +
+													  data.metricValue[1] +
+													  "K"
+													: data.metricValue.length >
+													  3
 													? data.metricValue[0] + "K"
 													: data.metricValue}
 											</td>
@@ -225,7 +246,9 @@ export default function SuperAdminImpactManagement() {
 					</div>
 				) : (
 					<div className="h-full flex justify-center items-center">
-						<h1 className="text-xl lg:text-3xl font-black">NO DATA</h1>
+						<h1 className="text-xl lg:text-3xl font-black">
+							NO DATA
+						</h1>
 					</div>
 				)}
 			</section>
@@ -239,7 +262,9 @@ export default function SuperAdminImpactManagement() {
 			{superAdminImpactManagementDetailData && (
 				<SuperAdminImpactManagementDetailPopUp
 					open={superAdminImpactManagementDetailPopUp}
-					close={() => setSuperAdminImpactManagementDetailPopUp(false)}
+					close={() =>
+						setSuperAdminImpactManagementDetailPopUp(false)
+					}
 					save={handleUpdateImpact}
 					data={superAdminImpactManagementDetailData}
 				/>

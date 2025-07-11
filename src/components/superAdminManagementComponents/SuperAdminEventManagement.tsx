@@ -40,7 +40,9 @@ export default function SuperAdminEventManagement() {
 	const [superAdminEventManagementData, setSuperAdminEventManagementData] =
 		useState<SuperAdminEventManagementProps[]>(() => {
 			try {
-				const getData = localStorage.getItem("superAdminEventManagementData");
+				const getData = localStorage.getItem(
+					"superAdminEventManagementData"
+				);
 
 				if (!getData || getData == null || getData == "") {
 					return null;
@@ -119,7 +121,10 @@ export default function SuperAdminEventManagement() {
 				currentData.endDate !== updatedData.endDate ||
 				currentData.eventDescription !== updatedData.eventDescription ||
 				currentData.image !== updatedData.image ||
-				compare(currentData.registrationUrl, updatedData.registrationUrl) ||
+				compare(
+					currentData.registrationUrl,
+					updatedData.registrationUrl
+				) ||
 				compare(currentData.startDate, updatedData.startDate) ||
 				compare(currentData.endDate, updatedData.endDate);
 
@@ -176,19 +181,26 @@ export default function SuperAdminEventManagement() {
 		setIndex(index);
 		setSuperAdminEventManagementDetailPopUp(true);
 
-		if (superAdminEventManagementData && superAdminEventManagementData[index]) {
+		if (
+			superAdminEventManagementData &&
+			superAdminEventManagementData[index]
+		) {
 			setSuperAdminEventManagementDetailData([
 				{
-					organization: superAdminEventManagementData[index].organization,
+					organization:
+						superAdminEventManagementData[index].organization,
 					date: superAdminEventManagementData[index].date,
 					eventName: superAdminEventManagementData[index].eventName,
-					registrationUrl1: superAdminEventManagementData[index].registrationUrl1,
+					registrationUrl1:
+						superAdminEventManagementData[index].registrationUrl1,
 					startTime: superAdminEventManagementData[index].startTime,
 					endTime: superAdminEventManagementData[index].endTime,
-					registrationUrl: superAdminEventManagementData[index].registrationUrl,
+					registrationUrl:
+						superAdminEventManagementData[index].registrationUrl,
 					startDate: superAdminEventManagementData[index].startDate,
 					endDate: superAdminEventManagementData[index].endDate,
-					eventDescription: superAdminEventManagementData[index].eventDescription,
+					eventDescription:
+						superAdminEventManagementData[index].eventDescription,
 					image: superAdminEventManagementData[index].image,
 				},
 			]);
@@ -226,7 +238,8 @@ export default function SuperAdminEventManagement() {
 					</h1>
 					<button
 						onClick={() => setEventPopUp(true)}
-						className="cursor-pointer bg-primary text-sm lg:text-base p-[16px] rounded-[8px]">
+						className="cursor-pointer bg-primary text-sm lg:text-base p-[16px] rounded-[8px]"
+					>
 						Add Event +
 					</button>
 				</section>
@@ -236,7 +249,7 @@ export default function SuperAdminEventManagement() {
 						<input
 							className="w-full h-full text-white placeholder-white outline-none"
 							type="text"
-							placeholder="Sarch"
+							placeholder="Search"
 						/>
 					</div>
 					<div className="col-span-1 bg-neutral-800 flex justify-center items-center gap-x-[10px] rounded-[8px]">
@@ -254,18 +267,34 @@ export default function SuperAdminEventManagement() {
 				<table className="table-auto w-[1000px] xl:w-full text-white">
 					<thead>
 						<tr className="border-b border-[#D4D4D4] text-left">
-							<th className="text-base lg:text-lg font-bold py-3 px-4">No</th>
-							<th className="text-base lg:text-lg font-bold py-3 px-4">BU Name</th>
-							<th className="text-base lg:text-lg font-bold py-3 px-10">Event Name</th>
-							<th className="text-base lg:text-lg font-bold py-3 px-4">Date</th>
-							<th className="text-base lg:text-lg font-bold py-3 px-">Actions</th>
+							<th className="text-base lg:text-lg font-bold py-3 px-4">
+								No
+							</th>
+							<th className="text-base lg:text-lg font-bold py-3 px-4">
+								BU Name
+							</th>
+							<th className="text-base lg:text-lg font-bold py-3 px-10">
+								Event Name
+							</th>
+							<th className="text-base lg:text-lg font-bold py-3 px-4">
+								Date
+							</th>
+							<th className="text-base lg:text-lg font-bold py-3 px-">
+								Actions
+							</th>
 						</tr>
 					</thead>
 					<tbody className="relative">
 						{superAdminEventData.length > 0 ? (
 							superAdminEventData.map(
-								(data: SuperAdminEventManagementProps, index: number) => (
-									<tr key={index} className="border-b border-[#D4D4D4]">
+								(
+									data: SuperAdminEventManagementProps,
+									index: number
+								) => (
+									<tr
+										key={index}
+										className="border-b border-[#D4D4D4]"
+									>
 										<td className="py-4 px-4 align-top text-sm font-medium">
 											{index + 1}
 										</td>
@@ -284,9 +313,16 @@ export default function SuperAdminEventManagement() {
 											<div className="flex items-center gap-x-[16px]">
 												<div className="cursor-pointer w-[34px] h-[34px] flex justify-center items-center border border-[#FF8800] p-[8px] rounded-[8px]">
 													<div
-														onClick={() => showDetail(index)}
-														className="cursor-pointer w-[34px] h-[34px] flex justify-center items-center border border-[#FF8800] p-[8px] rounded-[8px]">
-														<PencilIcon width={18} height={18} color="#FF8800" />
+														onClick={() =>
+															showDetail(index)
+														}
+														className="cursor-pointer w-[34px] h-[34px] flex justify-center items-center border border-[#FF8800] p-[8px] rounded-[8px]"
+													>
+														<PencilIcon
+															width={18}
+															height={18}
+															color="#FF8800"
+														/>
 													</div>
 												</div>
 											</div>
@@ -298,7 +334,9 @@ export default function SuperAdminEventManagement() {
 							<tr className="h-[250px]">
 								<td colSpan={5}>
 									<div className="flex flex-col justify-center items-center text-white">
-										<h1 className="text-xl lg:text-3xl font-black">NO DATA</h1>
+										<h1 className="text-xl lg:text-3xl font-black">
+											NO DATA
+										</h1>
 									</div>
 								</td>
 							</tr>
@@ -307,10 +345,12 @@ export default function SuperAdminEventManagement() {
 				</table>
 				<div
 					className={`w-[1000px] xl:w-full ${
-						superAdminEventManagementData && superAdminEventManagementData.length > 0
+						superAdminEventManagementData &&
+						superAdminEventManagementData.length > 0
 							? "flex"
 							: "hidden"
-					} justify-end items-center gap-2`}>
+					} justify-end items-center gap-2`}
+				>
 					<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20">
 						<LeftChevronIcon width={23} height={23} color="white" />
 					</button>

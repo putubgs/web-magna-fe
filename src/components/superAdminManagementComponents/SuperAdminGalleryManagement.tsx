@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
 import { LeftChevronIcon } from "../icons/leftChevronIcon";
 import { PencilIcon } from "../icons/pencilIcon";
-import { TrashCanIcon } from "../icons/trashCanIcon";
-import GalleryPopUp from "../adminPopUpComponents/galleryPopUp";
-import GalleryDetailPopUp from "../adminDetailPopUpComponents/galleryDetailPopUp";
+
 import DangerPopUp from "../dialog/dangerPopUp";
 import SuccessPopUp from "../dialog/sucessPopUp";
+import { AdminCalendarIcon } from "../icons/adminCalendarIcon";
+import { ChevronDown, Search } from "lucide-react";
 
-type GalleryProps = {
+import SuperAdminGalleryManagementPopUp from "../superAdminManagementPopUpComponents/superAdminGalleryManagementPopUp";
+import SuperAdminGalleryManagementDetailPopUp from "../superAdminManagementDetailPopUpComponents/superAdminGalleryManagementDetailPopUp";
+
+type SuperAdminGalleryProps = {
+	organization: string;
 	eventName: string;
 	date: string;
 	image: string;
@@ -18,31 +22,31 @@ type SuccessPopUpProps = {
 	message: string;
 };
 
-export default function GalleryManagement() {
+export default function SuperAdminGalleryManagement() {
 	const [galleryPopUp, setGalleryPopUp] = useState<boolean>(false);
 	const [galleryDetailPopUp, setGalleryDetailPopUp] =
 		useState<boolean>(false);
 	const [index, setIndex] = useState<number>(-1);
 	const [galleryDetailData, setGalleryDetailData] = useState<
-		GalleryProps[] | null
+		SuperAdminGalleryProps[] | null
 	>(null);
-	const [galleryData, setGalleryData] = useState<GalleryProps[] | null>(
-		() => {
-			try {
-				const getData = localStorage.getItem("galleryData");
+	const [galleryData, setGalleryData] = useState<
+		SuperAdminGalleryProps[] | null
+	>(() => {
+		try {
+			const getData = localStorage.getItem("galleryData");
 
-				if (!getData || getData == null || getData == "") {
-					return null;
-				}
-
-				const parsedData = JSON.parse(getData);
-
-				return parsedData.length > 0 ? parsedData : null;
-			} catch {
-				localStorage.removeItem("galleryData");
+			if (!getData || getData == null || getData == "") {
+				return null;
 			}
+
+			const parsedData = JSON.parse(getData);
+
+			return parsedData.length > 0 ? parsedData : null;
+		} catch {
+			localStorage.removeItem("galleryData");
 		}
-	);
+	});
 
 	const [dangerPopUp, setDangerPopUp] = useState<boolean>(false);
 	const [successPopUp, setSuccessPopUp] = useState<boolean>(false);
@@ -57,7 +61,7 @@ export default function GalleryManagement() {
 		}
 	}, [galleryData]);
 
-	function handleSubmitGallery(galleryData: GalleryProps) {
+	function handleSubmitGallery(galleryData: SuperAdminGalleryProps) {
 		setSuccessPopUpComponent({
 			title: "Photo Added!",
 			message: "You've successfully added a new photo to the panel",
@@ -69,7 +73,10 @@ export default function GalleryManagement() {
 		);
 	}
 
-	function handleUpdateGallery(updatedData: GalleryProps, index: number) {
+	function handleUpdateGallery(
+		updatedData: SuperAdminGalleryProps,
+		index: number
+	) {
 		setGalleryData((prev) => {
 			if (!prev) return null;
 
@@ -97,11 +104,6 @@ export default function GalleryManagement() {
 		});
 	}
 
-	function handleDeletePopUp(index: number) {
-		setIndex(index);
-		setDangerPopUp(true);
-	}
-
 	function handleDeleteGallery() {
 		setGalleryData((prev) => {
 			if (!prev) return null;
@@ -119,6 +121,7 @@ export default function GalleryManagement() {
 		if (galleryData && galleryData[index]) {
 			setGalleryDetailData([
 				{
+					organization: galleryData[index].organization,
 					eventName: galleryData[index].eventName,
 					date: galleryData[index].date,
 					image: galleryData[index].image,
@@ -129,18 +132,40 @@ export default function GalleryManagement() {
 
 	return (
 		<>
-			<section className="flex justify-between items-center bg-black border border-[#404040] p-[20px] rounded-[12px]">
-				<h1 className="text-lg lg:text-2xl font-semibold">
-					Gallery Management Panel
-				</h1>
-				<button
-					onClick={() => setGalleryPopUp(true)}
-					className="cursor-pointer bg-primary text-sm lg:text-base p-[16px] rounded-[8px]"
-				>
-					Add Picture +
-				</button>
+			<section className="flex-col justify-between items-center bg-black border border-[#404040] p-[20px] rounded-[12px] space-y-[24px]">
+				<section className="flex justify-between items-center">
+					<h1 className="text-lg lg:text-2xl font-semibold">
+						Gallery Management Panel
+					</h1>
+					<button
+						onClick={() => setGalleryPopUp(true)}
+						className="cursor-pointer bg-primary text-sm lg:text-base p-[16px] rounded-[8px]"
+					>
+						Add Gallery +
+					</button>
+				</section>
+
+				<section className="grid grid-cols-12 gap-x-[20px]">
+					<div className="col-span-9 flex items-center bg-neutral-800 gap-[10px] p-[12px] rounded-[8px]">
+						<Search />
+						<input
+							className="w-full h-full text-white placeholder-white outline-none"
+							type="text"
+							placeholder="Search"
+						/>
+					</div>
+					<div className="col-span-1 bg-neutral-800 flex justify-center items-center gap-x-[10px] rounded-[8px]">
+						<p>Date</p>
+						<AdminCalendarIcon className="w-5 h-5" color="#fff" />
+					</div>
+					<div className="col-span-2 bg-neutral-800 flex justify-center items-center gap-x-[10px] rounded-[8px]">
+						<p>Organization</p>
+						<ChevronDown />
+					</div>
+				</section>
 			</section>
 			<section className="overflow-scroll xl:overflow-auto h-[500px] bg-black flex flex-col justify-start border border-[#404040] rounded-[20px] p-4">
+				<h1 className="text-xl font-semibold mb-7">Gallery</h1>
 				<table className="table-auto w-[1000px] xl:w-full text-white">
 					<thead>
 						<tr className="border-b border-[#D4D4D4] text-left">
@@ -148,13 +173,14 @@ export default function GalleryManagement() {
 								No
 							</th>
 							<th className="text-base lg:text-lg font-bold py-3 px-4">
-								Photo
-							</th>
-							<th className="text-base lg:text-lg font-bold py-3 px-0">
-								Event Name
+								Date
 							</th>
 							<th className="text-base lg:text-lg font-bold py-3 px-4">
-								Date
+								BU Name
+							</th>
+
+							<th className="text-base lg:text-lg font-bold py-3 px-0">
+								Event Name
 							</th>
 							<th className="text-base lg:text-lg font-bold py-3 px-4">
 								Detail
@@ -169,27 +195,31 @@ export default function GalleryManagement() {
 									className="border-b border-[#D4D4D4]"
 								>
 									<td className="py-4 px-4 align-top text-sm font-medium">
-										1
+										{index + 1}
+									</td>
+									<td className="py-4 px-4 align-top text-base font-medium whitespace-nowrap">
+										{new Date(data.date).toLocaleDateString(
+											"en-GB",
+											{
+												day: "2-digit",
+												month: "short",
+												year: "numeric",
+											}
+										)}
+									</td>
+
+									<td className="py-4 px-4 align-top">
+										<p className="text-base font-semibold leading-tight">
+											{data.organization}
+										</p>
 									</td>
 									<td className="py-4 px-4 align-top">
-										<img
-											className="w-[150px]"
-											src={data.image}
-											alt="Event Poster"
-										/>
-									</td>
-									<td className="py-4 px-2 align-top">
 										<p className="text-base font-semibold leading-tight">
 											{data.eventName}
 										</p>
 									</td>
-									<td className="py-4 px-4 align-top text-base font-semibold whitespace-nowrap">
-										{`${data.date.split("/")[1]}/${
-											data.date.split("/")[0]
-										}/${data.date.split("/")[2]}`}
-									</td>
 									<td className="py-4 px-4 align-top">
-										<div className="flex items-center gap-x-[16px]">
+										<div className="flex items-center gap-x-[16px] pl-2">
 											<div
 												onClick={() =>
 													showDetail(index)
@@ -200,18 +230,6 @@ export default function GalleryManagement() {
 													width={18}
 													height={18}
 													color="#FF8800"
-												/>
-											</div>
-											<div
-												onClick={() =>
-													handleDeletePopUp(index)
-												}
-												className="cursor-pointer w-[34px] h-[34px] flex justify-center items-center border border-[#C00707] p-[8px] rounded-[8px]"
-											>
-												<TrashCanIcon
-													width={14}
-													height={18}
-													color="#C00707"
 												/>
 											</div>
 										</div>
@@ -252,15 +270,14 @@ export default function GalleryManagement() {
 					</button>
 				</div>
 			</section>
-
-			<GalleryPopUp
+			<SuperAdminGalleryManagementPopUp
 				open={galleryPopUp}
 				close={() => setGalleryPopUp(false)}
 				save={handleSubmitGallery}
 			/>
 
 			{galleryDetailData && (
-				<GalleryDetailPopUp
+				<SuperAdminGalleryManagementDetailPopUp
 					open={galleryDetailPopUp}
 					close={() => setGalleryDetailPopUp(false)}
 					save={handleUpdateGallery}
