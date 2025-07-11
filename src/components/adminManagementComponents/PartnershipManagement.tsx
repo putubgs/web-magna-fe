@@ -54,7 +54,10 @@ export default function PartnershipManagement() {
 		if (partnershipData == null) {
 			localStorage.removeItem("partnershipData");
 		} else {
-			localStorage.setItem("partnershipData", JSON.stringify(partnershipData));
+			localStorage.setItem(
+				"partnershipData",
+				JSON.stringify(partnershipData)
+			);
 		}
 	}, [partnershipData]);
 
@@ -96,7 +99,8 @@ export default function PartnershipManagement() {
 			const change =
 				currentData.partnerName !== updatedData.partnerName ||
 				currentData.image !== updatedData.image ||
-				(currentData.checked || false) !== (updatedData.checked || false);
+				(currentData.checked || false) !==
+					(updatedData.checked || false);
 
 			if (change) {
 				const newData = [...prev];
@@ -153,7 +157,8 @@ export default function PartnershipManagement() {
 					</h1>
 					<button
 						onClick={() => setPartnershipPopUp(true)}
-						className="cursor-pointer bg-primary text-sm lg:text-base p-[16px] rounded-[8px]">
+						className="cursor-pointer bg-primary text-sm lg:text-base p-[16px] rounded-[8px]"
+					>
 						Add Partner +
 					</button>
 				</section>
@@ -164,7 +169,7 @@ export default function PartnershipManagement() {
 							<input
 								className="w-full h-full text-white placeholder-white outline-none"
 								type="text"
-								placeholder="Sarch"
+								placeholder="Search"
 							/>
 						</div>
 					</section>
@@ -174,17 +179,30 @@ export default function PartnershipManagement() {
 				<table className="table-auto w-[700px] xl:w-full h-fit text-white">
 					<thead>
 						<tr className="border-b border-[#D4D4D4] text-left">
-							<th className="text-base lg:text-lg font-bold py-3 px-4">No</th>
-							<th className="text-base lg:text-lg font-bold py-3 px-4">Displayed</th>
-							<th className="text-base lg:text-lg font-bold py-3 px-20">Logo</th>
-							<th className="text-base lg:text-lg font-bold py-3 px-4">Name</th>
-							<th className="text-base lg:text-lg font-bold py-3 px-1">Actions</th>
+							<th className="text-base lg:text-lg font-bold py-3 px-4">
+								No
+							</th>
+							<th className="text-base lg:text-lg font-bold py-3 px-4">
+								Displayed
+							</th>
+							<th className="text-base lg:text-lg font-bold py-3 px-20">
+								Logo
+							</th>
+							<th className="text-base lg:text-lg font-bold py-3 px-4">
+								Name
+							</th>
+							<th className="text-base lg:text-lg font-bold py-3 px-1">
+								Actions
+							</th>
 						</tr>
 					</thead>
 					<tbody className="relative">
 						{partnershipData ? (
 							partnershipData.map((data, index) => (
-								<tr key={index} className="border-b border-[#D4D4D4]">
+								<tr
+									key={index}
+									className="border-b border-[#D4D4D4]"
+								>
 									<td className="py-4 px-4 align-top text-sm font-medium">
 										{index + 1}
 									</td>
@@ -197,7 +215,11 @@ export default function PartnershipManagement() {
 										/>
 									</td>
 									<td className="py-4 px-20 align-top">
-										<img className="w-[50px] h-[50px]" src={data.image} alt="" />
+										<img
+											className="w-[50px] h-[50px]"
+											src={data.image}
+											alt=""
+										/>
 									</td>
 									<td className="py-4 px-4 align-top text-base font-normal whitespace-nowrap">
 										{data.partnerName}
@@ -205,14 +227,28 @@ export default function PartnershipManagement() {
 									<td className="py-4 align-top">
 										<div className="flex items-center gap-x-[16px]">
 											<div
-												onClick={() => showDetail(index)}
-												className="cursor-pointer w-[34px] h-[34px] flex justify-center items-center border border-[#FF8800] p-[8px] rounded-[8px]">
-												<PencilIcon width={18} height={18} color="#FF8800" />
+												onClick={() =>
+													showDetail(index)
+												}
+												className="cursor-pointer w-[34px] h-[34px] flex justify-center items-center border border-[#FF8800] p-[8px] rounded-[8px]"
+											>
+												<PencilIcon
+													width={18}
+													height={18}
+													color="#FF8800"
+												/>
 											</div>
 											<div
-												onClick={() => handleDeletePopUp(index)}
-												className="cursor-pointer w-[36px] h-[36px] flex justify-center items-center border border-[#C00707] rounded-md">
-												<TrashCanIcon width={16} height={18} color="#C00707" />
+												onClick={() =>
+													handleDeletePopUp(index)
+												}
+												className="cursor-pointer w-[36px] h-[36px] flex justify-center items-center border border-[#C00707] rounded-md"
+											>
+												<TrashCanIcon
+													width={16}
+													height={18}
+													color="#C00707"
+												/>
 											</div>
 										</div>
 									</td>
@@ -222,7 +258,9 @@ export default function PartnershipManagement() {
 							<tr className="h-[250px]">
 								<td colSpan={5}>
 									<div className="flex flex-col justify-center items-center text-white">
-										<h1 className="text-xl lg:text-3xl font-black">NO DATA</h1>
+										<h1 className="text-xl lg:text-3xl font-black">
+											NO DATA
+										</h1>
 									</div>
 								</td>
 							</tr>
@@ -231,25 +269,36 @@ export default function PartnershipManagement() {
 				</table>
 				<div
 					className={`mt-3 w-[1000px] xl:w-full ${
-						partnershipData && partnershipData.length > 0 ? "flex" : "hidden"
+						partnershipData && partnershipData.length > 0
+							? "flex"
+							: "hidden"
 					} ${
 						partnershipData &&
 						partnershipData.length > 0 &&
-						partnershipData?.filter((item) => item.checked == true).length < 3
+						partnershipData?.filter((item) => item.checked == true)
+							.length < 3
 							? "justify-between"
 							: "justify-end"
-					} items-center`}>
+					} items-center`}
+				>
 					{partnershipData &&
 						partnershipData.length > 0 &&
-						partnershipData?.filter((item) => item.checked == true).length < 3 && (
+						partnershipData?.filter((item) => item.checked == true)
+							.length < 3 && (
 							<div className="flex items-center text-[#FB923C] gap-x-[10px]">
 								<TriangleAlert />
-								<p>Please select minimum 3 partners to display.</p>
+								<p>
+									Please select minimum 3 partners to display.
+								</p>
 							</div>
 						)}
 					<div className="flex justify-end items-center gap-2">
 						<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20">
-							<LeftChevronIcon width={23} height={23} color="white" />
+							<LeftChevronIcon
+								width={23}
+								height={23}
+								color="white"
+							/>
 						</button>
 						<div className="bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20 appearance-none">
 							<select className="bg-none p-0">
@@ -258,7 +307,11 @@ export default function PartnershipManagement() {
 						</div>
 						<p className="text-white">of 1</p>
 						<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20 rotate-180">
-							<LeftChevronIcon width={23} height={23} color="white" />
+							<LeftChevronIcon
+								width={23}
+								height={23}
+								color="white"
+							/>
 						</button>
 					</div>
 				</div>

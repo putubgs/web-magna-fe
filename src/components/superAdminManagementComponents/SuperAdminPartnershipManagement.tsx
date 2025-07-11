@@ -171,7 +171,7 @@ export default function SuperAdminPartnershipManagement() {
 							<input
 								className="w-full h-full text-white placeholder-white outline-none"
 								type="text"
-								placeholder="Sarch"
+								placeholder="Search"
 							/>
 						</div>
 					</section>
