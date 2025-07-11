@@ -168,7 +168,7 @@ export default function SuperAdminAboutUsManagement() {
             <input
               className="w-full h-full text-white placeholder-white outline-none"
               type="text"
-              placeholder="Sarch"
+              placeholder="Search"
             />
           </div>
           <div className="col-span-1 bg-neutral-800 flex justify-center items-center gap-x-[10px] rounded-[8px]">
