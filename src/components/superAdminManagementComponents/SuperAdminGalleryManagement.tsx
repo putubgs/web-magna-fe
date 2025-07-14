@@ -10,7 +10,7 @@ import { ChevronDown, Search } from "lucide-react";
 import SuperAdminGalleryManagementPopUp from "../superAdminManagementPopUpComponents/superAdminGalleryManagementPopUp";
 import SuperAdminGalleryManagementDetailPopUp from "../superAdminManagementDetailPopUpComponents/superAdminGalleryManagementDetailPopUp";
 
-type SuperAdminGalleryProps = {
+type SuperAdminGalleryManagementProps = {
 	organization: string;
 	eventName: string;
 	date: string;
@@ -24,17 +24,23 @@ type SuccessPopUpProps = {
 
 export default function SuperAdminGalleryManagement() {
 	const [galleryPopUp, setGalleryPopUp] = useState<boolean>(false);
-	const [galleryDetailPopUp, setGalleryDetailPopUp] =
-		useState<boolean>(false);
+	const [
+		superAdminGalleryManagementDetailPopUp,
+		setSuperAdminGalleryManagementDetailPopUp,
+	] = useState<boolean>(false);
 	const [index, setIndex] = useState<number>(-1);
-	const [galleryDetailData, setGalleryDetailData] = useState<
-		SuperAdminGalleryProps[] | null
-	>(null);
-	const [galleryData, setGalleryData] = useState<
-		SuperAdminGalleryProps[] | null
-	>(() => {
+	const [
+		superAdminGalleryManagementDetailData,
+		setSuperAdminGalleryManagementDetailData,
+	] = useState<SuperAdminGalleryManagementProps[] | null>(null);
+	const [
+		superAdminGalleryManagementData,
+		setSuperAdminGalleryManagementData,
+	] = useState<SuperAdminGalleryManagementProps[] | null>(() => {
 		try {
-			const getData = localStorage.getItem("galleryData");
+			const getData = localStorage.getItem(
+				"superAdminGalleryManagementData"
+			);
 
 			if (!getData || getData == null || getData == "") {
 				return null;
@@ -44,7 +50,7 @@ export default function SuperAdminGalleryManagement() {
 
 			return parsedData.length > 0 ? parsedData : null;
 		} catch {
-			localStorage.removeItem("galleryData");
+			localStorage.removeItem("superAdminGalleryManagementData");
 		}
 	});
 
@@ -54,30 +60,35 @@ export default function SuperAdminGalleryManagement() {
 		useState<SuccessPopUpProps | null>(null);
 
 	useEffect(() => {
-		if (galleryData == null) {
-			localStorage.removeItem("galleryData");
+		if (superAdminGalleryManagementData == null) {
+			localStorage.removeItem("superAdminGalleryManagementData");
 		} else {
-			localStorage.setItem("galleryData", JSON.stringify(galleryData));
+			localStorage.setItem(
+				"superAdminGalleryManagementData",
+				JSON.stringify(superAdminGalleryManagementData)
+			);
 		}
-	}, [galleryData]);
+	}, [superAdminGalleryManagementData]);
 
-	function handleSubmitGallery(galleryData: SuperAdminGalleryProps) {
+	function handleSubmitGallery(
+		superAdminGalleryData: SuperAdminGalleryManagementProps
+	) {
 		setSuccessPopUpComponent({
 			title: "Photo Added!",
 			message: "You've successfully added a new photo to the panel",
 		});
 		setSuccessPopUp(true);
 
-		setGalleryData((prev) =>
-			prev ? [...prev, galleryData] : [galleryData]
+		setSuperAdminGalleryManagementData((prev) =>
+			prev ? [...prev, superAdminGalleryData] : [superAdminGalleryData]
 		);
 	}
 
 	function handleUpdateGallery(
-		updatedData: SuperAdminGalleryProps,
+		updatedData: SuperAdminGalleryManagementProps,
 		index: number
 	) {
-		setGalleryData((prev) => {
+		setSuperAdminGalleryManagementData((prev) => {
 			if (!prev) return null;
 
 			const currentData = prev[index];
@@ -105,7 +116,7 @@ export default function SuperAdminGalleryManagement() {
 	}
 
 	function handleDeleteGallery() {
-		setGalleryData((prev) => {
+		setSuperAdminGalleryManagementData((prev) => {
 			if (!prev) return null;
 
 			const result = prev.filter((_, i) => i !== index);
@@ -116,15 +127,19 @@ export default function SuperAdminGalleryManagement() {
 
 	function showDetail(index: number) {
 		setIndex(index);
-		setGalleryDetailPopUp(true);
+		setSuperAdminGalleryManagementDetailPopUp(true);
 
-		if (galleryData && galleryData[index]) {
-			setGalleryDetailData([
+		if (
+			superAdminGalleryManagementData &&
+			superAdminGalleryManagementData[index]
+		) {
+			setSuperAdminGalleryManagementDetailData([
 				{
-					organization: galleryData[index].organization,
-					eventName: galleryData[index].eventName,
-					date: galleryData[index].date,
-					image: galleryData[index].image,
+					organization:
+						superAdminGalleryManagementData[index].organization,
+					eventName: superAdminGalleryManagementData[index].eventName,
+					date: superAdminGalleryManagementData[index].date,
+					image: superAdminGalleryManagementData[index].image,
 				},
 			]);
 		}
@@ -188,54 +203,55 @@ export default function SuperAdminGalleryManagement() {
 						</tr>
 					</thead>
 					<tbody className="relative h-auto">
-						{galleryData ? (
-							galleryData.map((data, index) => (
-								<tr
-									key={index}
-									className="border-b border-[#D4D4D4]"
-								>
-									<td className="py-4 px-4 align-top text-sm font-medium">
-										{index + 1}
-									</td>
-									<td className="py-4 px-4 align-top text-base font-medium whitespace-nowrap">
-										{new Date(data.date).toLocaleDateString(
-											"en-GB",
-											{
+						{superAdminGalleryManagementData ? (
+							superAdminGalleryManagementData.map(
+								(data, index) => (
+									<tr
+										key={index}
+										className="border-b border-[#D4D4D4]"
+									>
+										<td className="py-4 px-4 align-top text-sm font-medium">
+											{index + 1}
+										</td>
+										<td className="py-4 px-4 align-top text-base font-medium whitespace-nowrap">
+											{new Date(
+												data.date
+											).toLocaleDateString("en-GB", {
 												day: "2-digit",
 												month: "short",
 												year: "numeric",
-											}
-										)}
-									</td>
+											})}
+										</td>
 
-									<td className="py-4 px-4 align-top">
-										<p className="text-base font-semibold leading-tight">
-											{data.organization}
-										</p>
-									</td>
-									<td className="py-4 px-4 align-top">
-										<p className="text-base font-semibold leading-tight">
-											{data.eventName}
-										</p>
-									</td>
-									<td className="py-4 px-4 align-top">
-										<div className="flex items-center gap-x-[16px] pl-2">
-											<div
-												onClick={() =>
-													showDetail(index)
-												}
-												className="cursor-pointer w-[34px] h-[34px] flex justify-center items-center border border-[#FF8800] p-[8px] rounded-[8px]"
-											>
-												<PencilIcon
-													width={18}
-													height={18}
-													color="#FF8800"
-												/>
+										<td className="py-4 px-4 align-top">
+											<p className="text-base font-semibold leading-tight">
+												{data.organization}
+											</p>
+										</td>
+										<td className="py-4 px-4 align-top">
+											<p className="text-base font-semibold leading-tight">
+												{data.eventName}
+											</p>
+										</td>
+										<td className="py-4 px-4 align-top">
+											<div className="flex items-center gap-x-[16px] pl-2">
+												<div
+													onClick={() =>
+														showDetail(index)
+													}
+													className="cursor-pointer w-[34px] h-[34px] flex justify-center items-center border border-[#FF8800] p-[8px] rounded-[8px]"
+												>
+													<PencilIcon
+														width={18}
+														height={18}
+														color="#FF8800"
+													/>
+												</div>
 											</div>
-										</div>
-									</td>
-								</tr>
-							))
+										</td>
+									</tr>
+								)
+							)
 						) : (
 							<tr className="h-[250px]">
 								<td colSpan={5}>
@@ -251,7 +267,8 @@ export default function SuperAdminGalleryManagement() {
 				</table>
 				<div
 					className={`w-[1000px] xl:w-full mt-3 ${
-						galleryData && galleryData.length > 0
+						superAdminGalleryManagementData &&
+						superAdminGalleryManagementData.length > 0
 							? "flex"
 							: "hidden"
 					} justify-end items-center gap-2`}
@@ -276,13 +293,15 @@ export default function SuperAdminGalleryManagement() {
 				save={handleSubmitGallery}
 			/>
 
-			{galleryDetailData && (
+			{superAdminGalleryManagementDetailData && (
 				<SuperAdminGalleryManagementDetailPopUp
-					open={galleryDetailPopUp}
-					close={() => setGalleryDetailPopUp(false)}
+					open={superAdminGalleryManagementDetailPopUp}
+					close={() =>
+						setSuperAdminGalleryManagementDetailPopUp(false)
+					}
 					save={handleUpdateGallery}
 					delete={handleDeleteGallery}
-					data={galleryDetailData}
+					data={superAdminGalleryManagementDetailData}
 					index={index}
 				/>
 			)}

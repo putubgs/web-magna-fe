@@ -8,7 +8,7 @@ import DeleteAndSaveButtonForAdd from "../adminComponents/deleteAndSaveButton";
 import Tooltip from "../tooltip";
 import { Backdrop } from "../backdrop";
 
-type PartnershipProps = {
+type SuperAdminPartnershipManagementProps = {
 	checked: boolean;
 	partnerName: string;
 	image: string;
@@ -17,10 +17,10 @@ type PartnershipProps = {
 type PartnershipPopUpProps = {
 	open: boolean;
 	close: () => void;
-	save: (PartnerData: PartnershipProps) => void;
+	save: (PartnerData: SuperAdminPartnershipManagementProps) => void;
 };
 
-export default function SuperAdminPartnershipPopUp({
+export default function SuperAdminPartnershipManagementPopUp({
 	open,
 	close,
 	save,
@@ -67,7 +67,7 @@ export default function SuperAdminPartnershipPopUp({
 			setEditPartnerName(true);
 			setEditImage(true);
 		} else if (submited == "submit") {
-			const partnershipData: PartnershipProps = {
+			const partnershipData: SuperAdminPartnershipManagementProps = {
 				checked: false,
 				partnerName,
 				image: preview,

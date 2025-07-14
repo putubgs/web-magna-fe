@@ -7,7 +7,7 @@ import ImageInputField from "../adminComponents/imageInputField";
 import { DeleteAndSaveButtonForEdit } from "../adminComponents/deleteAndSaveButton";
 import Tooltip from "../tooltip";
 
-type PartnershipProps = {
+type SuperAdminPartnershipManagementProps = {
 	partnerName: string;
 	image: string;
 };
@@ -15,13 +15,16 @@ type PartnershipProps = {
 type PartnershipPopUpProps = {
 	open: boolean;
 	close: () => void;
-	save: (eventData: PartnershipProps, index: number) => void;
+	save: (
+		eventData: SuperAdminPartnershipManagementProps,
+		index: number
+	) => void;
 	delete: (index: number) => void;
-	data: PartnershipProps[];
+	data: SuperAdminPartnershipManagementProps[];
 	index: number;
 };
 
-export default function SuperAdminPartnershipDetailPopUp({
+export default function SuperAdminPartnershipManagementDetailPopUp({
 	open,
 	close,
 	save,
@@ -66,7 +69,7 @@ export default function SuperAdminPartnershipDetailPopUp({
 	function handleSubmit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 
-		const partnershipData: PartnershipProps = {
+		const partnershipData: SuperAdminPartnershipManagementProps = {
 			partnerName,
 			image: preview,
 		};

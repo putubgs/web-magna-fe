@@ -15,9 +15,9 @@ import Tooltip from "../tooltip";
 import { Backdrop } from "../backdrop";
 
 type SuperAdminEventManagementProps = {
-  organization: string;
+	organization: string;
 	eventName: string;
-  registrationUrl1: string;
+	registrationUrl1: string;
 	date: string;
 	startTime: string;
 	endTime: string;
@@ -69,7 +69,8 @@ export default function SuperAdminEventManagementPopUp({
 	const [editDate, setEditDate] = useState<boolean>(false);
 	const [editStartTime, setEditStartTime] = useState<boolean>(false);
 	const [editEndTime, setEditEndTime] = useState<boolean>(false);
-	const [editRegistrationUrl2, setEditRegistrationUrl2] = useState<boolean>(false);
+	const [editRegistrationUrl2, setEditRegistrationUrl2] =
+		useState<boolean>(false);
 	const [editStartDate, setEditStartDate] = useState<boolean>(false);
 	const [editEndDate, setEditEndDate] = useState<boolean>(false);
 	const [editEventDescription, setEditEventDescription] =
@@ -105,7 +106,7 @@ export default function SuperAdminEventManagementPopUp({
 
 	function resetForm() {
 		setTogel(false);
-    setOrganization("");
+		setOrganization("");
 		setEventName("");
 		setRegistrationUrl1("");
 		setDate("");
@@ -154,7 +155,7 @@ export default function SuperAdminEventManagementPopUp({
 		if (submited == null) {
 			setSubmited("submit");
 			setEditEventName(true);
-      setEditRegistrationUrl1(true);
+			setEditRegistrationUrl1(true);
 			setEditDate(true);
 			setEditStartTime(true);
 			setEditEndTime(true);
@@ -165,9 +166,9 @@ export default function SuperAdminEventManagementPopUp({
 			setEditImage(true);
 		} else if (submited == "submit") {
 			const eventData: SuperAdminEventManagementProps = {
-        organization,
+				organization,
 				eventName,
-        registrationUrl1,
+				registrationUrl1,
 				date,
 				startTime,
 				endTime,
@@ -219,7 +220,8 @@ export default function SuperAdminEventManagementPopUp({
 									? setDangerPopUp(true)
 									: close()
 							}
-							className="cursor-pointer border border-white rounded-[4px] p-2">
+							className="cursor-pointer border border-white rounded-[4px] p-2"
+						>
 							<ExitIcon size={13} />
 						</div>
 					</div>
@@ -227,7 +229,11 @@ export default function SuperAdminEventManagementPopUp({
 						<div className="cursor-pointer group">
 							<Backdrop className="z-1 bg-white/10 group-hover:opacity-95 duration-300" />
 							<div className="relative z-2">
-								<InformationIcon width={20} height={20} color="white" />
+								<InformationIcon
+									width={20}
+									height={20}
+									color="white"
+								/>
 								<Tooltip
 									tooltipGuide={tooltipGuide}
 									tooltipData={tooltipData}
@@ -237,7 +243,8 @@ export default function SuperAdminEventManagementPopUp({
 						</div>
 						<form
 							onSubmit={handleSubmit}
-							className="w-full flex flex-col items-end gap-y-[32px]">
+							className="w-full flex flex-col items-end gap-y-[32px]"
+						>
 							<ul className="w-full border border-neutral-700 px-[20px] py-[24px] rounded-[8px] space-y-[40px]">
 								<li className="gap-x-[40px]">
 									<div className="relative w-full flex flex-col gap-y-[6px]">
@@ -267,7 +274,9 @@ export default function SuperAdminEventManagementPopUp({
 											inputLabel="Registration URL"
 											inputPlaceholder="Registration URL"
 											setData={setRegistrationUrl1}
-											setEditData={setEditRegistrationUrl1}
+											setEditData={
+												setEditRegistrationUrl1
+											}
 											editData={editRegistrationUrl1}
 											submited={`${submited}`}
 										/>
@@ -276,7 +285,9 @@ export default function SuperAdminEventManagementPopUp({
 								<li className="grid grid-cols-12 gap-[20px]">
 									<div className="relative col-span-12 md:col-span-4 lg:col-span-6 flex flex-col gap-[6px]">
 										<DateInputField
-											setDatePickerOpen={setDatePickerOpen}
+											setDatePickerOpen={
+												setDatePickerOpen
+											}
 											setDatePickerOpenType="date"
 											setDate={setDate}
 											date={date}
@@ -295,81 +306,161 @@ export default function SuperAdminEventManagementPopUp({
 													Start Time
 												</td>
 												<td className="px-2 sm:px-5"></td>
-												<td className="w-[50%] text-xs sm:text-base font-bold">End Time</td>
+												<td className="w-[50%] text-xs sm:text-base font-bold">
+													End Time
+												</td>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
 												<td className="relative w-[50%]">
 													<div
-														onClick={() => setTimePickerOpen("startTime")}
+														onClick={() =>
+															setTimePickerOpen(
+																"startTime"
+															)
+														}
 														className={`cursor-pointer flex items-center h-full mt-[6px] rounded-[4px] border ${
 															editStartTime
 																? "bg-neutral-800 border-transparent"
 																: "bg-transparent border-neutral-500"
-														} px-2 sm:px-4 py-[4px] sm:py-[8px] gap-x-1 sm:gap-x-3`}>
-														<Calendar className="w-4 sm:w-7" color="#737373" />
+														} px-2 sm:px-4 py-[4px] sm:py-[8px] gap-x-1 sm:gap-x-3`}
+													>
+														<Calendar
+															className="w-4 sm:w-7"
+															color="#737373"
+														/>
 														<p
 															className={`w-full flex justify-between items-center text-xs sm:text-base ${
-																startTime ? "text-white" : "text-neutral-500"
-															}`}>
+																startTime
+																	? "text-white"
+																	: "text-neutral-500"
+															}`}
+														>
 															{startTime
-																? startTime.split(" ")[0] +
+																? startTime.split(
+																		" "
+																  )[0] +
 																  ":" +
-																  startTime.split(" ")[1] +
-																  startTime.split(" ")[2]
+																  startTime.split(
+																		" "
+																  )[1] +
+																  startTime.split(
+																		" "
+																  )[2]
 																: "Select A Time"}
 															<ChevronDown />
 														</p>
 													</div>
 													<TimePicker
-														close={() => setTimePickerOpen("")}
-														open={timePickerPopUp == "startTime" && !editStartTime}
-														time={(value) => setStartTime(value)}
+														close={() =>
+															setTimePickerOpen(
+																""
+															)
+														}
+														open={
+															timePickerPopUp ==
+																"startTime" &&
+															!editStartTime
+														}
+														time={(value) =>
+															setStartTime(value)
+														}
 													/>
 													{submited && (
 														<div
-															onClick={() => setEditStartTime(!editStartTime)}
-															className="cursor-pointer absolute right-1 sm:right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[5px] sm:gap-x-[10px] px-[8px] py-[5px] rounded-[8px]">
-															<p className="text-xs text-neutral-400">Edit</p>
-															<PencilIcon width={14} height={14} color="#A3A3A3" />
+															onClick={() =>
+																setEditStartTime(
+																	!editStartTime
+																)
+															}
+															className="cursor-pointer absolute right-1 sm:right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[5px] sm:gap-x-[10px] px-[8px] py-[5px] rounded-[8px]"
+														>
+															<p className="text-xs text-neutral-400">
+																Edit
+															</p>
+															<PencilIcon
+																width={14}
+																height={14}
+																color="#A3A3A3"
+															/>
 														</div>
 													)}
 												</td>
-												<td className="px-2 sm:px-5">-</td>
+												<td className="px-2 sm:px-5">
+													-
+												</td>
 												<td className="relative w-[50%]">
 													<div
-														onClick={() => setTimePickerOpen("endTime")}
+														onClick={() =>
+															setTimePickerOpen(
+																"endTime"
+															)
+														}
 														className={`cursor-pointer flex items-center h-full mt-[6px] rounded-[4px] border ${
 															editEndTime
 																? "bg-neutral-800 border-transparent"
 																: "bg-transparent border-neutral-500"
-														} px-2 sm:px-4 py-[4px] sm:py-[8px] gap-x-1 sm:gap-x-3`}>
-														<Calendar className="w-4 sm:w-7" color="#737373" />
+														} px-2 sm:px-4 py-[4px] sm:py-[8px] gap-x-1 sm:gap-x-3`}
+													>
+														<Calendar
+															className="w-4 sm:w-7"
+															color="#737373"
+														/>
 														<p
 															className={`w-full flex justify-between items-center text-xs sm:text-base ${
-																endTime ? "text-white" : "text-neutral-500"
-															}`}>
+																endTime
+																	? "text-white"
+																	: "text-neutral-500"
+															}`}
+														>
 															{endTime
-																? endTime.split(" ")[0] +
+																? endTime.split(
+																		" "
+																  )[0] +
 																  ":" +
-																  endTime.split(" ")[1] +
-																  endTime.split(" ")[2]
+																  endTime.split(
+																		" "
+																  )[1] +
+																  endTime.split(
+																		" "
+																  )[2]
 																: "Select A Time"}
 															<ChevronDown />
 														</p>
 													</div>
 													<TimePicker
-														close={() => setTimePickerOpen("")}
-														open={timePickerPopUp == "endTime" && !editEndTime}
-														time={(value) => setEndTime(value)}
+														close={() =>
+															setTimePickerOpen(
+																""
+															)
+														}
+														open={
+															timePickerPopUp ==
+																"endTime" &&
+															!editEndTime
+														}
+														time={(value) =>
+															setEndTime(value)
+														}
 													/>
 													{submited && (
 														<div
-															onClick={() => setEditEndTime(!editEndTime)}
-															className="cursor-pointer absolute right-1 sm:right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[5px] sm:gap-x-[10px] px-[8px] py-[5px] rounded-[8px]">
-															<p className="text-xs text-neutral-400">Edit</p>
-															<PencilIcon width={14} height={14} color="#A3A3A3" />
+															onClick={() =>
+																setEditEndTime(
+																	!editEndTime
+																)
+															}
+															className="cursor-pointer absolute right-1 sm:right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[5px] sm:gap-x-[10px] px-[8px] py-[5px] rounded-[8px]"
+														>
+															<p className="text-xs text-neutral-400">
+																Edit
+															</p>
+															<PencilIcon
+																width={14}
+																height={14}
+																color="#A3A3A3"
+															/>
 														</div>
 													)}
 												</td>
@@ -381,12 +472,18 @@ export default function SuperAdminEventManagementPopUp({
 									<div
 										onClick={() => setTogel(!togel)}
 										className={`w-[40px] sm:w-[60px] h-[20px] sm:h-[30px] ${
-											!togel ? "bg-primary" : "bg-neutral-400"
-										} flex items-center rounded-full px-[5px] relative cursor-pointer`}>
+											!togel
+												? "bg-primary"
+												: "bg-neutral-400"
+										} flex items-center rounded-full px-[5px] relative cursor-pointer`}
+									>
 										<div
 											className={`absolute left-[5px] w-[11px] sm:w-[21px] h-[11px] sm:h-[21px] bg-white rounded-full transition-all duration-300 ${
-												togel ? "translate-x-0" : "translate-x-[20px] sm:translate-x-[30px]"
-											}`}></div>
+												togel
+													? "translate-x-0"
+													: "translate-x-[20px] sm:translate-x-[30px]"
+											}`}
+										></div>
 									</div>
 									<p className="text-xs sm:text-base font-bold">
 										Registration Informations
@@ -395,12 +492,19 @@ export default function SuperAdminEventManagementPopUp({
 								{!togel && (
 									<li className="grid grid-cols-12 gap-[20px]">
 										<div className="relative col-span-12 md:col-span-4 lg:col-span-6 flex flex-col gap-y-[6px]">
-											<label className="text-xs sm:text-base font-bold" htmlFor="">
+											<label
+												className="text-xs sm:text-base font-bold"
+												htmlFor=""
+											>
 												Registration Url
 											</label>
 											<div className="flex items-center">
 												<input
-													onChange={(e) => setRegistrationUrl2(e.target.value)}
+													onChange={(e) =>
+														setRegistrationUrl2(
+															e.target.value
+														)
+													}
 													className={`w-full text-xs sm:text-base font-normal border ${
 														editRegistrationUrl2
 															? "bg-neutral-800 border-transparent"
@@ -408,14 +512,27 @@ export default function SuperAdminEventManagementPopUp({
 													} px-[12px] py-[8px] rounded-[4px] outline-none`}
 													type="text"
 													placeholder="Enter the Registration Url"
-													disabled={editRegistrationUrl2}
+													disabled={
+														editRegistrationUrl2
+													}
 												/>
 												{submited && (
 													<div
-														onClick={() => setEditRegistrationUrl2(!editRegistrationUrl2)}
-														className="cursor-pointer absolute right-1 sm:right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[5px] sm:gap-x-[10px] px-[8px] py-[5px] rounded-[8px]">
-														<p className="text-xs text-neutral-400">Edit</p>
-														<PencilIcon width={14} height={14} color="#A3A3A3" />
+														onClick={() =>
+															setEditRegistrationUrl2(
+																!editRegistrationUrl2
+															)
+														}
+														className="cursor-pointer absolute right-1 sm:right-2 bottom-1 sm:bottom-2 flex items-center bg-neutral-700 gap-x-[5px] sm:gap-x-[10px] px-[8px] py-[5px] rounded-[8px]"
+													>
+														<p className="text-xs text-neutral-400">
+															Edit
+														</p>
+														<PencilIcon
+															width={14}
+															height={14}
+															color="#A3A3A3"
+														/>
 													</div>
 												)}
 											</div>
@@ -436,32 +553,58 @@ export default function SuperAdminEventManagementPopUp({
 												<tr>
 													<td className="relative">
 														<DateInputField
-															setDatePickerOpen={setDatePickerOpen}
+															setDatePickerOpen={
+																setDatePickerOpen
+															}
 															setDatePickerOpenType="startDate"
-															setDate={setStartDate}
+															setDate={
+																setStartDate
+															}
 															date={startDate}
-															setEditDate={setEditStartDate}
-															editDate={editStartDate}
+															setEditDate={
+																setEditStartDate
+															}
+															editDate={
+																editStartDate
+															}
 															submited={submited}
-															datePickerPopUp={datePickerPopUp}
+															datePickerPopUp={
+																datePickerPopUp
+															}
 															selectedDate={date}
-															selectedStartDate={startDate}
+															selectedStartDate={
+																startDate
+															}
 														/>
 													</td>
-													<td className="px-2 sm:px-5">-</td>
+													<td className="px-2 sm:px-5">
+														-
+													</td>
 													<td className="relative">
 														<DateInputField
-															setDatePickerOpen={setDatePickerOpen}
+															setDatePickerOpen={
+																setDatePickerOpen
+															}
 															setDatePickerOpenType="endDate"
 															setDate={setEndDate}
 															date={endDate}
-															setEditDate={setEditEndDate}
-															editDate={editEndDate}
+															setEditDate={
+																setEditEndDate
+															}
+															editDate={
+																editEndDate
+															}
 															submited={submited}
-															datePickerPopUp={datePickerPopUp}
+															datePickerPopUp={
+																datePickerPopUp
+															}
 															selectedDate={date}
-															selectedStartDate={startDate}
-															selectedEndDate={endDate}
+															selectedStartDate={
+																startDate
+															}
+															selectedEndDate={
+																endDate
+															}
 														/>
 													</td>
 												</tr>
@@ -475,7 +618,9 @@ export default function SuperAdminEventManagementPopUp({
 											textAreaLabel="Event Description"
 											textAreaPlaceholder="Event Description"
 											setData={setEventDescription}
-											setEditData={setEditEventDescription}
+											setEditData={
+												setEditEventDescription
+											}
 											editData={editEventDescription}
 											submited={`${submited}`}
 										/>
@@ -497,7 +642,9 @@ export default function SuperAdminEventManagementPopUp({
 							<DeleteAndSaveButtonForAdd
 								submited={submited}
 								formComplete={formComplete}
-								handleDangerPopUp={() => setDangerPopUp(!dangerPopUp)}
+								handleDangerPopUp={() =>
+									setDangerPopUp(!dangerPopUp)
+								}
 								saveLabel="Save"
 							/>
 						</form>

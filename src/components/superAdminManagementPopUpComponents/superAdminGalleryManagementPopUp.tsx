@@ -10,7 +10,7 @@ import Tooltip from "../tooltip";
 import { Backdrop } from "../backdrop";
 import { ChevronDown } from "lucide-react";
 
-type SuperAdminGalleryProps = {
+type SuperAdminGalleryManagementProps = {
 	organization: string;
 	eventName: string;
 	date: string;
@@ -20,7 +20,7 @@ type SuperAdminGalleryProps = {
 type GalleryPopUpProps = {
 	open: boolean;
 	close: () => void;
-	save: (galleryData: SuperAdminGalleryProps) => void;
+	save: (galleryData: SuperAdminGalleryManagementProps) => void;
 };
 
 export default function SuperAdminGalleryManagementPopUp({
@@ -84,7 +84,7 @@ export default function SuperAdminGalleryManagementPopUp({
 			setEditDate(true);
 			setEditImage(true);
 		} else if (submited == "submit") {
-			const galleryData: SuperAdminGalleryProps = {
+			const galleryData: SuperAdminGalleryManagementProps = {
 				organization,
 				eventName,
 				date,

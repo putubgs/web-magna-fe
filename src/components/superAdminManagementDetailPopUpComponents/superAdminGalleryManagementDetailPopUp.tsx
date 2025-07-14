@@ -10,7 +10,7 @@ import ImageInputField from "../adminComponents/imageInputField";
 import { DeleteAndSaveButtonForEdit } from "../adminComponents/deleteAndSaveButton";
 import Tooltip from "../tooltip";
 
-type SuperAdminGalleryDataProps = {
+type SuperAdminGalleryManagementDataProps = {
 	organization: string;
 	eventName: string;
 	date: string;
@@ -20,9 +20,12 @@ type SuperAdminGalleryDataProps = {
 type GalleryPopUpProps = {
 	open: boolean;
 	close: () => void;
-	save: (galleryData: SuperAdminGalleryDataProps, index: number) => void;
+	save: (
+		superAdminGalleryManagementData: SuperAdminGalleryManagementDataProps,
+		index: number
+	) => void;
 	delete: (index: number) => void;
-	data: SuperAdminGalleryDataProps[];
+	data: SuperAdminGalleryManagementDataProps[];
 	index: number;
 };
 
@@ -85,7 +88,7 @@ export default function SuperAdminGalleryManagementDetailPopUp({
 	function handleSubmit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 
-		const editEventData: SuperAdminGalleryDataProps = {
+		const editEventData: SuperAdminGalleryManagementDataProps = {
 			organization,
 			eventName,
 			date,
