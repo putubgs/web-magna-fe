@@ -133,11 +133,12 @@ export default function SuperAdminGalleryManagementPopUp({
 								<select
 									className="appearance-none w-full bg-neutral-900 text-white px-4 py-2 pr-10 rounded-[8px] border border-white"
 									value={organization}
-									onChange={(e) =>
-										setOrganization(e.target.value)
-									}
+									onChange={(e) => {
+										setOrganization(e.target.value);
+										setIsDropdownOpen(false);
+										e.target.blur();
+									}}
 									onFocus={() => setIsDropdownOpen(true)}
-									onBlur={() => setIsDropdownOpen(false)}
 								>
 									<option value="">
 										Select Organization
