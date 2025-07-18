@@ -20,26 +20,29 @@ type SuccessPopUpProps = {
 
 export default function GalleryManagement() {
 	const [galleryPopUp, setGalleryPopUp] = useState<boolean>(false);
-	const [galleryDetailPopUp, setGalleryDetailPopUp] = useState<boolean>(false);
+	const [galleryDetailPopUp, setGalleryDetailPopUp] =
+		useState<boolean>(false);
 	const [index, setIndex] = useState<number>(-1);
 	const [galleryDetailData, setGalleryDetailData] = useState<
 		GalleryProps[] | null
 	>(null);
-	const [galleryData, setGalleryData] = useState<GalleryProps[] | null>(() => {
-		try {
-			const getData = localStorage.getItem("galleryData");
+	const [galleryData, setGalleryData] = useState<GalleryProps[] | null>(
+		() => {
+			try {
+				const getData = localStorage.getItem("galleryData");
 
-			if (!getData || getData == null || getData == "") {
-				return null;
+				if (!getData || getData == null || getData == "") {
+					return null;
+				}
+
+				const parsedData = JSON.parse(getData);
+
+				return parsedData.length > 0 ? parsedData : null;
+			} catch {
+				localStorage.removeItem("galleryData");
 			}
-
-			const parsedData = JSON.parse(getData);
-
-			return parsedData.length > 0 ? parsedData : null;
-		} catch {
-			localStorage.removeItem("galleryData");
 		}
-	});
+	);
 
 	const [dangerPopUp, setDangerPopUp] = useState<boolean>(false);
 	const [successPopUp, setSuccessPopUp] = useState<boolean>(false);
@@ -61,7 +64,9 @@ export default function GalleryManagement() {
 		});
 		setSuccessPopUp(true);
 
-		setGalleryData((prev) => (prev ? [...prev, galleryData] : [galleryData]));
+		setGalleryData((prev) =>
+			prev ? [...prev, galleryData] : [galleryData]
+		);
 	}
 
 	function handleUpdateGallery(updatedData: GalleryProps, index: number) {
@@ -130,7 +135,8 @@ export default function GalleryManagement() {
 				</h1>
 				<button
 					onClick={() => setGalleryPopUp(true)}
-					className="cursor-pointer bg-primary text-sm lg:text-base p-[16px] rounded-[8px]">
+					className="cursor-pointer bg-primary text-sm lg:text-base p-[16px] rounded-[8px]"
+				>
 					Add Picture +
 				</button>
 			</section>
@@ -138,20 +144,39 @@ export default function GalleryManagement() {
 				<table className="table-auto w-[1000px] xl:w-full text-white">
 					<thead>
 						<tr className="border-b border-[#D4D4D4] text-left">
-							<th className="text-base lg:text-lg font-bold py-3 px-4">No</th>
-							<th className="text-base lg:text-lg font-bold py-3 px-4">Photo</th>
-							<th className="text-base lg:text-lg font-bold py-3 px-0">Event Name</th>
-							<th className="text-base lg:text-lg font-bold py-3 px-4">Date</th>
-							<th className="text-base lg:text-lg font-bold py-3 px-4">Actions</th>
+							<th className="text-base lg:text-lg font-bold py-3 px-4">
+								No
+							</th>
+							<th className="text-base lg:text-lg font-bold py-3 px-4">
+								Photo
+							</th>
+							<th className="text-base lg:text-lg font-bold py-3 px-0">
+								Event Name
+							</th>
+							<th className="text-base lg:text-lg font-bold py-3 px-4">
+								Date
+							</th>
+							<th className="text-base lg:text-lg font-bold py-3 px-4">
+								Detail
+							</th>
 						</tr>
 					</thead>
 					<tbody className="relative h-auto">
 						{galleryData ? (
 							galleryData.map((data, index) => (
-								<tr key={index} className="border-b border-[#D4D4D4]">
-									<td className="py-4 px-4 align-top text-sm font-medium">1</td>
+								<tr
+									key={index}
+									className="border-b border-[#D4D4D4]"
+								>
+									<td className="py-4 px-4 align-top text-sm font-medium">
+										1
+									</td>
 									<td className="py-4 px-4 align-top">
-										<img className="w-[150px]" src={data.image} alt="Event Poster" />
+										<img
+											className="w-[150px]"
+											src={data.image}
+											alt="Event Poster"
+										/>
 									</td>
 									<td className="py-4 px-2 align-top">
 										<p className="text-base font-semibold leading-tight">
@@ -159,21 +184,35 @@ export default function GalleryManagement() {
 										</p>
 									</td>
 									<td className="py-4 px-4 align-top text-base font-semibold whitespace-nowrap">
-										{`${data.date.split("/")[1]}/${data.date.split("/")[0]}/${
-											data.date.split("/")[2]
-										}`}
+										{`${data.date.split("/")[1]}/${
+											data.date.split("/")[0]
+										}/${data.date.split("/")[2]}`}
 									</td>
 									<td className="py-4 px-4 align-top">
 										<div className="flex items-center gap-x-[16px]">
 											<div
-												onClick={() => showDetail(index)}
-												className="cursor-pointer w-[34px] h-[34px] flex justify-center items-center border border-[#FF8800] p-[8px] rounded-[8px]">
-												<PencilIcon width={18} height={18} color="#FF8800" />
+												onClick={() =>
+													showDetail(index)
+												}
+												className="cursor-pointer w-[34px] h-[34px] flex justify-center items-center border border-[#FF8800] p-[8px] rounded-[8px]"
+											>
+												<PencilIcon
+													width={18}
+													height={18}
+													color="#FF8800"
+												/>
 											</div>
 											<div
-												onClick={() => handleDeletePopUp(index)}
-												className="cursor-pointer w-[34px] h-[34px] flex justify-center items-center border border-[#C00707] p-[8px] rounded-[8px]">
-												<TrashCanIcon width={14} height={18} color="#C00707" />
+												onClick={() =>
+													handleDeletePopUp(index)
+												}
+												className="cursor-pointer w-[34px] h-[34px] flex justify-center items-center border border-[#C00707] p-[8px] rounded-[8px]"
+											>
+												<TrashCanIcon
+													width={14}
+													height={18}
+													color="#C00707"
+												/>
 											</div>
 										</div>
 									</td>
@@ -183,7 +222,9 @@ export default function GalleryManagement() {
 							<tr className="h-[250px]">
 								<td colSpan={5}>
 									<div className="flex flex-col justify-center items-center text-white">
-										<h1 className="text-xl lg:text-3xl font-black">NO DATA</h1>
+										<h1 className="text-xl lg:text-3xl font-black">
+											NO DATA
+										</h1>
 									</div>
 								</td>
 							</tr>
@@ -192,8 +233,11 @@ export default function GalleryManagement() {
 				</table>
 				<div
 					className={`w-[1000px] xl:w-full mt-3 ${
-						galleryData && galleryData.length > 0 ? "flex" : "hidden"
-					} justify-end items-center gap-2`}>
+						galleryData && galleryData.length > 0
+							? "flex"
+							: "hidden"
+					} justify-end items-center gap-2`}
+				>
 					<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20">
 						<LeftChevronIcon width={23} height={23} color="white" />
 					</button>

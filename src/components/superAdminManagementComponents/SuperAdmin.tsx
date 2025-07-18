@@ -11,9 +11,9 @@ type SuperAdminProps = {
 
 export default function SuperAdmin() {
 	const [superAdminPopUp, setSuperAdminPopUp] = useState<boolean>(false);
-	const [superAdminData, setSuperAdminData] = useState<SuperAdminProps[] | null>(
-		null
-	);
+	const [superAdminData, setSuperAdminData] = useState<
+		SuperAdminProps[] | null
+	>(null);
 
 	function handleSuperAdmin(superAdminData: SuperAdminProps) {
 		setSuperAdminData((prev) =>
@@ -30,7 +30,8 @@ export default function SuperAdmin() {
 					</h1>
 					<button
 						onClick={() => setSuperAdminPopUp(true)}
-						className="cursor-pointer bg-primary text-sm lg:text-base p-[16px] rounded-[8px]">
+						className="cursor-pointer bg-primary text-sm lg:text-base p-[16px] rounded-[8px]"
+					>
 						Add Admin +
 					</button>
 				</section>
@@ -40,7 +41,7 @@ export default function SuperAdmin() {
 						<input
 							className="w-full h-full text-white placeholder-white outline-none"
 							type="text"
-							placeholder="Sarch"
+							placeholder="Search"
 						/>
 					</div>
 					<div className="col-span-1 bg-neutral-800 flex justify-center items-center gap-x-[10px] rounded-[8px]">
@@ -58,15 +59,21 @@ export default function SuperAdmin() {
 				<table className="table-auto w-[1000px] xl:w-full text-white">
 					<thead>
 						<tr className="border-b border-[#D4D4D4] text-left">
-							<th className="text-base lg:text-lg font-bold py-3 px-4">No</th>
+							<th className="text-base lg:text-lg font-bold py-3 px-4">
+								No
+							</th>
 							<th className="text-base lg:text-lg font-bold py-3 px-4">
 								Organization Name
 							</th>
-							<th className="text-base lg:text-lg font-bold py-3 px-10">Email</th>
+							<th className="text-base lg:text-lg font-bold py-3 px-10">
+								Email
+							</th>
 							<th className="text-base lg:text-lg font-bold py-3 px-0">
 								Date Created
 							</th>
-							<th className="text-base lg:text-lg font-bold py-3 px-4">Actions</th>
+							<th className="text-base lg:text-lg font-bold py-3 px-4">
+								Actions
+							</th>
 						</tr>
 					</thead>
 					<tbody className="relative">
@@ -90,7 +97,11 @@ export default function SuperAdmin() {
 									<td className="py-4 px-4 align-top">
 										<div className="flex items-center gap-x-[16px]">
 											<div className="cursor-pointer w-[34px] h-[34px] flex justify-center items-center border border-[#FF8800] p-[8px] rounded-[8px]">
-												<PencilIcon width={18} height={18} color="#FF8800" />
+												<PencilIcon
+													width={18}
+													height={18}
+													color="#FF8800"
+												/>
 											</div>
 										</div>
 									</td>
@@ -100,7 +111,9 @@ export default function SuperAdmin() {
 							<tr className="h-[250px]">
 								<td colSpan={5}>
 									<div className="flex flex-col justify-center items-center text-white">
-										<h1 className="text-xl lg:text-3xl font-black">NO DATA</h1>
+										<h1 className="text-xl lg:text-3xl font-black">
+											NO DATA
+										</h1>
 									</div>
 								</td>
 							</tr>
@@ -109,8 +122,11 @@ export default function SuperAdmin() {
 				</table>
 				<section
 					className={`absolute right-3 -bottom-20 ${
-						superAdminData && superAdminData.length > 0 ? "flex" : "hidden"
-					} justify-end items-center gap-2`}>
+						superAdminData && superAdminData.length > 0
+							? "flex"
+							: "hidden"
+					} justify-end items-center gap-2`}
+				>
 					<button className="h-full bg-[#1c1c1c] text-white px-3 py-1 rounded-md border border-white/20">
 						<LeftChevronIcon width={23} height={23} color="white" />
 					</button>

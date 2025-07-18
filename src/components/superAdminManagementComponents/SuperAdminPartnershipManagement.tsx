@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { LeftChevronIcon } from "../icons/leftChevronIcon";
 import { PencilIcon } from "../icons/pencilIcon";
-import PartnershipPopUp from "../adminPopUpComponents/partnershipPopUp";
-import PartnershipDetailPopUp from "../adminDetailPopUpComponents/partnershipDetailPopUp";
+import SuperAdminPartnershipManagementDetailPopUp from "../superAdminManagementDetailPopUpComponents/superAdminPartnershipManagementDetailPopUp";
+import SuperAdminPartnershipManagementPopUp from "../superAdminManagementPopUpComponents/superAdminPartnershipManagementPopUp";
 import { Search, TriangleAlert } from "lucide-react";
 import { TrashCanIcon } from "../icons/trashCanIcon";
 import DangerPopUp from "../dialog/dangerPopUp";
 import SuccessPopUp from "../dialog/sucessPopUp";
 
-type PartnershipProps = {
+type SuperAdminPartnershipProps = {
 	checked?: boolean;
 	partnerName: string;
 	image: string;
@@ -19,19 +19,25 @@ type SuccessPopUpProps = {
 	message: string;
 };
 
-export default function PartnershipManagement() {
+export default function SuperAdminPartnershipManagement() {
 	const [partnershipPopUp, setPartnershipPopUp] = useState<boolean>(false);
-	const [partnershipDetailPopUp, setPartnershipDetailPopUp] =
-		useState<boolean>(false);
+	const [
+		superAdminPartnershipManagementDetailPopUp,
+		setSuperAdminPartnershipManagementDetailPopUp,
+	] = useState<boolean>(false);
 	const [index, setIndex] = useState<number>(-1);
-	const [partnershipDetailData, setPartnershipDetailData] = useState<
-		PartnershipProps[] | null
-	>(null);
-	const [partnershipData, setPartnershipData] = useState<
-		PartnershipProps[] | null
-	>(() => {
+	const [
+		superAdminPartnershipDetailData,
+		setsuperAdminPartnershipDetailData,
+	] = useState<SuperAdminPartnershipProps[] | null>(null);
+	const [
+		superAdminPartnershipManagementData,
+		setSuperAdminPartnershipManagementData,
+	] = useState<SuperAdminPartnershipProps[] | null>(() => {
 		try {
-			const getData = localStorage.getItem("partnershipData");
+			const getData = localStorage.getItem(
+				"superAdminPartnershipManagementData"
+			);
 
 			if (!getData || getData == null || getData == "") {
 				return null;
@@ -41,7 +47,7 @@ export default function PartnershipManagement() {
 
 			return parsedData.length > 0 ? parsedData : null;
 		} catch {
-			localStorage.removeItem("partnershipData");
+			localStorage.removeItem("superAdminPartnershipManagementData");
 		}
 	});
 
@@ -51,18 +57,18 @@ export default function PartnershipManagement() {
 		useState<SuccessPopUpProps | null>(null);
 
 	useEffect(() => {
-		if (partnershipData == null) {
-			localStorage.removeItem("partnershipData");
+		if (superAdminPartnershipManagementData == null) {
+			localStorage.removeItem("superAdminPartnershipManagementData");
 		} else {
 			localStorage.setItem(
-				"partnershipData",
-				JSON.stringify(partnershipData)
+				"superAdminPartnershipManagementData",
+				JSON.stringify(superAdminPartnershipManagementData)
 			);
 		}
-	}, [partnershipData]);
+	}, [superAdminPartnershipManagementData]);
 
 	const handleCheck = (index: number) => {
-		setPartnershipData((prev) => {
+		setSuperAdminPartnershipManagementData((prev) => {
 			if (!prev) return null;
 
 			const newData = [...prev];
@@ -75,23 +81,27 @@ export default function PartnershipManagement() {
 		});
 	};
 
-	function handleSubmitPartnership(partnershipData: PartnershipProps) {
+	function handleSubmitPartnership(
+		superAdminPartnershipData: SuperAdminPartnershipProps
+	) {
 		setSuccessPopUpComponent({
 			title: "Partner Added!",
 			message: "You've successfully added a new partner to the panel",
 		});
 		setSuccessPopUp(true);
 
-		setPartnershipData((prev) =>
-			prev ? [...prev, partnershipData] : [partnershipData]
+		setSuperAdminPartnershipManagementData((prev) =>
+			prev
+				? [...prev, superAdminPartnershipData]
+				: [superAdminPartnershipData]
 		);
 	}
 
 	function handleUpdatePartnership(
-		updatedData: PartnershipProps,
+		updatedData: SuperAdminPartnershipProps,
 		index: number
 	) {
-		setPartnershipData((prev) => {
+		setSuperAdminPartnershipManagementData((prev) => {
 			if (!prev) return null;
 
 			const currentData = prev[index];
@@ -125,7 +135,7 @@ export default function PartnershipManagement() {
 	}
 
 	function handleDeletePartnership() {
-		setPartnershipData((prev) => {
+		setSuperAdminPartnershipManagementData((prev) => {
 			if (!prev) return null;
 
 			const result = prev.filter((_, i) => i !== index);
@@ -136,13 +146,17 @@ export default function PartnershipManagement() {
 
 	function showDetail(index: number) {
 		setIndex(index);
-		setPartnershipDetailPopUp(true);
+		setSuperAdminPartnershipManagementDetailPopUp(true);
 
-		if (partnershipData && partnershipData[index]) {
-			setPartnershipDetailData([
+		if (
+			superAdminPartnershipManagementData &&
+			superAdminPartnershipManagementData[index]
+		) {
+			setsuperAdminPartnershipDetailData([
 				{
-					partnerName: partnershipData[index].partnerName,
-					image: partnershipData[index].image,
+					partnerName:
+						superAdminPartnershipManagementData[index].partnerName,
+					image: superAdminPartnershipManagementData[index].image,
 				},
 			]);
 		}
@@ -162,7 +176,7 @@ export default function PartnershipManagement() {
 						Add Partner +
 					</button>
 				</section>
-				{partnershipData && (
+				{superAdminPartnershipManagementData && (
 					<section className="grid grid-cols-12 gap-x-[20px]">
 						<div className="col-span-12 flex items-center bg-neutral-800 gap-[10px] p-[12px] rounded-[8px]">
 							<Search />
@@ -189,7 +203,7 @@ export default function PartnershipManagement() {
 								Logo
 							</th>
 							<th className="text-base lg:text-lg font-bold py-3 px-4">
-								Name
+								Partner
 							</th>
 							<th className="text-base lg:text-lg font-bold py-3 px-1">
 								Actions
@@ -197,63 +211,67 @@ export default function PartnershipManagement() {
 						</tr>
 					</thead>
 					<tbody className="relative">
-						{partnershipData ? (
-							partnershipData.map((data, index) => (
-								<tr
-									key={index}
-									className="border-b border-[#D4D4D4]"
-								>
-									<td className="py-4 px-4 align-top text-sm font-medium">
-										{index + 1}
-									</td>
-									<td className="py-4 px-4 align-top text-sm font-medium">
-										<input
-											onChange={() => handleCheck(index)}
-											checked={data.checked || false}
-											className="cursor-pointer w-[40px] h-[40px] appearance-none border-2 border-white bg-transparent rounded-md checked:bg-transparent checked:border-white relative before:content-[''] before:absolute before:top-4 before:left-1/2 before:transform before:-translate-x-1/2 before:-translate-y-1/2 before:w-4 before:h-2 before:border-l-2 before:border-b-2 before:border-white before:rotate-[-45deg] before:opacity-0 checked:before:opacity-100"
-											type="checkbox"
-										/>
-									</td>
-									<td className="py-4 px-20 align-top">
-										<img
-											className="w-[50px] h-[50px]"
-											src={data.image}
-											alt=""
-										/>
-									</td>
-									<td className="py-4 px-4 align-top text-base font-normal whitespace-nowrap">
-										{data.partnerName}
-									</td>
-									<td className="py-4 align-top">
-										<div className="flex items-center gap-x-[16px]">
-											<div
-												onClick={() =>
-													showDetail(index)
+						{superAdminPartnershipManagementData ? (
+							superAdminPartnershipManagementData.map(
+								(data, index) => (
+									<tr
+										key={index}
+										className="border-b border-[#D4D4D4]"
+									>
+										<td className="py-4 px-4 align-top text-sm font-medium">
+											{index + 1}
+										</td>
+										<td className="py-4 px-4 align-top text-sm font-medium">
+											<input
+												onChange={() =>
+													handleCheck(index)
 												}
-												className="cursor-pointer w-[34px] h-[34px] flex justify-center items-center border border-[#FF8800] p-[8px] rounded-[8px]"
-											>
-												<PencilIcon
-													width={18}
-													height={18}
-													color="#FF8800"
-												/>
+												checked={data.checked || false}
+												className="cursor-pointer w-[40px] h-[40px] appearance-none border-2 border-white bg-transparent rounded-md checked:bg-transparent checked:border-white relative before:content-[''] before:absolute before:top-4 before:left-1/2 before:transform before:-translate-x-1/2 before:-translate-y-1/2 before:w-4 before:h-2 before:border-l-2 before:border-b-2 before:border-white before:rotate-[-45deg] before:opacity-0 checked:before:opacity-100"
+												type="checkbox"
+											/>
+										</td>
+										<td className="py-4 px-20 align-top">
+											<img
+												className="w-[50px] h-[50px]"
+												src={data.image}
+												alt=""
+											/>
+										</td>
+										<td className="py-4 px-4 align-top text-base font-normal whitespace-nowrap">
+											{data.partnerName}
+										</td>
+										<td className="py-4 align-top">
+											<div className="flex items-center gap-x-[16px]">
+												<div
+													onClick={() =>
+														showDetail(index)
+													}
+													className="cursor-pointer w-[34px] h-[34px] flex justify-center items-center border border-[#FF8800] p-[8px] rounded-[8px]"
+												>
+													<PencilIcon
+														width={18}
+														height={18}
+														color="#FF8800"
+													/>
+												</div>
+												<div
+													onClick={() =>
+														handleDeletePopUp(index)
+													}
+													className="cursor-pointer w-[36px] h-[36px] flex justify-center items-center border border-[#C00707] rounded-md"
+												>
+													<TrashCanIcon
+														width={16}
+														height={18}
+														color="#C00707"
+													/>
+												</div>
 											</div>
-											<div
-												onClick={() =>
-													handleDeletePopUp(index)
-												}
-												className="cursor-pointer w-[36px] h-[36px] flex justify-center items-center border border-[#C00707] rounded-md"
-											>
-												<TrashCanIcon
-													width={16}
-													height={18}
-													color="#C00707"
-												/>
-											</div>
-										</div>
-									</td>
-								</tr>
-							))
+										</td>
+									</tr>
+								)
+							)
 						) : (
 							<tr className="h-[250px]">
 								<td colSpan={5}>
@@ -269,22 +287,25 @@ export default function PartnershipManagement() {
 				</table>
 				<div
 					className={`mt-3 w-[1000px] xl:w-full ${
-						partnershipData && partnershipData.length > 0
+						superAdminPartnershipManagementData &&
+						superAdminPartnershipManagementData.length > 0
 							? "flex"
 							: "hidden"
 					} ${
-						partnershipData &&
-						partnershipData.length > 0 &&
-						partnershipData?.filter((item) => item.checked == true)
-							.length < 3
+						superAdminPartnershipManagementData &&
+						superAdminPartnershipManagementData.length > 0 &&
+						superAdminPartnershipManagementData?.filter(
+							(item) => item.checked == true
+						).length < 3
 							? "justify-between"
 							: "justify-end"
 					} items-center`}
 				>
-					{partnershipData &&
-						partnershipData.length > 0 &&
-						partnershipData?.filter((item) => item.checked == true)
-							.length < 3 && (
+					{superAdminPartnershipManagementData &&
+						superAdminPartnershipManagementData.length > 0 &&
+						superAdminPartnershipManagementData?.filter(
+							(item) => item.checked == true
+						).length < 3 && (
 							<div className="flex items-center text-[#FB923C] gap-x-[10px]">
 								<TriangleAlert />
 								<p>
@@ -317,19 +338,21 @@ export default function PartnershipManagement() {
 				</div>
 			</section>
 
-			<PartnershipPopUp
+			<SuperAdminPartnershipManagementPopUp
 				open={partnershipPopUp}
 				close={() => setPartnershipPopUp(false)}
 				save={handleSubmitPartnership}
 			/>
 
-			{partnershipDetailData && (
-				<PartnershipDetailPopUp
-					open={partnershipDetailPopUp}
-					close={() => setPartnershipDetailPopUp(false)}
+			{superAdminPartnershipDetailData && (
+				<SuperAdminPartnershipManagementDetailPopUp
+					open={superAdminPartnershipManagementDetailPopUp}
+					close={() =>
+						setSuperAdminPartnershipManagementDetailPopUp(false)
+					}
 					save={handleUpdatePartnership}
 					delete={handleDeletePartnership}
-					data={partnershipDetailData}
+					data={superAdminPartnershipDetailData}
 					index={index}
 				/>
 			)}
