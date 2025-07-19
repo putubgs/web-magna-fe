@@ -169,7 +169,7 @@ export default function GalleryManagement() {
 									className="border-b border-[#D4D4D4]"
 								>
 									<td className="py-4 px-4 align-top text-sm font-medium">
-										1
+										{index + 1}
 									</td>
 									<td className="py-4 px-4 align-top">
 										<img
