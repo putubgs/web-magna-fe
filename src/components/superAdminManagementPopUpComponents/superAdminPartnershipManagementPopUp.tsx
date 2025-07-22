@@ -7,6 +7,7 @@ import ImageInputField from "../adminComponents/imageInputField";
 import DeleteAndSaveButtonForAdd from "../adminComponents/deleteAndSaveButton";
 import Tooltip from "../tooltip";
 import { Backdrop } from "../backdrop";
+import OrganizationDropdown from "../organizationDropdown";
 
 type SuperAdminPartnershipManagementProps = {
 	checked: boolean;
@@ -28,17 +29,16 @@ export default function SuperAdminPartnershipManagementPopUp({
 	const [partnerName, setPartnerName] = useState<string>("");
 	const [imageFileName, setImageFileName] = useState<string>("");
 	const [preview, setPreview] = useState<string>("");
+	const [organization, setOrganization] = useState<string>("");
 	const formComplete = partnerName && preview;
 	const [submited, setSubmited] = useState<string | null>(null);
+	const [editOrganization, setEditOrganization] = useState<boolean>(false);
 	const [editPartnerName, setEditPartnerName] = useState<boolean>(false);
 	const [editImage, setEditImage] = useState<boolean>(false);
 
 	const [dangerPopUp, setDangerPopUp] = useState<boolean>(false);
 
-	const tooltipData = [
-		["Data", "Min", "Max"],
-		[["Logo", "1 image", "1 image"]],
-	];
+	const tooltipData = [["Data", "Min", "Max"], [["Logo", "1 image", "1 image"]]];
 	const tooltipGuide = [
 		"Each organization must display a minimum of 3 partner.",
 	];
@@ -95,13 +95,8 @@ export default function SuperAdminPartnershipManagementPopUp({
 							Partnership
 						</h1>
 						<div
-							onClick={() =>
-								partnerName || preview
-									? setDangerPopUp(true)
-									: close()
-							}
-							className="cursor-pointer border border-white rounded-[4px] p-2"
-						>
+							onClick={() => (partnerName || preview ? setDangerPopUp(true) : close())}
+							className="cursor-pointer border border-white rounded-[4px] p-2">
 							<ExitIcon size={13} />
 						</div>
 					</div>
@@ -109,11 +104,7 @@ export default function SuperAdminPartnershipManagementPopUp({
 						<div className="cursor-pointer group">
 							<Backdrop className="z-1 bg-white/10 group-hover:opacity-95 duration-300" />
 							<div className="relative z-2">
-								<InformationIcon
-									width={20}
-									height={20}
-									color="white"
-								/>
+								<InformationIcon width={20} height={20} color="white" />
 								<Tooltip
 									tooltipGuide={tooltipGuide}
 									tooltipData={tooltipData}
@@ -123,9 +114,19 @@ export default function SuperAdminPartnershipManagementPopUp({
 						</div>
 						<form
 							onSubmit={handleSubmit}
-							className="w-full flex flex-col items-end gap-y-[32px]"
-						>
+							className="w-full flex flex-col items-end gap-y-[32px]">
 							<ul className="w-full border border-neutral-700 px-[20px] py-[24px] rounded-[8px] space-y-[40px]">
+								<li className="gap-x-[40px]">
+									<div className="relative w-full flex flex-col gap-y-[6px]">
+										<OrganizationDropdown
+											setEditData={setEditOrganization}
+											editData={editOrganization}
+											submited={`${submited}`}
+											organization={organization}
+											setOrganization={setOrganization}
+										/>
+									</div>
+								</li>
 								<li className="gap-x-[40px]">
 									<div className="relative w-full flex flex-col gap-y-[6px]">
 										<InputField
@@ -154,9 +155,7 @@ export default function SuperAdminPartnershipManagementPopUp({
 							<DeleteAndSaveButtonForAdd
 								submited={submited}
 								formComplete={formComplete}
-								handleDangerPopUp={() =>
-									setDangerPopUp(!dangerPopUp)
-								}
+								handleDangerPopUp={() => setDangerPopUp(!dangerPopUp)}
 								saveLabel="Save"
 							/>
 						</form>

@@ -8,7 +8,7 @@ import DeleteAndSaveButtonForAdd from "../adminComponents/deleteAndSaveButton";
 import DateInputField from "../adminComponents/dateInputField";
 import Tooltip from "../tooltip";
 import { Backdrop } from "../backdrop";
-import { ChevronDown } from "lucide-react";
+import OrganizationDropdown from "../organizationDropdown";
 
 type SuperAdminGalleryManagementProps = {
 	organization: string;
@@ -35,11 +35,10 @@ export default function SuperAdminGalleryManagementPopUp({
 	const [preview, setPreview] = useState<string>("");
 	const formComplete = eventName && date && preview;
 	const [submited, setSubmited] = useState<string | null>(null);
+	const [editOrganization, setEditOrganization] = useState<boolean>(false);
 	const [editEventName, setEditEventName] = useState<boolean>(false);
 	const [editDate, setEditDate] = useState<boolean>(false);
 	const [editImage, setEditImage] = useState<boolean>(false);
-
-	const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
 
 	const [datePickerPopUp, setDatePickerOpen] = useState<string>("");
 
@@ -114,54 +113,20 @@ export default function SuperAdminGalleryManagementPopUp({
 						</h1>
 						<div
 							onClick={() =>
-								eventName || date || preview
-									? setDangerPopUp(true)
-									: close()
+								eventName || date || preview ? setDangerPopUp(true) : close()
 							}
-							className="cursor-pointer border border-white rounded-[4px] p-2"
-						>
+							className="cursor-pointer border border-white rounded-[4px] p-2">
 							<ExitIcon size={13} />
 						</div>
 					</div>
 					<div className="bg-neutral-900 flex flex-col items-end px-5 sm:px-[36px] py-[24px] space-y-[20px] sm:space-y-[32px]">
 						<form
 							onSubmit={handleSubmit}
-							className="w-full flex flex-col items-end gap-y-[32px]"
-						>
-							<div className="w-full relative">
-								{/* Organization select dropdown, sementara masih dummy options */}
-								<select
-									className="appearance-none w-full bg-neutral-900 text-white px-4 py-2 pr-10 rounded-[8px] border border-white"
-									value={organization}
-									onChange={(e) => {
-										setOrganization(e.target.value);
-										setIsDropdownOpen(false);
-										e.target.blur();
-									}}
-									onFocus={() => setIsDropdownOpen(true)}
-								>
-									<option value="">
-										Select Organization
-									</option>
-									<option value="Magna">Magna</option>
-								</select>
-
-								<div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-									<ChevronDown
-										className={`${
-											isDropdownOpen ? "rotate-180" : ""
-										}`}
-									/>
-								</div>
-							</div>
+							className="w-full flex flex-col items-end gap-y-[32px]">
 							<div className="cursor-pointer group">
 								<Backdrop className="z-1 bg-white/10 group-hover:opacity-95 duration-300" />
 								<div className="relative z-2">
-									<InformationIcon
-										width={20}
-										height={20}
-										color="white"
-									/>
+									<InformationIcon width={20} height={20} color="white" />
 									<Tooltip
 										tooltipGuide={tooltipGuide}
 										tooltipData={tooltipData}
@@ -170,6 +135,17 @@ export default function SuperAdminGalleryManagementPopUp({
 								</div>
 							</div>
 							<ul className="w-full border border-neutral-700 px-[20px] py-[24px] rounded-[8px] space-y-[40px]">
+								<li className="gap-x-[40px]">
+									<div className="relative w-full flex flex-col gap-y-[6px]">
+										<OrganizationDropdown
+											setEditData={setEditOrganization}
+											editData={editOrganization}
+											submited={`${submited}`}
+											organization={organization}
+											setOrganization={setOrganization}
+										/>
+									</div>
+								</li>
 								<li className="w-full flex flex-col sm:flex-row gap-[20px]">
 									<div className="relative w-full sm:w-[50%] flex flex-col gap-y-[6px]">
 										<InputField
@@ -184,9 +160,7 @@ export default function SuperAdminGalleryManagementPopUp({
 									<div className="relative w-full sm:w-[50%] flex flex-col gap-y-[6px]">
 										<DateInputField
 											label="Date"
-											setDatePickerOpen={
-												setDatePickerOpen
-											}
+											setDatePickerOpen={setDatePickerOpen}
 											setDate={setDate}
 											date={date}
 											setEditDate={setEditDate}
@@ -212,9 +186,7 @@ export default function SuperAdminGalleryManagementPopUp({
 							<DeleteAndSaveButtonForAdd
 								submited={submited}
 								formComplete={formComplete}
-								handleDangerPopUp={() =>
-									setDangerPopUp(!dangerPopUp)
-								}
+								handleDangerPopUp={() => setDangerPopUp(!dangerPopUp)}
 								saveLabel="Save"
 							/>
 						</form>
